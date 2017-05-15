@@ -6,21 +6,12 @@ import {
 } from 'react-router-dom'
 import axios from "axios";
 import firebase from "firebase";
+import auth from "../utils/auth";
 
 export class Admin extends React.Component{
 	constructor(props) {
 		super(props);
-		
-		var config = {
-		    apiKey: "AIzaSyB3033HOIzxeeoSLsHsiWBCoRpG_Sbo-4A",
-		    authDomain: "blog-987eb.firebaseapp.com",
-		    databaseURL: "https://blog-987eb.firebaseio.com",
-		    projectId: "blog-987eb",
-		    storageBucket: "blog-987eb.appspot.com",
-		    messagingSenderId: "198509011282"
-		};
-		firebase.initializeApp(config);
-		this.setupLogin();
+		this.setupAuth();
 		this.state = {
 			email: null,
 			password: null,
@@ -28,8 +19,8 @@ export class Admin extends React.Component{
 		};
 	}
 
-	setupLogin() {
-		firebase.auth().onAuthStateChanged(function(user) {
+	setupAuth() {
+		auth.onAuthStateChanged(function(user) {
 			
 		  if (user) {
 		    // User is signed in.

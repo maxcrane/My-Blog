@@ -6,6 +6,7 @@ import {Article} from "./components/Article.jsx";
 import {ArticleList} from "./components/ArticleList.jsx";
 import {Navbar} from "./components/Navbar.jsx";
 import {Admin} from "./components/Admin.jsx";
+import {CreateArticle} from "./components/CreateArticle.jsx";
 
 import {
   BrowserRouter as Router,
@@ -23,6 +24,7 @@ ReactDOM.render(
 		  		<Route path="/about"      component={About}/>
 		  		<Route path="/articles"   component={ArticleList}/>
 		  		<Route path="/admin"      component={Admin}/>	
+		  		<Route path="/create"     component={CreateArticle}/>
 		  		<Route path="/:articleId" component={Article}/>	
 		    </Switch>
 		</div>

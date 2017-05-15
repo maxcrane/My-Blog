@@ -19,7 +19,6 @@ export class ArticleList extends React.Component{
 		
 		axios.get('/api/articles')
 		.then((res)=>{
-			console.log(res.data);
 			this.setState({
 				articles : res.data
 			});

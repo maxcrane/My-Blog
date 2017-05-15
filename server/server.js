@@ -52,34 +52,6 @@ app.get('/api/articles', function(req, res) {
 	});
 });
 
-app.get('/api/login', function(req, res) {
-	var email = "maxlccrane@gmail.com";
-	var pass = "adminadmin";
-	firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		// [START_EXCLUDE]
-		if (errorCode === 'auth/wrong-password') {
-			alert('Wrong password.');
-		} else {
-			alert(errorMessage);
-		}
-		console.log(error);
-	});
-	res.send("logging in...");
-});
-
-
-
-
-app.get('/api/:name', function(req, res) {
-	articles.push({
-		title: req.params.name
-	});
-	res.send("added");
-});
-
 app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 });
