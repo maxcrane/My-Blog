@@ -1,19 +1,48 @@
-import React from "react";
+import React from "react"
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+import axios from "axios"
+import hljs from "highlight.js"
 
 export class Article extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			text: "",
+			title: ""
+		};
+		hljs.initHighlightingOnLoad();
+	}
+
 	componentDidMount() {
-		//console.log("article id: ",this.props.match.params);
+		var articleKey = this.props.match.params.articleId;
+		articleKey = articleKey.replace(new RegExp("-", 'g'), " ");
+		axios.get(`/api/${articleKey}`)
+		.then((res)=>{
+			this.setState({
+				text : res.data.content,
+				title : res.data.title
+			});
+		}).catch(function (error) {
+			console.log(error);
+		});
+
 	}
 
 	render() {
+		var showdown  = require('showdown'),
+	    converter = new showdown.Converter(),
+	    text      = this.state.text,
+	    markdown      = converter.makeHtml(text);
+
+
 		return (
-			<div className="row">
-				<h3>ID: {this.props.match.params.articleId}</h3>
+			<div>
+				<h3>{this.state.title}</h3>
+				<div id="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
 			</div>
 		);
 	}

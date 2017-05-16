@@ -14,9 +14,7 @@ export class ArticleList extends React.Component{
 		};
 	}
 
-	componentDidMount() {
-		console.log("article id: ", this.props.match.params);
-		
+	componentDidMount() {		
 		axios.get('/api/articles')
 		.then((res)=>{
 			this.setState({
@@ -27,12 +25,18 @@ export class ArticleList extends React.Component{
 		});
 	}
 
-
+	getPrettyArticleNameForUrl (title) {
+		return title.replace(new RegExp(" ", 'g'), "-");
+	}	
 
 	render() {
 		return (
 			<ul>
-      			{this.state.articles.map((article, index) => <h3 key={index}>{article.title}</h3>)}
+      			{this.state.articles.map((article, index) => 
+      				<Link key={`${index}link`} to={{
+      					pathname : `/${this.getPrettyArticleNameForUrl(article.title)}`,
+      					state : {key : article.key}
+      				}}><h3 key={index}>{article.title}</h3> </Link>)}
     		</ul>
 		);
 	}

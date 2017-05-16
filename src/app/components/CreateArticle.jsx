@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom'
 import auth from "../utils/auth";
 import addArticle from "../utils/addArticle";
+import SimpleMDE from "SimpleMDE";
+
 
 export class CreateArticle extends React.Component{
 	constructor(props) {
@@ -13,8 +15,20 @@ export class CreateArticle extends React.Component{
 		this.setupAuth();
 		this.state = {
 			adminLoggedIn : true,
-			title : null
+			title : null,
+			editor : null
 		}
+		this.id = "markdownEditor";
+	}
+
+	componentDidMount(){
+		this.createEditor();
+	}
+
+	createEditor(){
+		this.editor = new SimpleMDE({ 
+			element: document.getElementById(this.id)
+		});
 	}
 
 	setupAuth() {
@@ -25,7 +39,7 @@ export class CreateArticle extends React.Component{
 		    });
 		  } else {
 		    this.setState({
-		    	adminLoggedIn : true
+		    	adminLoggedIn : false
 		    });
 		  }
 		}.bind(this));
@@ -33,10 +47,13 @@ export class CreateArticle extends React.Component{
 
 	submitArticle() {
 		const articleTitle = this.state.title;
+		const articleContent = this.editor.value();
 
-		if (articleTitle != null && articleTitle !== ""){
+		if (articleTitle != null && articleTitle !== "" &&
+			articleContent != null && articleContent != ""){
 			addArticle.addArticle({
-				title : articleTitle
+				title : articleTitle,
+				content : articleContent
 			})
 			console.log("create article named " + articleTitle);
 		}
@@ -48,7 +65,7 @@ export class CreateArticle extends React.Component{
 
 	onTitleChanged(event) {
 		this.setState({
-			title : event.target.value
+			title : event.target.value.trim()
 		});
 	}
 
@@ -57,19 +74,21 @@ export class CreateArticle extends React.Component{
 		let titleField = null;
 		let submitButton = null;
 		let adminLoggedIn = this.state.adminLoggedIn;
-
+		
 		if (adminLoggedIn != null && adminLoggedIn) {
 			titleField = <input  type="text" placeholder="article title" 
 									onChange={(event)=> this.onTitleChanged(event)} ></input>
 			submitButton = <button className="btn btn-primary" onClick={this.submitArticle.bind(this)}>Submit</button>
 		}
 
+		let textarea = React.createElement('textarea', {id: this.id});
+    	let editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
+		
 		return (
-
-
 			<div>
 				{titleField}
 				{submitButton}
+				{editor}
 			</div>
 		);
 	}

@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path');
 const firebase = require("firebase");
 const app = express()
-var config = {
+const config = {
     apiKey: "AIzaSyB3033HOIzxeeoSLsHsiWBCoRpG_Sbo-4A",
     authDomain: "blog-987eb.firebaseapp.com",
     databaseURL: "https://blog-987eb.firebaseio.com",
@@ -11,26 +11,15 @@ var config = {
     messagingSenderId: "198509011282"
 };
 firebase.initializeApp(config);
-var database = firebase.database(); 
-var articles = database.ref('articles');
+const database = firebase.database();
+const articles = database.ref('articles');
 
-// Add headers
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
+// Middleware that allows cross origin (for development only)
+app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-
-    // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
     next();
 });
 
@@ -38,18 +27,38 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/api/articles', function(req, res) {
-	articles.once('value', (data)=>{
-		const articles = [];
-		const values = data.val();
-		Object.keys(values).forEach((key)=>{
-			articles.push({
-				title: values[key].title
-			});
-		});
-		res.send(articles);
-	}, (err)=>{
-		res.send(err);
-	});
+    articles.once('value', (data) => {
+        const articles = [];
+        const values = data.val();
+
+        if (values) {
+            Object.keys(values).forEach((key) => {
+                articles.push({
+                    title: values[key].title,
+                    key: key
+                });
+            });
+        }
+        res.send(articles);
+    }, (err) => {
+        res.send(err);
+    });
+});
+
+app.get('/api/:articleName', function(req, res) {
+    const articleName = req.params.articleName.replace(new RegExp("-", 'g'), " ");
+    const articleRef = articles.child(articleName);
+
+    articleRef.on("value", function(snapshot) {
+        const article = snapshot.val();
+        if (article) {
+            res.send(article);
+        } else {
+            res.send("not found");
+        }
+    }, function(errorObject) {
+        res.send(errorObject.code);
+    });
 });
 
 app.get('*', function(req, res) {

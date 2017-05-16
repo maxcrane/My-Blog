@@ -63,13 +63,13 @@ export class Admin extends React.Component{
 	}
 
 	onLogout() {
-		firebase.auth().signOut().then(function() {
+		auth.signOut(function() {
 		  this.setState({
 		    	loggedIn : false
 		    });
-		}).catch(function(error) {
+		}.bind(this), function(error) {
 		  // An error happened.
-		});
+		}.bind(this));
 	}
 
 	onEmailChanged(event){
@@ -84,15 +84,22 @@ export class Admin extends React.Component{
 		});
 	}
 
+	onGoToCreate(){
+
+	}
+
 	render() {
-		let button = null;
+		let loginbutton = null;
 		let form  = null;
+		let goToCreate = null;
 		let loggedIn = this.state.loggedIn;
 
+
 	    if (loggedIn && loggedIn != undefined) {
-	    	button = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogout.bind(this)} type="submit">Logout</button>;
+	    	goToCreate = <Link to="/create"><button className="btn btn-primary center-block loginbutton" onClick={this.onGoToCreate.bind(this)} type="submit">Create</button></Link>;
+	    	loginbutton = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogout.bind(this)} type="submit">Logout</button>;
 	    } else if (loggedIn != undefined){
-	      	button = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogin.bind(this)} type="submit">Login</button>;
+	      	loginbutton = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogin.bind(this)} type="submit">Login</button>;
 	    	form = 	<div className="logincontainer">
 							<input  type="text" placeholder="email" className="loginfield form-control"
 									onChange={(event)=> this.onEmailChanged(event)} ></input>
@@ -104,7 +111,8 @@ export class Admin extends React.Component{
 		return (
 			<div>	
 				{form}
-				{button}
+				{goToCreate}
+				{loginbutton}
 			</div>
 		);
 	}

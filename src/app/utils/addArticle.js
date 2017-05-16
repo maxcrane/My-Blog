@@ -8,9 +8,7 @@ module.exports = {
 	addArticle : function(article) {
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
-				articles.push({
-					title: article.title
-				});
+				articles.child(article.title).set(article);
 			}
 		});
 	}

@@ -28,6 +28,6 @@ ReactDOM.render(
 		  		<Route path="/:articleId" component={Article}/>	
 		    </Switch>
 		</div>
-  	</Router>
-	,document.getElementById("app")
+  	</Router>,
+  	document.getElementById("app")
 );
