@@ -19,6 +19,7 @@ ReactDOM.render(
 	<Router>
 		<div>
 		  	<Navbar/>
+		  	
 		    <Switch>
 		   		<Route exact path="/"     component={Home}/>
 		  		<Route path="/about"      component={About}/>

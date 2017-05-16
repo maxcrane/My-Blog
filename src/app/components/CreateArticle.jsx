@@ -76,12 +76,12 @@ export class CreateArticle extends React.Component{
 		let adminLoggedIn = this.state.adminLoggedIn;
 		
 		if (adminLoggedIn != null && adminLoggedIn) {
-			titleField = <input  type="text" placeholder="article title" 
+			titleField = <input className="articleTitleField" type="text" placeholder="article title" 
 									onChange={(event)=> this.onTitleChanged(event)} ></input>
 			submitButton = <button className="btn btn-primary" onClick={this.submitArticle.bind(this)}>Submit</button>
 		}
 
-		let textarea = React.createElement('textarea', {id: this.id});
+		let textarea = React.createElement('textarea', {id: this.id, className : "markdownEditor"});
     	let editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		
 		return (

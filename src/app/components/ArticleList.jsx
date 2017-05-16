@@ -31,12 +31,12 @@ export class ArticleList extends React.Component{
 
 	render() {
 		return (
-			<ul>
+			<ul className="article">
       			{this.state.articles.map((article, index) => 
       				<Link key={`${index}link`} to={{
       					pathname : `/${this.getPrettyArticleNameForUrl(article.title)}`,
       					state : {key : article.key}
-      				}}><h3 key={index}>{article.title}</h3> </Link>)}
+      				}}><li key={index}>{article.title}</li> </Link>)}
     		</ul>
 		);
 	}

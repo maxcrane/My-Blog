@@ -1,19 +1,79 @@
 .logincontainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .loginfield {
-	align-self: center;
-	width: 50%;
+    align-self: center;
+    width: 50%;
 }
 
 .loginbutton {
-	margin-top: 20px;
-	width: 50%;
+    margin-top: 20px;
+    width: 50%;
 }
 
-.markdownEditor{
+.articleTitleField {
+	margin: 5%;
+}
+.markdownEditor {
+	margin: 0% 5% 5% 5%;
+}
 
+.article {
+	margin: 0% 8% 8% 8%;
+}
+
+.content {
+	padding-top: 50px;
+}
+
+.navcontainer{
+  display: flex; 
+  flex-direction: row;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+  border-width: 1px;
+  background-color: #e6e6e6;
+}
+
+.navlink {
+	color: #0086b3 ;
+	font-size: 25px;
+	margin: 0% 1% 0% 1%;
+	align-self: center;
+	transition: font-size 0.3s;
+}
+
+.navlink:hover, .navlink:focus  {
+	color: #004d66 ;
+	text-decoration: none;
+}
+
+.navlink, .navlink:visited, .navlink:active {
+    text-decoration:none;
+}
+
+@media only screen and (max-width: 500px) {
+    .navlink {
+        font-size: 20px;
+        transition: font-size 0.3s;
+    }
+
+    .navcontainer {
+    	-webkit-padding-start: 0px;
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    .navlink {
+        font-size: 13px;
+    }
+}
+
+* {
+    font-size: 100%;
+    font-family: 'Ubuntu', sans-serif;
 }

@@ -40,7 +40,7 @@ export class Article extends React.Component{
 
 
 		return (
-			<div>
+			<div className="article">
 				<h3>{this.state.title}</h3>
 				<div id="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
 			</div>
