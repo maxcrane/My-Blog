@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev":"npm run build & npm run server",
-    "start": "export PORT=3000 && npm run server",
-    "postinstall": "npm run build:prod",
+    "start": "npm run build:prod && npm run server",
     "server": "nodemon server/server.js",
     "build": "webpack -d && cp src/index.html dist/index.html && cp src/app.css dist/app.css && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
-    "build:prod": "webpack -v && cp src/index.html dist/index.html"
+    "build:prod": "src/copy.sh && npm run pack",
+    "pack":"webpack"
   },
   "author": "max crane",
   "license": "ISC",
@@ -25,7 +25,12 @@
     "react-router-dom": "^4.1.1",
     "showdown": "^1.6.4",
     "simplemde": "^1.11.2",
-    "webpack": "^2.5.1"
+    "webpack": "^2.5.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1" 
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

@@ -65,6 +65,8 @@ app.get('*', function(req, res) {
     res.sendFile(path.resolve(__dirname, '../dist/index.html'));
 });
 
-app.listen(3000, function() {
-    console.log('Express server running at http://localhost:3000/');
+const port = process.env.PORT || 3000;
+
+app.listen(port, function() {
+    console.log(`Express server running at http://localhost:${port}/`);
 })

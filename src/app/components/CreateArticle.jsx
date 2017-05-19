@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import auth from "../utils/auth";
 import addArticle from "../utils/addArticle";
-import SimpleMDE from "SimpleMDE";
+import SimpleMDE from "simplemde";
 
 
 export class CreateArticle extends React.Component{
