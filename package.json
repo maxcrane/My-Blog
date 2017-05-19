@@ -4,10 +4,11 @@
   "description": "learning react",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build & npm run server",
+    "dev":"npm run build & npm run server",
+    "start": "export PORT=3000 && npm run build:prod",
     "server": "nodemon server/server.js",
     "build": "webpack -d && cp src/index.html dist/index.html && cp src/app.css dist/app.css && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
-    "build:prod": "webpack -v && cp src/index.html dist/index.html && webpack-dev-server --content-base src/ --inline --hot"
+    "build:prod": "webpack -v && cp src/index.html dist/index.html && node server/server.js"
   },
   "author": "max crane",
   "license": "ISC",
@@ -16,12 +17,14 @@
     "express": "^4.15.2",
     "firebase": "^3.9.0",
     "highlight.js": "^9.11.0",
+    "nodemon": "^1.11.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "showdown": "^1.6.4",
-    "simplemde": "^1.11.2"
+    "simplemde": "^1.11.2",
+    "webpack": "^2.5.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

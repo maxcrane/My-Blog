@@ -7,14 +7,15 @@ import {
 } from 'react-router-dom'
 
 export class Navbar extends React.Component{
+
 	render() {
 		return (
 				<ul className="navcontainer">
-			    	<Link className="navitem navlink" to="/">home</Link><li className="divider">/</li>
-			        <Link className="navitem navlink" to="/about">about</Link><li className="divider">/</li>
-			        <Link className="navitem navlink" to="/articles">articles</Link><li className="divider">/</li>
-			        <Link className="navitem navlink" to="/music">music</Link><li className="divider">/</li>
-			        <Link className="navitem navlink" to="/music">thing</Link>
+					<Link className="navitem navlink" to="/">HOME</Link><li className="divider">/</li>
+			        <Link className="navitem navlink" to="/about">ABOUT</Link><li className="divider">/</li>
+			        <Link className="navitem navlink" to="/articles">ARTICLES</Link><li className="divider">/</li>
+			        <Link className="navitem navlink" to="/music">PROJECTS</Link><li className="divider">/</li>
+			        <Link className="navitem navlink" to="/music">MUSIC</Link>
 		        </ul>
 		)
 	}

@@ -5,7 +5,7 @@ export class About extends React.Component{
 		return (
 			<div className="row">
 				<div className="col-xs-10 col-xs-offset-1">
-					About
+					About!
 				</div>
 			</div>
 		);
