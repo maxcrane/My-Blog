@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev":"npm run build & npm run server",
-    "start": "export PORT=3000 && npm run build:prod",
+    "start": "export PORT=3000 && npm run server",
+    "postinstall": "npm run build:prod",
     "server": "nodemon server/server.js",
     "build": "webpack -d && cp src/index.html dist/index.html && cp src/app.css dist/app.css && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
-    "build:prod": "webpack -v && cp src/index.html dist/index.html && node server/server.js"
+    "build:prod": "webpack -v && cp src/index.html dist/index.html"
   },
   "author": "max crane",
   "license": "ISC",
