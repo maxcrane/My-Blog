@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
 });
 
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 
 app.get('/api/articles', function(req, res) {
     articles.once('value', (data) => {
@@ -62,7 +62,7 @@ app.get('/api/:articleName', function(req, res) {
 });
 
 app.get('*', function(req, res) {
-    res.sendFile(path.resolve(__dirname, '../dist/index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
 });
 
 const port = process.env.PORT || 3000;

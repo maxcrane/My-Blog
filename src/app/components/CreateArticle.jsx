@@ -5,6 +5,7 @@ import {
   Link
 } from 'react-router-dom'
 import auth from "../utils/auth";
+import {ArticleEditor} from "./ArticleEditor.jsx";
 import articleUtils from "../utils/articleUtils";
 import SimpleMDE from "simplemde";
 
@@ -15,19 +16,8 @@ export class CreateArticle extends React.Component{
 		this.state = {
 			adminLoggedIn : true,
 			title : null,
-			editor : null
+			content : null
 		}
-		this.id = "markdownEditor";
-	}
-
-	componentDidMount(){
-		this.createEditor();
-	}
-
-	createEditor(){
-		this.editor = new SimpleMDE({ 
-			element: document.getElementById(this.id)
-		});
 	}
 
 	setupAuth() {
@@ -44,9 +34,7 @@ export class CreateArticle extends React.Component{
 		}.bind(this));
 	}
 
-	submitArticle() {
-		const articleTitle = this.state.title;
-		const articleContent = this.editor.value();
+	onSubmitArticle(articleTitle, articleContent) {
 
 		if (articleTitle != null && articleTitle !== "" &&
 			articleContent != null && articleContent != ""){
@@ -54,7 +42,6 @@ export class CreateArticle extends React.Component{
 				title : articleTitle,
 				content : articleContent
 			})
-
 
 			const articleLink = `article/${articleTitle.replace(new RegExp(" ", 'g'), "-")}`;
 			this.props.history.push(articleLink);
@@ -64,33 +51,18 @@ export class CreateArticle extends React.Component{
 		}
 	}
 
-	onTitleChanged(event) {
-		this.setState({
-			title : event.target.value.trim()
-		});
-	}
-
 
 	render() {
-		let titleField = null;
-		let textarea = null;
 		let editor = null;
-		let submitButton = null;
 		let adminLoggedIn = this.state.adminLoggedIn;
 		
 		if (adminLoggedIn != null && adminLoggedIn) {
-			titleField = <input className="articleTitleField" type="text" placeholder="article title" 
-									onChange={(event)=> this.onTitleChanged(event)} ></input>
-			submitButton = <button className="btn btn-primary" onClick={this.submitArticle.bind(this)}>Submit</button>
-			textarea = React.createElement('textarea', {id: this.id, className : "markdownEditor"});
-    		editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
+			editor = <ArticleEditor content="" title="" buttonTitle="create"
+				callback={ this.onSubmitArticle.bind(this) }/>;
 		}
-
 		
 		return (
 			<div>
-				{titleField}
-				{submitButton}
 				{editor}
 			</div>
 		);

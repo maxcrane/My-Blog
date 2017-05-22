@@ -46,11 +46,13 @@ export class ArticleList extends React.Component{
 	}
 
 	getPrettyArticleNameForUrl (title) {
-		return `article/${title.replace(new RegExp(" ", 'g'), "-")}`;
+		return `${title.replace(new RegExp(" ", 'g'), "-")}`;
 	}	
 
 	editArticle (title) {
-		console.log(title);
+		const editArticleLink = `edit/${this.getPrettyArticleNameForUrl(title)}`
+		this.props.history.push(editArticleLink);
+		//console.log(title);
 	}
 
 	deleteArticle (title) {
@@ -87,7 +89,7 @@ export class ArticleList extends React.Component{
       			{this.state.articles.map((article, index) => 
       				<div key={index} className="articlelink">
 	      				<Link key={`${index}link`} to={{
-	      					pathname : `/${this.getPrettyArticleNameForUrl(article.title || "")}`,
+	      					pathname : `/article/${this.getPrettyArticleNameForUrl(article.title || "")}`,
 	      					state : {key : article.key}
 	      				}}><li key={index}>{article.title}</li></Link>
 							{editButtons[index]}
