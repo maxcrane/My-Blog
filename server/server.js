@@ -49,7 +49,7 @@ app.get('/api/:articleName', function(req, res) {
     const articleName = req.params.articleName.replace(new RegExp("-", 'g'), " ");
     const articleRef = articles.child(articleName);
 
-    articleRef.on("value", function(snapshot) {
+    articleRef.once("value", function(snapshot) {
         const article = snapshot.val();
         if (article) {
             res.send(article);

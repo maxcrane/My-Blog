@@ -18,18 +18,18 @@ export class Article extends React.Component{
 	}
 
 	componentDidMount() {
-		var articleKey = this.props.match.params.articleId;
-		articleKey = articleKey.replace(new RegExp("-", 'g'), " ");
+		var articleKey = this.props.match.params.title;
+		articleKey = encodeURIComponent(articleKey.replace(new RegExp("-", 'g'), " "));
+		
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
 			this.setState({
 				text : res.data.content,
-				title : res.data.title
+				title : unescape(res.data.title)
 			});
 		}).catch(function (error) {
 			console.log(error);
 		});
-
 	}
 
 	render() {

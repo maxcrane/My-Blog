@@ -15,46 +15,56 @@
 }
 
 .articleTitleField {
-	margin: 5%;
+    margin: 5%;
 }
+
 .markdownEditor {
-	margin: 0% 5% 5% 5%;
+    margin: 0% 5% 5% 5%;
+}
+
+.articleList {
+    /*margin: 0% 8% 8% 8%;*/
+    list-style-type: none;
 }
 
 .article {
-	margin: 0% 8% 8% 8%;
+    margin: 0% 8% 8% 8%;
 }
 
 .content {
-	padding-top: 50px;
+    padding-top: 50px;
 }
 
-.navcontainer{
-  display: flex; 
-  flex-direction: row;
-  list-style-type: none;
-  justify-content: center;
-  align-items: center;
-  border-width: 1px;
-  background-color: black;/*#e6e6e6;*/
-  height: 70px;
+.navcontainer {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    background-color: black;
+    /*#e6e6e6;*/
+    height: 70px;
 }
 
 .navlink {
-	color: #0086b3 ;
-	font-size: 25px;
-	margin: 0% 1% 0% 1%;
-	align-self: center;
-	transition: font-size 0.3s;
+    color: #0086b3;
+    font-size: 25px;
+    margin: 0% 1% 0% 1%;
+    align-self: center;
+    transition: font-size 0.3s;
 }
 
-.navlink:hover, .navlink:focus  {
-	color: #004d66 ;
-	text-decoration: none;
+.navlink:hover,
+.navlink:focus {
+    color: #004d66;
+    text-decoration: none;
 }
 
-.navlink, .navlink:visited, .navlink:active {
-    text-decoration:none;
+.navlink,
+.navlink:visited,
+.navlink:active {
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 500px) {
@@ -62,9 +72,8 @@
         font-size: 20px;
         transition: font-size 0.3s;
     }
-
     .navcontainer {
-    	-webkit-padding-start: 0px;
+        -webkit-padding-start: 0px;
     }
 }
 
@@ -75,15 +84,30 @@
 }
 
 img {
-	margin: 20px;
-	max-width: 90%;
+    margin: 20px;
+    max-width: 90%;
 }
 
 .logo {
-	max-height: 60px;
-	max-width: 60px;
+    max-height: 60px;
+    max-width: 60px;
 }
+
 * {
     font-size: 100%;
     font-family: 'Ubuntu', sans-serif;
+}
+
+.articlelink {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.articlelinkedit {
+    margin: 0px 0px 0px 15px;
+}
+
+.articlelinkdelete {
+    margin: 0px 0px 0px 5px;
 }

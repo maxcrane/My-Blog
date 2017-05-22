@@ -11,5 +11,12 @@ module.exports = {
 				articles.child(article.title).set(article);
 			}
 		});
+	},
+
+	deleteArticle : function(articleTitle, onDelete) {
+		const article = articles.child(articleTitle);
+		article.remove((err)=>{
+			onDelete(err);
+		})
 	}
 };

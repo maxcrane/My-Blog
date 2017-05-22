@@ -21,12 +21,13 @@ ReactDOM.render(
 		  	<Navbar/>
 		  	
 		    <Switch>
-		   		<Route exact path="/"     component={Home}/>
+		   		<Route exact path="/"            component={Home}/>
+		   		<Route path="/article/:title"    component={Article}/>	
 		  		<Route path="/about"      component={About}/>
 		  		<Route path="/articles"   component={ArticleList}/>
 		  		<Route path="/admin"      component={Admin}/>	
 		  		<Route path="/create"     component={CreateArticle}/>
-		  		<Route path="/:articleId" component={Article}/>	
+		  		
 		    </Switch>
 		</div>
   	</Router>,

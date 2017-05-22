@@ -5,9 +5,8 @@ import {
   Link
 } from 'react-router-dom'
 import auth from "../utils/auth";
-import addArticle from "../utils/addArticle";
+import articleUtils from "../utils/articleUtils";
 import SimpleMDE from "simplemde";
-
 
 export class CreateArticle extends React.Component{
 	constructor(props) {
@@ -51,16 +50,18 @@ export class CreateArticle extends React.Component{
 
 		if (articleTitle != null && articleTitle !== "" &&
 			articleContent != null && articleContent != ""){
-			addArticle.addArticle({
+			articleUtils.addArticle({
 				title : articleTitle,
 				content : articleContent
 			})
-			console.log("create article named " + articleTitle);
+
+
+			const articleLink = `article/${articleTitle.replace(new RegExp(" ", 'g'), "-")}`;
+			this.props.history.push(articleLink);
 		}
 		else {
 			console.log("article title missing...");
 		}
-		
 	}
 
 	onTitleChanged(event) {
@@ -72,6 +73,8 @@ export class CreateArticle extends React.Component{
 
 	render() {
 		let titleField = null;
+		let textarea = null;
+		let editor = null;
 		let submitButton = null;
 		let adminLoggedIn = this.state.adminLoggedIn;
 		
@@ -79,10 +82,10 @@ export class CreateArticle extends React.Component{
 			titleField = <input className="articleTitleField" type="text" placeholder="article title" 
 									onChange={(event)=> this.onTitleChanged(event)} ></input>
 			submitButton = <button className="btn btn-primary" onClick={this.submitArticle.bind(this)}>Submit</button>
+			textarea = React.createElement('textarea', {id: this.id, className : "markdownEditor"});
+    		editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		}
 
-		let textarea = React.createElement('textarea', {id: this.id, className : "markdownEditor"});
-    	let editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		
 		return (
 			<div>
