@@ -57,13 +57,19 @@ export class ArticleEditor extends React.Component{
 		let titleField = null;
 		let textarea = null;
 		let editor = null;
-		let submitButton = <button className="btn btn-primary" onClick={this.onButtonClicked.bind(this)}>{this.props.buttonTitle}</button>
+		let submitButton = <button className="btn btn-primary editorSubmitButton" 
+			onClick={this.onButtonClicked.bind(this)}>
+			{this.props.buttonTitle}</button>
 
-		titleField = <input className="articleTitleField" type="text" value={this.state.title} placeholder={"article title"}
+		titleField = <input className="articleTitleField" 
+			type="text" value={this.state.title} placeholder={"article title"}
+			onChange={this.onTitleChanged.bind(this)} ></input>
 
-								onChange={this.onTitleChanged.bind(this)} ></input>
-		textarea = React.createElement('textarea', {id: this.id, className : "markdownEditor"});
-		editor =  React.createElement('div', {id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
+		textarea = React.createElement('textarea', 
+			{id: this.id, className : "markdownEditor"});
+
+		editor = React.createElement('div', 
+			{id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		
 		return (
 			<div>
