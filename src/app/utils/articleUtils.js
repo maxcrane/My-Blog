@@ -15,22 +15,19 @@ module.exports = {
     addArticle: function(article) {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                articles.child(article.title).set(article);
+                const articleKey = this.getKeyForTitle(article.title);
+                articles.child(articleKey).set(article);
             }
         });
     },
 
     // updateArticle expects article to be an object that has a title and content key
-    updateArticle: function(article, titleChanged, oldTitle) {
-        if (titleChanged) {
-            this.deleteArticle(oldTitle, (err) => {
-                if (err) {
-                    console.log("error deleting old article ", err);
-                }
-            });
-        }
-
-        this.addArticle(article);
+    updateArticle: function(article, key) {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                articles.child(key).set(article);
+            }
+        });
     },
 
     deleteArticle: function(articleTitle, onDelete) {

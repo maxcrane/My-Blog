@@ -46,7 +46,7 @@ app.get('/api/articles', function(req, res) {
 });
 
 app.get('/api/:articleName', function(req, res) {
-    const articleName = req.params.articleName.replace(new RegExp("-", 'g'), " ");
+    const articleName = encodeURIComponent(req.params.articleName); 
     const articleRef = articles.child(articleName);
 
     articleRef.once("value", function(snapshot) {

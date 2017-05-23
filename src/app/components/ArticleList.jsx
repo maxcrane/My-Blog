@@ -49,18 +49,17 @@ export class ArticleList extends React.Component{
 		return `${title.replace(new RegExp(" ", 'g'), "-")}`;
 	}	
 
-	editArticle (title) {
-		const editArticleLink = `edit/${this.getPrettyArticleNameForUrl(title)}`
+	editArticle (key) {
+		const editArticleLink = `edit/${key}`
 		this.props.history.push(editArticleLink);
-		//console.log(title);
 	}
 
-	deleteArticle (title) {
-		if (!confirm(`are you sure you want to delete ${title}?`)) {
+	deleteArticle (key) {
+		if (!confirm(`are you sure you want to delete ${key}?`)) {
 			return;    
 		} 
 
-		articleUtils.deleteArticle(title, (err)=>{
+		articleUtils.deleteArticle(key, (err)=>{
 			if(err) {
 				alert("could not delete");
 			}
@@ -78,9 +77,9 @@ export class ArticleList extends React.Component{
 	    if (this.state.adminLoggedIn) {
 	    	this.state.articles.map((article) => {
 	    		editButtons.push(<span className="glyphicon glyphicon-pencil articlelinkedit" 
-	    			onClick={()=>{this.editArticle(article.title)}}></span>);
+	    			onClick={()=>{this.editArticle(article.key)}}></span>);
 	    		deleteButtons.push(<span className="glyphicon glyphicon-trash articlelinkdelete"
-	    			onClick={()=>{this.deleteArticle(article.title)}}></span>);
+	    			onClick={()=>{this.deleteArticle(article.key)}}></span>);
 	    	});
 	    } 
 
@@ -89,7 +88,7 @@ export class ArticleList extends React.Component{
       			{this.state.articles.map((article, index) => 
       				<div key={index} className="articlelink">
 	      				<Link key={`${index}link`} to={{
-	      					pathname : `/article/${this.getPrettyArticleNameForUrl(article.title || "")}`,
+	      					pathname : `/article/${article.key}`,
 	      					state : {key : article.key}
 	      				}}><li key={index}>{article.title}</li></Link>
 							{editButtons[index]}

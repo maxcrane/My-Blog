@@ -43,7 +43,7 @@ export class CreateArticle extends React.Component{
 				content : articleContent
 			})
 
-			const articleLink = `article/${articleTitle.replace(new RegExp(" ", 'g'), "-")}`;
+			const articleLink = `article/${articleUtils.getKeyForTitle(articleTitle)}`;
 			this.props.history.push(articleLink);
 		}
 		else {

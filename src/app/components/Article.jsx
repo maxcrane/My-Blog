@@ -7,6 +7,7 @@ import {
 import axios from "axios"
 import hljs from "highlight.js"
 
+
 export class Article extends React.Component{
 	constructor(props) {
 		super(props);
@@ -19,8 +20,7 @@ export class Article extends React.Component{
 
 	componentDidMount() {
 		var articleKey = this.props.match.params.title;
-		articleKey = encodeURIComponent(articleKey.replace(new RegExp("-", 'g'), " "));
-		
+			
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
 			this.setState({
@@ -37,7 +37,6 @@ export class Article extends React.Component{
 	    converter = new showdown.Converter(),
 	    text      = this.state.text,
 	    markdown      = converter.makeHtml(text);
-
 
 		return (
 			<div className="article">

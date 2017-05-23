@@ -14,42 +14,38 @@ export class EditArticle extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			initialTitle: "",
-			content: "",
-			titleChanged: false
+			key: "",
+			title: "",
+			content: ""
 		};
 	}
 
 	componentDidMount() {
-		var articleKey = this.props.match.params.title;
-		articleKey = encodeURIComponent(articleKey.replace(new RegExp("-", 'g'), " "));
-		
+		const articleKey = this.props.match.params.title;
+		this.setState({
+			key : articleKey
+		});
+
+
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
 			this.setState({
 				content : res.data.content,
-				initialTitle : unescape(res.data.title)
+				title : res.data.title
 			});
 		}).catch(function (error) {
 			console.log(error);
 		});
 	}
 
-	onSaveClicked(title, content) {
-		if (title !== this.state.initialTitle) {
-			this.state.titleChanged = true;
-		}
-		
-		console.log("titleChanged?" , this.state.titleChanged, this.state.initialTitle);
-
-		articleUtils.updateArticle({title, content}, 
-			this.state.titleChanged, this.state.initialTitle);
+	onSaveClicked(title, content) {		
+		articleUtils.updateArticle({title, content}, this.state.key);
 	}
 
 	render() {
 		return (
 			<div>
-				<ArticleEditor content={this.state.content} title={this.state.initialTitle}
+				<ArticleEditor content={this.state.content} title={this.state.title}
 							   buttonTitle={"save"} callback={this.onSaveClicked.bind(this)}/>
 			</div>
 		);
