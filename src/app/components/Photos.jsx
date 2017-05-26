@@ -63,11 +63,13 @@ export class Photos extends React.Component{
 	      						 className="photoInList"/>
 		      				</a> 
 
-	      					<span 
-	      						  key={`delete${index}`}
-	      						  className="glyphicon glyphicon-trash deletePhotoButton" 
-	      						  onClick={()=>{this.deleteImageClicked(photoKeys[index])}}>
-	      					</span>
+		      				<a href="javascript:;">
+		      					<span 
+		      						  key={`delete${index}`}
+		      						  className="glyphicon glyphicon-trash deletePhotoButton" 
+		      						  onClick={()=>{this.deleteImageClicked(photoKeys[index])}}>
+		      					</span>
+	      					</a>
 	      				</div>
       				)
       			}

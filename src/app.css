@@ -153,6 +153,12 @@ img {
     display: flex;
 }
 
+.addPhotoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 body {
     padding-bottom: 1%;
 }

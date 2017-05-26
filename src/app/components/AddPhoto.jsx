@@ -12,7 +12,9 @@ export class AddPhoto extends React.Component{
 		super(props);
 		
 		this.state = {
-			percentUploaded: 0
+			percentUploaded: 0,
+			file: null,
+			photoUploaded: false
 		}
 	} 
 
@@ -23,8 +25,24 @@ export class AddPhoto extends React.Component{
 
 	}
 
-		onThumbnailUploaded(event){
+	onThumbnailUploaded(event){
 		const file = event.target.files[0];
+
+		this.setState({
+			file,
+			photoUploaded: false
+		})		
+	}
+
+	onUploadClicked() {
+		this.uploadFile();
+	}
+
+	uploadFile() {
+		if (this.state.file === null) {
+			alert("no file selected!")
+			return;
+		}
 
 		const onProgress = (snapshot) => {
 			this.setState({
@@ -38,21 +56,37 @@ export class AddPhoto extends React.Component{
 
 		const onComplete = () => {
 			this.setState({
-				percentUploaded: 100
+				percentUploaded: 100,
+				photoUploaded: true
 			});
-			alert("file uploaded!");
 		}
- 
-		photoUtils.addPhoto(file, onProgress, onError, onComplete);
+
+		photoUtils.addPhoto(this.state.file, onProgress, onError, onComplete);
 	}
 
 
-
 	render() {
+		let uploadButton = null;
+		let uploadedMessage = null;
+		let allPhotosButton = <Link to="/photos"><button className="btn btn-primary center-block" type="submit">All Photos</button></Link>;
+
+		if (this.state.photoUploaded) {
+			uploadedMessage = <p>{this.state.file.name} uploaded</p>
+		}
+		else {
+			uploadButton = <button className="btn btn-primary center-block" 
+								   onClick={this.onUploadClicked.bind(this)} 
+								   type="submit">Upload
+						   </button>
+		}
+
 		return (
-			<div>
+			<div className="addPhotoContainer">
 				<progress value={this.state.percentUploaded} max="100">0%</progress>
 				<input type="file" onChange={(event)=>{this.onThumbnailUploaded(event)}}></input>
+				{uploadButton}
+				{uploadedMessage}
+				{allPhotosButton}
 			</div>
 		);
 	}
