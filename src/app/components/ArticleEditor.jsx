@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import auth from "../utils/auth";
 import articleUtils from "../utils/articleUtils";
+import photoUtils from "../utils/photoUtils";
 import SimpleMDE from "simplemde";
 
 export class ArticleEditor extends React.Component{
@@ -13,7 +14,8 @@ export class ArticleEditor extends React.Component{
 		super(props);
 		this.state = {
 			editor : null,
-			title: ""
+			title: "",
+			percentUploaded: 0
 		}
 		this.id = "markdownEditor";
 		
@@ -52,6 +54,28 @@ export class ArticleEditor extends React.Component{
 		this.props.callback(this.state.title.trim(), text);
 	}
 
+	onThumbnailUploaded(event){
+		const file = event.target.files[0];
+
+		const onProgress = (snapshot) => {
+			this.setState({
+				percentUploaded: (snapshot.bytesTransferred/snapshot.totalBytes) * 100
+			});
+		};
+
+		const onError = (err) => {
+
+		};
+
+		const onComplete = () => {
+			this.setState({
+				percentUploaded: 100
+			});
+		}
+ 
+		photoUtils.addImage(file, onProgress, onError, onComplete);
+	}
+
 
 	render() {
 		let titleField = null;
@@ -76,6 +100,8 @@ export class ArticleEditor extends React.Component{
 				{titleField}
 				{editor}
 				{submitButton}
+				<progress value={this.state.percentUploaded} max="100">0%</progress>
+				<input type="file" onChange={(event)=>{this.onThumbnailUploaded(event)}}></input>
 			</div>
 		);
 	}

@@ -92,14 +92,16 @@ export class Admin extends React.Component{
 		let loginbutton = null;
 		let form  = null;
 		let goToCreate = null;
+		let goToPhotos = null;
 		let loggedIn = this.state.loggedIn;
 
 
 	    if (loggedIn && loggedIn != undefined) {
-	    	goToCreate = <Link to="/create"><button className="btn btn-primary center-block loginbutton" onClick={this.onGoToCreate.bind(this)} type="submit">Create</button></Link>;
-	    	loginbutton = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogout.bind(this)} type="submit">Logout</button>;
+	    	goToCreate = <Link to="/create"><button className="btn btn-primary center-block adminButton" type="submit">Create</button></Link>;
+	    	goToPhotos = <Link to="/photos"><button className="btn btn-primary center-block adminButton"  type="submit">Photos</button></Link>;
+	    	loginbutton = <button className="btn btn-primary center-block adminButton" onClick={this.onLogout.bind(this)} type="submit">Logout</button>;
 	    } else if (loggedIn != undefined){
-	      	loginbutton = <button className="btn btn-primary center-block loginbutton" onClick={this.onLogin.bind(this)} type="submit">Login</button>;
+	      	loginbutton = <button className="btn btn-primary center-block adminButton" onClick={this.onLogin.bind(this)} type="submit">Login</button>;
 	    	form = 	<div className="logincontainer">
 							<input  type="text" placeholder="email" className="loginfield form-control"
 									onChange={(event)=> this.onEmailChanged(event)} ></input>
@@ -112,6 +114,7 @@ export class Admin extends React.Component{
 			<div>	
 				{form}
 				{goToCreate}
+				{goToPhotos}
 				{loginbutton}
 			</div>
 		);

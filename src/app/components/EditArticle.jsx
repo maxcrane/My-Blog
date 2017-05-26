@@ -47,6 +47,8 @@ export class EditArticle extends React.Component{
 			<div>
 				<ArticleEditor content={this.state.content} title={this.state.title}
 							   buttonTitle={"save"} callback={this.onSaveClicked.bind(this)}/>
+							   
+							   
 			</div>
 		);
 	}

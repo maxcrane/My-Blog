@@ -9,7 +9,7 @@
     width: 50%;
 }
 
-.loginbutton {
+.adminButton {
     margin-top: 20px;
     width: 50%;
 }
@@ -125,6 +125,32 @@ img {
 
 .articlelinkdelete {
     margin: 0px 0px 0px 5px;
+}
+
+.photoInList {
+    
+}
+
+.photoContainer {
+    position:relative;
+    width: 400px;
+    height: auto;
+}
+
+.deletePhotoButton {
+    position:absolute !important;
+    font-size: 20px;
+    top:30px !important;
+    right:30px !important;
+}
+
+.deletePhotoButton:hover{
+    color: red;
+}
+
+.photoListContainer {
+    margin: 0% 3% 0% 3%;
+    display: flex;
 }
 
 body {

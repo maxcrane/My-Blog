@@ -10,6 +10,12 @@ const getKeyForTitle = (articleTitle) => {
 	return articleTitle.replace(RegExp("%252D", "g"), "-");
 };
 
+const addImage = (image, progress, err, complete) => { 
+    const storageRef = firebaseRef.getFirebase().storage().ref(`photos/${image.name}`);
+    const task = storageRef.put(image);
+    task.on('state_changed', progress, err, complete);
+};
+
 module.exports = {
     // addArticle expects article to be an object that has a title and content key
     addArticle: function(article) {
@@ -37,5 +43,6 @@ module.exports = {
         })
     },
 
-    getKeyForTitle
+    getKeyForTitle,
+    addImage
 };

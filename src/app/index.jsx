@@ -8,6 +8,8 @@ import {Navbar} from "./components/Navbar.jsx";
 import {Admin} from "./components/Admin.jsx";
 import {CreateArticle} from "./components/CreateArticle.jsx";
 import {EditArticle} from "./components/EditArticle.jsx";
+import {Photos} from "./components/Photos.jsx";
+import {AddPhoto} from "./components/AddPhoto.jsx";
 
 
 import {
@@ -30,7 +32,8 @@ ReactDOM.render(
 		  		<Route path="/articles"   component={ArticleList}/>
 		  		<Route path="/admin"      component={Admin}/>	
 		  		<Route path="/create"     component={CreateArticle}/>
-		  		
+		  		<Route exact path="/photos"     component={Photos}/>
+		  		<Route path="/photos/add"     component={AddPhoto}/>
 		    </Switch>
 		</div>
   	</Router>,
