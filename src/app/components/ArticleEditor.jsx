@@ -8,6 +8,8 @@ import auth from "../utils/auth";
 import articleUtils from "../utils/articleUtils";
 import photoUtils from "../utils/photoUtils";
 import SimpleMDE from "simplemde";
+import {AddPhoto} from "./AddPhoto.jsx";
+import {Photos} from "./Photos.jsx";
 
 export class ArticleEditor extends React.Component{
 	constructor(props) {
@@ -15,10 +17,11 @@ export class ArticleEditor extends React.Component{
 		this.state = {
 			editor : null,
 			title: "",
-			percentUploaded: 0
+			percentUploaded: 0,
+			thumbnailUrl: null,
+			thumbnailName: null
 		}
 		this.id = "markdownEditor";
-		
 	}
 
 	componentDidMount(){
@@ -51,15 +54,17 @@ export class ArticleEditor extends React.Component{
 
 	onButtonClicked(){
 		let text = this.state.editor.value();
-		this.props.callback(this.state.title.trim(), text);
+		this.props.callback(this.state.title.trim(), text, 
+							this.state.thumbnailUrl, this.state.thumbnailName);
 	}
 
 	onThumbnailUploaded(event){
 		const file = event.target.files[0];
 
 		const onProgress = (snapshot) => {
+			const percentUploaded = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
 			this.setState({
-				percentUploaded: (snapshot.bytesTransferred/snapshot.totalBytes) * 100
+				percentUploaded
 			});
 		};
 
@@ -74,6 +79,21 @@ export class ArticleEditor extends React.Component{
 		}
  
 		photoUtils.addImage(file, onProgress, onError, onComplete);
+	}
+
+	onPhotoUploaded(thumbnailName, thumbnailUrl){
+		this.setState({
+			thumbnailUrl,
+			thumbnailName
+		})
+	}
+
+	onPhotoClicked(thumbnailName, thumbnailUrl){
+		console.log("hi", thumbnailName, thumbnailUrl);
+		this.setState({
+			thumbnailUrl,
+			thumbnailName
+		})
 	}
 
 
@@ -100,8 +120,11 @@ export class ArticleEditor extends React.Component{
 				{titleField}
 				{editor}
 				{submitButton}
-				<progress value={this.state.percentUploaded} max="100">0%</progress>
-				<input type="file" onChange={(event)=>{this.onThumbnailUploaded(event)}}></input>
+				<AddPhoto includeLinkToAllPhotos={false}
+						  onFileUploaded={this.onPhotoUploaded.bind(this)}/>
+				<img src={this.state.thumbnailUrl}></img>
+				<Photos isSelectionMode={true} 
+						onPhotoClicked={this.onPhotoClicked.bind(this)}/>
 			</div>
 		);
 	}

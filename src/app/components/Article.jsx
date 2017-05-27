@@ -13,7 +13,9 @@ export class Article extends React.Component{
 		super(props);
 		this.state = {
 			text: "",
-			title: ""
+			title: "",
+			thumbnailName: "",
+			thumbnailUrl: ""
 		};
 		hljs.initHighlightingOnLoad();
 	}
@@ -23,9 +25,13 @@ export class Article extends React.Component{
 			
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
+			const article = res.data;
+
 			this.setState({
-				text : res.data.content,
-				title : unescape(res.data.title)
+				text: article.content,
+				title: article.title,
+				thumbnailName: article.thumbnailName,
+				thumbnailUrl: article.thumbnailUrl
 			});
 		}).catch(function (error) {
 			console.log(error);
@@ -41,6 +47,9 @@ export class Article extends React.Component{
 		return (
 			<div className="article">
 				<h3>{this.state.title}</h3>
+				<img src={this.state.thumbnailUrl} 
+					 alt={this.state.thumbnailName}
+					 className="articlePhoto"></img>
 				<div id="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
 			</div>
 		);

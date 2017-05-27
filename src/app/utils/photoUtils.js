@@ -9,11 +9,11 @@ const addPhoto = (image, progress, err, onComplete) => {
     const task = storageRef.put(image);
     task.on('state_changed', progress, err, () => {
         var downloadURL = task.snapshot.downloadURL;
-        addPhotoDBRecord(image.name, downloadURL, onComplete);
+        addPhotoDBRecord(image.name, downloadURL, onComplete, err);
     });
 };
 
-const addPhotoDBRecord = (imageName, downloadURL, onComplete) => {
+const addPhotoDBRecord = (imageName, downloadURL, onComplete, err) => {
     auth.onAuthStateChanged((user) => {
         if (user) {
             photos.push().set({
@@ -21,9 +21,9 @@ const addPhotoDBRecord = (imageName, downloadURL, onComplete) => {
                 url: downloadURL
             }, function(error) {
                 if (error) {
-                    onComplete("Data could not be saved." + error);
+                    err(error);
                 } else {
-                    onComplete("Data saved successfully.");
+                    onComplete(imageName, downloadURL);
                 }
             });
         }

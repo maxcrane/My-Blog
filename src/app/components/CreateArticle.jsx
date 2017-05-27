@@ -34,16 +34,19 @@ export class CreateArticle extends React.Component{
 		}.bind(this));
 	}
 
-	onSubmitArticle(articleTitle, articleContent) {
+	onSubmitArticle(title, content, thumbnailUrl, thumbnailName) {
+		console.log(thumbnailUrl, thumbnailName);
 
-		if (articleTitle != null && articleTitle !== "" &&
-			articleContent != null && articleContent != ""){
+		if (title != null && title !== "" &&
+			content != null && content != ""){
 			articleUtils.addArticle({
-				title : articleTitle,
-				content : articleContent
+				title, 
+				content, 
+				thumbnailName, 
+				thumbnailUrl
 			})
 
-			const articleLink = `article/${articleUtils.getKeyForTitle(articleTitle)}`;
+			const articleLink = `article/${articleUtils.getKeyForTitle(title)}`;
 			this.props.history.push(articleLink);
 		}
 		else {

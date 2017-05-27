@@ -35,7 +35,9 @@ app.get('/api/articles', function(req, res) {
             Object.keys(values).forEach((key) => {
                 articles.push({
                     title: values[key].title,
-                    key: key
+                    key: key,
+                    thumbnailName: values[key].thumbnailName,
+                    thumbnailUrl: values[key].thumbnailUrl
                 });
             });
         }

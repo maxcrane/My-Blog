@@ -32,6 +32,8 @@
 
 .articleList {
     list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .article {
@@ -121,15 +123,34 @@ img {
 
 .articlelinkedit {
     margin: 0px 0px 0px 15px;
+    position:absolute !important;
+    font-size: 20px;
+    top: 30px !important;
+    right: 60px !important;
+}
+
+.articlelinkedit:hover{
+    color: green;
 }
 
 .articlelinkdelete {
     margin: 0px 0px 0px 5px;
+    position:absolute !important;
+    font-size: 20px;
+    top: 30px !important;
+    right: 30px !important;
 }
 
-.photoInList {
-    
+.articlelinkdelete:hover{
+    color: red;
 }
+
+
+.articleTitle {
+    position:absolute !important;
+    font-size: 20px;
+    margin: 5px 20px 0px 20px;
+}   
 
 .photoContainer {
     position:relative;
@@ -137,20 +158,36 @@ img {
     height: auto;
 }
 
+.articlePhoto {
+    position:relative;
+    width: 400px;
+    height: auto;
+    margin-bottom: 0px !important
+}
+
 .deletePhotoButton {
     position:absolute !important;
     font-size: 20px;
-    top:30px !important;
-    right:30px !important;
+    top: 30px !important;
+    right: 30px !important;
 }
 
 .deletePhotoButton:hover{
     color: red;
 }
 
+.deleteArticleButton {
+    position:absolute !important;
+    font-size: 20px;
+    top: 30px !important;
+    right: 30px !important;
+}
+
+
 .photoListContainer {
     margin: 0% 3% 0% 3%;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .addPhotoContainer {

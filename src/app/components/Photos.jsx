@@ -13,9 +13,10 @@ export class Photos extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			photos : {}
+			photos : {},
+			isSelectionMode : Boolean(props.isSelectionMode),
+			onPhotoClicked : props.onPhotoClicked
 		}
-		
 	}
 
 	componentDidMount() {
@@ -56,18 +57,23 @@ export class Photos extends React.Component{
 				{
 					Object.values(this.state.photos).map((photo, index) => 
 						<div key={`${index}container`} className="photoContainer">
-							<a href={photo.url}>
+							<a href={this.state.isSelectionMode ? "javascript:;" : photo.url}>
 								<img key={index} 
 	      						 src={photo.url} 
-	      						 alt={photo.name}
-	      						 className="photoInList"/>
+	      						 alt={photo.name}/>
 		      				</a> 
-
-		      				<a href="javascript:;">
-		      					<span 
+	      					<a href="javascript:;">
+		      					<span style={this.state.isSelectionMode ? {display: "none"} : {}}
 		      						  key={`delete${index}`}
 		      						  className="glyphicon glyphicon-trash deletePhotoButton" 
 		      						  onClick={()=>{this.deleteImageClicked(photoKeys[index])}}>
+		      					</span>
+	      					</a>
+	      					<a href="javascript:;">
+		      					<span style={this.state.isSelectionMode ? {} : {display: "none"}}
+		      						  key={`delete${index}`}
+		      						  className="glyphicon glyphicon-plus deletePhotoButton" 
+		      						  onClick={()=>{this.state.onPhotoClicked(photo.name, photo.url)}}>
 		      					</span>
 	      					</a>
 	      				</div>

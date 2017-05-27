@@ -23,16 +23,15 @@ ReactDOM.render(
 	<Router>
 		<div>
 		  	<Navbar/>
-		  	
 		    <Switch>
-		   		<Route exact path="/"          component={Home}/>
-		   		<Route path="/edit/:title"     component={EditArticle}/>
-		   		<Route path="/article/:title"  component={Article}/>	
-		  		<Route path="/about"      component={About}/>
-		  		<Route path="/articles"   component={ArticleList}/>
-		  		<Route path="/admin"      component={Admin}/>	
-		  		<Route path="/create"     component={CreateArticle}/>
-		  		<Route exact path="/photos"     component={Photos}/>
+		   		<Route exact path="/"         component={Home}/>
+		   		<Route path="/edit/:title"    component={EditArticle}/>
+		   		<Route path="/article/:title" component={Article}/>	
+		  		<Route path="/about"          component={About}/>
+		  		<Route path="/articles"       component={ArticleList}/>
+		  		<Route path="/admin"          component={Admin}/>	
+		  		<Route path="/create"         component={CreateArticle}/>
+		  		<Route exact path="/photos"   component={Photos}/>
 		  		<Route path="/photos/add"     component={AddPhoto}/>
 		    </Switch>
 		</div>

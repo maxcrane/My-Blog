@@ -14,16 +14,11 @@ export class AddPhoto extends React.Component{
 		this.state = {
 			percentUploaded: 0,
 			file: null,
-			photoUploaded: false
+			photoUploaded: false,
+			includeLinkToAllPhotos: !Boolean(props.includeLinkToAllPhotos === false),
+			onFileUploaded: props.onFileUploaded
 		}
 	} 
-
-	componentDidMount(){
-	}
-
-	componentWillReceiveProps(nextProps){
-
-	}
 
 	onThumbnailUploaded(event){
 		const file = event.target.files[0];
@@ -54,11 +49,15 @@ export class AddPhoto extends React.Component{
 
 		};
 
-		const onComplete = () => {
+		const onComplete = (imgName, downloadURL) => {
 			this.setState({
 				percentUploaded: 100,
 				photoUploaded: true
 			});
+
+			if(this.state.onFileUploaded) {
+				this.state.onFileUploaded(imgName, downloadURL);
+			}
 		}
 
 		photoUtils.addPhoto(this.state.file, onProgress, onError, onComplete);
@@ -68,7 +67,7 @@ export class AddPhoto extends React.Component{
 	render() {
 		let uploadButton = null;
 		let uploadedMessage = null;
-		let allPhotosButton = <Link to="/photos"><button className="btn btn-primary center-block" type="submit">All Photos</button></Link>;
+		let allPhotosButton = null;
 
 		if (this.state.photoUploaded) {
 			uploadedMessage = <p>{this.state.file.name} uploaded</p>
@@ -78,6 +77,14 @@ export class AddPhoto extends React.Component{
 								   onClick={this.onUploadClicked.bind(this)} 
 								   type="submit">Upload
 						   </button>
+		}
+
+		if (this.state.includeLinkToAllPhotos) {
+			allPhotosButton = <Link to="/photos">
+								<button className="btn btn-primary center-block" 
+										type="submit">All Photos
+								</button>
+							</Link>;
 		}
 
 		return (
