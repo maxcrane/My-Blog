@@ -15,12 +15,20 @@ export class Photos extends React.Component{
 		this.state = {
 			photos : {},
 			isSelectionMode : Boolean(props.isSelectionMode),
-			onPhotoClicked : props.onPhotoClicked
+			onPhotoClicked : props.onPhotoClicked,
+			loggedIn: false
 		}
 	}
 
 	componentDidMount() {
-		photoUtils.getPhotos(this.receievedPhotos.bind(this));
+		auth.onAuthStateChanged(function(user) {			
+		  if (user) {
+		    photoUtils.getPhotos(this.receievedPhotos.bind(this));
+		    this.setState({
+		    	loggedIn: true
+		    });
+		  } 
+		}.bind(this));
 	}
 
 	receievedPhotos(photos) {
@@ -49,7 +57,13 @@ export class Photos extends React.Component{
 	}
 
 	render() {
-		let addPhotoButton = <Link to="/photos/add"><button className="btn btn-primary center-block" type="submit">Add Photo</button></Link>;
+		let addPhotoButton = this.state.loggedIn ?  
+							<Link to="/photos/add">
+								<button className="btn btn-primary center-block addPhotoButton" 
+										type="submit">
+										Add Photo
+								</button>
+							</Link> : null;
 		let photoKeys = Object.keys(this.state.photos);
 
 		return (

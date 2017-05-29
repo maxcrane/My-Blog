@@ -16,7 +16,9 @@ export class EditArticle extends React.Component{
 		this.state = {
 			key: "",
 			title: "",
-			content: ""
+			content: "",
+			thumbnailName: "",
+			thumbnailUrl: ""
 		};
 	}
 
@@ -29,17 +31,22 @@ export class EditArticle extends React.Component{
 
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
+			const article = res.data;
+
 			this.setState({
-				content : res.data.content,
-				title : res.data.title
+				content : article.content,
+				title : article.title,
+				thumbnailName: article.thumbnailName,
+				thumbnailUrl: article.thumbnailUrl
 			});
 		}).catch(function (error) {
 			console.log(error);
 		});
 	}
 
-	onSaveClicked(title, content) {		
-		articleUtils.updateArticle({title, content}, this.state.key);
+	onSaveClicked(title, content, thumbnailUrl, thumbnailName) {		
+		articleUtils.updateArticle({title, content, thumbnailUrl, thumbnailName}, 
+					this.state.key);
 	}
 
 	render() {
@@ -47,8 +54,6 @@ export class EditArticle extends React.Component{
 			<div>
 				<ArticleEditor content={this.state.content} title={this.state.title}
 							   buttonTitle={"save"} callback={this.onSaveClicked.bind(this)}/>
-							   
-							   
 			</div>
 		);
 	}
