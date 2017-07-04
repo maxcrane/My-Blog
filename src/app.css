@@ -51,13 +51,12 @@
     justify-content: center;
     align-items: center;
     border-width: 1px;
-    background-color: black;
-    /*#e6e6e6;*/
     height: 70px;
+    background-color: black;
 }
 
 .navlink {
-    color: #0086b3;
+    color: white;
     font-size: 25px;
     margin: 0% 1% 0% 1%;
     align-self: center;
@@ -66,7 +65,7 @@
 
 .navlink:hover,
 .navlink:focus {
-    color: #004d66;
+    color: lightblue;
     text-decoration: none;
 }
 
@@ -203,6 +202,14 @@ img {
     height: auto;
 }
 
+.divider{
+	color: white;
+}
+
 body {
     padding-bottom: 1%;
+}
+
+body {
+	background-image: url("background.png");
 }
