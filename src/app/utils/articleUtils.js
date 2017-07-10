@@ -1,13 +1,13 @@
 import firebaseRef from "./firebaseRef";
 import auth from "./auth";
+import slugify from "slugify";
+slugify.extend({'%': ' percent'})
 
 const database = firebaseRef.getFirebase().database();
 const articles = database.ref('articles');
 
 const getKeyForTitle = (articleTitle) => { 
-    articleTitle = articleTitle.replace(RegExp("-", "g"), "%2D");
-    articleTitle = encodeURIComponent(articleTitle.trim().replace(RegExp(" ", "g"), "-"));
-	return articleTitle.replace(RegExp("%252D", "g"), "-");
+	return slugify(articleTitle, '_');
 };
 
 const addImage = (image, progress, err, complete) => { 

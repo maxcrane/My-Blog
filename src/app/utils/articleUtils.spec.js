@@ -10,16 +10,16 @@ describe('article utils', function() {
             expect(articleUtils.getKeyForTitle("  Cats  ")).to.equal("Cats");
         });
 
-        it('should replace spaces with dashes', () => {
-            expect(articleUtils.getKeyForTitle("All about dinosaurs")).to.equal("All-about-dinosaurs");
+        it('should replace spaces with underscores', () => {
+            expect(articleUtils.getKeyForTitle("All about dinosaurs")).to.equal("All_about_dinosaurs");
         });
 
-        it('should not replace dashes', () => {
-            expect(articleUtils.getKeyForTitle("All-about-dinosaurs")).to.equal("All-about-dinosaurs");
+        it('should replace dashes with underscores', () => {
+            expect(articleUtils.getKeyForTitle("All-about-dinosaurs")).to.equal("All_about_dinosaurs");
         });
 
-        it('should leave percentages alone', () => {
-        	const res = "50%25-of-people-don\'t-like-chocolate";
+        it('should replace percent symbol with word percent', () => {
+        	const res = "50_percent_of_people_don\'t_like_chocolate";
             expect(articleUtils.getKeyForTitle("50% of people don't like chocolate")).to.equal(res);
         });
     });
