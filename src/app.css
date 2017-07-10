@@ -33,7 +33,8 @@
 .articleList {
     list-style-type: none;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
 
 .article {
@@ -52,7 +53,6 @@
     align-items: center;
     border-width: 1px;
     height: 70px;
-    background-color: black;
 }
 
 .navlink {
@@ -114,75 +114,80 @@ img {
     font-family: 'Ubuntu', sans-serif;
 }
 
-.articlelink {
+.articlecontainer {
     margin-bottom: 10px;
+    width: 70%;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    flex-direction: column;
 }
 
 .articlelinkedit {
     margin: 0px 0px 0px 15px;
-    position:absolute !important;
+    position: absolute !important;
     font-size: 20px;
     top: 30px !important;
     right: 60px !important;
 }
 
-.articlelinkedit:hover{
+.articlelinkedit:hover {
     color: green;
 }
 
 .articlelinkdelete {
     margin: 0px 0px 0px 5px;
-    position:absolute !important;
+    position: absolute !important;
     font-size: 20px;
     top: 30px !important;
     right: 30px !important;
 }
 
-.articlelinkdelete:hover{
+.articlelinkdelete:hover {
     color: red;
 }
 
-
 .articleTitle {
-    position:absolute !important;
     font-size: 20px;
     margin: 5px 20px 0px 20px;
-}   
+    color: white;
+    text-decoration: none;
+}
+
+.articleTitle:hover {
+    color: lightblue;   
+}
 
 .photoContainer {
-    position:relative;
+    position: relative;
     width: 350px;
     justify-content: space-around;
     height: auto;
 }
 
 .articlePhoto {
-    position:relative;
+    position: relative;
     width: 400px;
     height: auto;
     margin-bottom: 0px !important
 }
 
 .deletePhotoButton {
-    position:absolute !important;
+    position: absolute !important;
     font-size: 20px;
     top: 30px !important;
     right: 30px !important;
 }
 
-.deletePhotoButton:hover{
+.deletePhotoButton:hover {
     color: red;
 }
 
 .deleteArticleButton {
-    position:absolute !important;
+    position: absolute !important;
     font-size: 20px;
     top: 30px !important;
     right: 30px !important;
 }
-
 
 .photoListContainer {
     margin: 0% 3% 0% 3%;
@@ -202,14 +207,26 @@ img {
     height: auto;
 }
 
-.divider{
-	color: white;
+.divider {
+    color: white;
 }
 
-body {
-    padding-bottom: 1%;
+#bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  margin: 0px;
+  z-index: -1;
+  max-width: 100%;
+  min-height: 100%;
 }
 
-body {
-	background-image: url("background.png");
+.articleLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.articleLink:hover {
+    text-decoration: none;
 }

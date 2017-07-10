@@ -86,21 +86,26 @@ export class ArticleList extends React.Component{
 		return (
 			<ul className="articleList">
       			{this.state.articles.map((article, index) => 
-      				<div key={index} className="articlelink">
-      					<div className="photoContainer">
+      				<div key={index} className="articlecontainer">
+      					
 	      					
-		      				<Link key={`${index}link`} to={{
+		      				<Link className="articleLink" 
+		      					  key={`${index}link`} to={{
 		      					pathname : `/article/${article.key}`,
 		      					state : {key : article.key}
-		      				}}><img key={`${index}img`} 
+		      				}}>
+		      				<div className="photoContainer">
+		      				<img key={`${index}img`} 
 	      						 src={article.thumbnailUrl}
 	      						 className="articlePhoto"></img>
+	      					{editButtons[index]}
+		      				{deleteButtons[index]}
+	      					</div>
 		      					<li key={index}
 		      					   className="articleTitle">{article.title}</li>
 		      				</Link>
-							{editButtons[index]}
-		      				{deleteButtons[index]}
-	      				</div>
+							
+	      				
       				</div>
       			)}
     		</ul>
