@@ -7,6 +7,7 @@ import {
 import auth from "../utils/auth";
 import articleUtils from "../utils/articleUtils";
 import axios from "axios";
+import moment from "moment";
 
 export class ArticleList extends React.Component{
 	constructor(props) {
@@ -38,8 +39,11 @@ export class ArticleList extends React.Component{
 			this.setState({
 				articles : res.data.filter((article)=>{
 					return article.title;
+				}).sort((a, b)=>{
+					return new Date(b.creationDate) - new Date(a.creationDate);
 				})
 			});
+			console.log(this.state.articles);
 		}).catch(function (error) {
 			console.log(error);
 		});
@@ -101,6 +105,10 @@ export class ArticleList extends React.Component{
 	      					{editButtons[index]}
 		      				{deleteButtons[index]}
 	      					</div>
+	      						<li key={`${index}date`}
+		      					   className="articleDate">{
+		      					   	moment(new Date(article.creationDate)).format("MMMM Do, YYYY")
+		      					   }</li>
 		      					<li key={index}
 		      					   className="articleTitle">{article.title}</li>
 		      				</Link>

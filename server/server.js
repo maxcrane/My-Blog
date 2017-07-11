@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const firebase = require("firebase");
+const compression = require('compression');
 const app = express();
 const config = {
     apiKey: "AIzaSyB3033HOIzxeeoSLsHsiWBCoRpG_Sbo-4A",
@@ -14,6 +15,9 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const articles = database.ref('articles');
 
+//gzip compression
+app.use(compression());
+
 // Middleware that allows cross origin (for development only)
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -22,7 +26,6 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
-
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 
@@ -33,12 +36,9 @@ app.get('/api/articles', function(req, res) {
 
         if (values) {
             Object.keys(values).forEach((key) => {
-                articles.push({
-                    title: values[key].title,
-                    key: key,
-                    thumbnailName: values[key].thumbnailName,
-                    thumbnailUrl: values[key].thumbnailUrl
-                });
+                const article = values[key];
+                article.key = key;
+                articles.push(article);
             });
         }
         res.send(articles);

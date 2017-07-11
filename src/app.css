@@ -61,12 +61,14 @@
     margin: 0% 1% 0% 1%;
     align-self: center;
     transition: font-size 0.3s;
+    transition: color 0.2s linear;
 }
 
 .navlink:hover,
 .navlink:focus {
-    color: lightblue;
+    color: darkslategray;
     text-decoration: none;
+    transition: color 0.2s linear;
 }
 
 .navlink,
@@ -147,14 +149,23 @@ img {
 }
 
 .articleTitle {
-    font-size: 20px;
+    font-size: 30px;
     margin: 5px 20px 0px 20px;
     color: white;
     text-decoration: none;
+    transition: color 0.2s linear;
 }
 
 .articleTitle:hover {
-    color: lightblue;   
+    color: darkslategray;
+    transition: color 0.2s linear;
+}
+
+.articleDate {
+    font-size: 20px;
+    margin: 5px 20px 0px 20px;
+    color: lightgrey;
+    text-decoration: none;
 }
 
 .photoContainer {

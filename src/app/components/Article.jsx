@@ -46,7 +46,7 @@ export class Article extends React.Component{
 
 		return (
 			<div className="article">
-				<h3>{this.state.title}</h3>
+				<h3 className="articleTitle">{this.state.title}</h3>
 				<img src={this.state.thumbnailUrl} 
 					 alt={this.state.thumbnailName}
 					 className="articlePhoto"></img>

@@ -18,7 +18,8 @@ export class EditArticle extends React.Component{
 			title: "",
 			content: "",
 			thumbnailName: "",
-			thumbnailUrl: ""
+			thumbnailUrl: "",
+			creationDate: ""
 		};
 	}
 
@@ -32,13 +33,7 @@ export class EditArticle extends React.Component{
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
 			const article = res.data;
-
-			this.setState({
-				content : article.content,
-				title : article.title,
-				thumbnailName: article.thumbnailName,
-				thumbnailUrl: article.thumbnailUrl
-			});
+			this.setState(article);
 		}).catch(function (error) {
 			console.log(error);
 		});

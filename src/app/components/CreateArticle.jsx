@@ -35,15 +35,16 @@ export class CreateArticle extends React.Component{
 	}
 
 	onSubmitArticle(title, content, thumbnailUrl, thumbnailName) {
-		console.log(thumbnailUrl, thumbnailName);
-
+		const creationDate = new Date().toJSON();
+		
 		if (title != null && title !== "" &&
 			content != null && content != ""){
 			articleUtils.addArticle({
 				title, 
 				content, 
 				thumbnailName, 
-				thumbnailUrl
+				thumbnailUrl,
+				creationDate
 			})
 
 			const articleLink = `article/${articleUtils.getKeyForTitle(title)}`;
