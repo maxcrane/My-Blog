@@ -25,6 +25,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.24.1",
     "compression": "^1.7.0",
+    "css-loader": "^0.28.4",
     "escape-html": "^1.0.3",
     "express": "^4.15.2",
     "firebase": "^3.9.0",
@@ -39,6 +40,7 @@
     "showdown": "^1.6.4",
     "simplemde": "^1.11.2",
     "slugify": "^1.1.0",
+    "style-loader": "^0.18.2",
     "uglify-js": "^3.0.23",
     "webpack": "^2.5.1"
   },

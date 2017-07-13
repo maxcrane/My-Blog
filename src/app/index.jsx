@@ -10,7 +10,7 @@ import {CreateArticle} from "./components/CreateArticle.jsx";
 import {EditArticle} from "./components/EditArticle.jsx";
 import {Photos} from "./components/Photos.jsx";
 import {AddPhoto} from "./components/AddPhoto.jsx";
-
+import './css/app.css';
 
 import {
   BrowserRouter as Router,
