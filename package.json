@@ -7,9 +7,10 @@
     "dev": "npm run build & npm run server",
     "start": "npm run build:prod && npm run server",
     "server": "nodemon server/server.js",
-    "build": "webpack -d && src/copy.sh && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
-    "build:prod": "src/copy.sh && npm run pack",
-    "pack": "webpack",
+    "build": "npm run packdev && src/copy.sh && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
+    "build:prod": "src/copy.sh && npm run packprod",
+    "packprod": "webpack -p",
+    "packdev": "webpack -d",
     "test": "karma start --single-run",
     "testserver": "karma start"
   },

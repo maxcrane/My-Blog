@@ -43,7 +43,6 @@ export class ArticleList extends React.Component{
 					return new Date(b.creationDate) - new Date(a.creationDate);
 				})
 			});
-			console.log(this.state.articles);
 		}).catch(function (error) {
 			console.log(error);
 		});
