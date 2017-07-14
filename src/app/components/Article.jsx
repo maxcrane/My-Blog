@@ -1,12 +1,10 @@
-import React from "react"
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
-import axios from "axios"
-import hljs from "highlight.js"
-
+} from 'react-router-dom';
+import axios from "axios";
 
 export class Article extends React.Component{
 	constructor(props) {
@@ -15,12 +13,16 @@ export class Article extends React.Component{
 			text: "",
 			title: "",
 			thumbnailName: "",
-			thumbnailUrl: ""
+			thumbnailUrl: "",
 		};
-		hljs.initHighlightingOnLoad();
 	}
 
 	componentDidMount() {
+		this.getArticle();
+	}
+
+
+	getArticle() {
 		var articleKey = this.props.match.params.title;
 			
 		axios.get(`/api/${articleKey}`)
@@ -39,9 +41,13 @@ export class Article extends React.Component{
 	}
 
 	render() {
-		var showdown  = require('showdown'),
-	    converter = new showdown.Converter(),
-	    text      = this.state.text,
+		var showdown  = require('showdown');
+		var showdownHighlight = require("showdown-highlight")
+		let converter = new showdown.Converter({
+		    extensions: [showdownHighlight]
+		});
+
+	    var text      = this.state.text,
 	    markdown      = converter.makeHtml(text);
 
 		return (
@@ -50,8 +56,9 @@ export class Article extends React.Component{
 				<img src={this.state.thumbnailUrl} 
 					 alt={this.state.thumbnailName}
 					 className="articlePhoto"></img>
-				<div id="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
+				<div id="content" ref="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
 			</div>
 		);
+
 	}
 }

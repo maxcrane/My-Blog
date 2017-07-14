@@ -41,7 +41,11 @@ export class ArticleEditor extends React.Component{
 	createEditor(){
 		this.setState({
 			editor : new SimpleMDE({ 
-				element: document.getElementById(this.id)
+				element: document.getElementById(this.id),
+				renderingConfig: {
+					//will will highlight code using highlight.js
+					codeSyntaxHighlighting: true
+				}
 			})
 		});
 	}
