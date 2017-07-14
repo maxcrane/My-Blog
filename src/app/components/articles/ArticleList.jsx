@@ -4,8 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import auth from "../utils/auth";
-import articleUtils from "../utils/articleUtils";
+import auth from "../../utils/auth";
+import articleUtils from "../../utils/articleUtils";
 import axios from "axios";
 import moment from "moment";
 

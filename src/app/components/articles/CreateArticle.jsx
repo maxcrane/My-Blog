@@ -4,9 +4,9 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import auth from "../utils/auth";
+import auth from "../../utils/auth";
 import {ArticleEditor} from "./ArticleEditor.jsx";
-import articleUtils from "../utils/articleUtils";
+import articleUtils from "../../utils/articleUtils";
 import SimpleMDE from "simplemde";
 
 export class CreateArticle extends React.Component{

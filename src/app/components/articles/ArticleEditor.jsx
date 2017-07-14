@@ -4,12 +4,12 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import auth from "../utils/auth";
-import articleUtils from "../utils/articleUtils";
-import photoUtils from "../utils/photoUtils";
+import auth from "../../utils/auth";
+import articleUtils from "../../utils/articleUtils";
+import photoUtils from "../../utils/photoUtils";
 import SimpleMDE from "simplemde";
-import {AddPhoto} from "./AddPhoto.jsx";
-import {Photos} from "./Photos.jsx";
+import {AddPhoto} from "../AddPhoto.jsx";
+import {Photos} from "../Photos.jsx";
 
 export class ArticleEditor extends React.Component{
 	constructor(props) {

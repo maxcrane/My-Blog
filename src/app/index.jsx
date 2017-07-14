@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {About} from "./components/About.jsx";
 import {Home} from "./components/Home.jsx";
-import {Article} from "./components/Article.jsx";
-import {ArticleList} from "./components/ArticleList.jsx";
 import {Navbar} from "./components/Navbar.jsx";
 import {Admin} from "./components/Admin.jsx";
-import {CreateArticle} from "./components/CreateArticle.jsx";
-import {EditArticle} from "./components/EditArticle.jsx";
 import {Photos} from "./components/Photos.jsx";
 import {AddPhoto} from "./components/AddPhoto.jsx";
+import {Article} from "./components/articles/Article.jsx";
+import {ArticleList} from "./components/articles/ArticleList.jsx";
+import {CreateArticle} from "./components/articles/CreateArticle.jsx";
+import {EditArticle} from "./components/articles/EditArticle.jsx";
 
 import './css/app.css';
 import './css/simplemde.min.css';
