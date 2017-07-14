@@ -31,11 +31,34 @@
 }
 
 .articleList {
-    list-style-type: none;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 100%;
 }
+
+.articleCard {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+    transition: width 0.5s;
+}
+
+@media only screen and (max-width: 700px) {
+    .articleCard {
+        width: 90%;
+        transition: width 0.5s;
+    }
+}
+
+.articleCardDivider  { 
+    border-style: inset;
+    border-width: 1px;
+    color: white;
+    width: 100%;
+} 
 
 .article {
     margin: 0% 25% 0% 25%;
@@ -101,11 +124,6 @@
     }
 }
 
-img {
-    margin: 20px;
-    max-width: 90%;
-}
-
 .logo {
     max-height: 60px;
     max-width: 60px;
@@ -150,7 +168,6 @@ img {
 
 .articleTitle {
     font-size: 30px;
-    margin: 5px 20px 0px 20px;
     color: white;
     text-decoration: none;
     transition: color 0.2s linear;
@@ -163,7 +180,6 @@ img {
 
 .articleDate {
     font-size: 20px;
-    margin: 5px 20px 0px 20px;
     color: lightgrey;
     text-decoration: none;
 }
@@ -177,9 +193,9 @@ img {
 
 .articlePhoto {
     position: relative;
-    width: 400px;
+    width: 100%;
     height: auto;
-    margin-bottom: 0px !important
+    margin-top: 20px;
 }
 
 .deletePhotoButton {

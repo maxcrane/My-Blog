@@ -8,6 +8,7 @@ import {Photos} from "./components/Photos.jsx";
 import {AddPhoto} from "./components/AddPhoto.jsx";
 import {Article} from "./components/articles/Article.jsx";
 import {ArticleList} from "./components/articles/ArticleList.jsx";
+import {ArticleCard} from "./components/articles/ArticleCard.jsx";
 import {CreateArticle} from "./components/articles/CreateArticle.jsx";
 import {EditArticle} from "./components/articles/EditArticle.jsx";
 

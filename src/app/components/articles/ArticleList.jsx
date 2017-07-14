@@ -7,7 +7,8 @@ import {
 import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
 import axios from "axios";
-import moment from "moment";
+import {ArticleCard} from "./ArticleCard.jsx";
+
 
 export class ArticleList extends React.Component{
 	constructor(props) {
@@ -48,74 +49,16 @@ export class ArticleList extends React.Component{
 		});
 	}
 
-	getPrettyArticleNameForUrl (title) {
-		return `${title.replace(new RegExp(" ", 'g'), "-")}`;
-	}	
-
-	editArticle (key) {
-		const editArticleLink = `edit/${key}`
-		this.props.history.push(editArticleLink);
-	}
-
-	deleteArticle (key) {
-		if (!confirm(`are you sure you want to delete ${key}?`)) {
-			return;    
-		} 
-
-		articleUtils.deleteArticle(key, (err)=>{
-			if(err) {
-				alert("could not delete");
-			}
-			else {
-				this.getArticles();
-				alert("successfully deleted");
-			}
-		});
-	}
-
 	render() {
-		let deleteButtons = [];
-		let editButtons = [];
-
-	    if (this.state.adminLoggedIn) {
-	    	this.state.articles.map((article) => {
-	    		editButtons.push(<span className="glyphicon glyphicon-pencil articlelinkedit" 
-	    			onClick={()=>{this.editArticle(article.key)}}></span>);
-	    		deleteButtons.push(<span className="glyphicon glyphicon-trash articlelinkdelete"
-	    			onClick={()=>{this.deleteArticle(article.key)}}></span>);
-	    	});
-	    } 
-
 		return (
-			<ul className="articleList">
+			<div className="articleList">
       			{this.state.articles.map((article, index) => 
-      				<div key={index} className="articlecontainer">
-      					
-	      					
-		      				<Link className="articleLink" 
-		      					  key={`${index}link`} to={{
-		      					pathname : `/article/${article.key}`,
-		      					state : {key : article.key}
-		      				}}>
-		      				<div className="photoContainer">
-		      				<img key={`${index}img`} 
-	      						 src={article.thumbnailUrl}
-	      						 className="articlePhoto"></img>
-	      					{editButtons[index]}
-		      				{deleteButtons[index]}
-	      					</div>
-	      						<li key={`${index}date`}
-		      					   className="articleDate">{
-		      					   	moment(new Date(article.creationDate)).format("MMMM Do, YYYY")
-		      					   }</li>
-		      					<li key={index}
-		      					   className="articleTitle">{article.title}</li>
-		      				</Link>
-							
-	      				
-      				</div>
+      				<ArticleCard key={index} 
+      							 article={article} 
+      							 index={index}
+      							 admin={this.state.adminLoggedIn}/>
       			)}
-    		</ul>
+    		</div>
 		);
 	}
 }
