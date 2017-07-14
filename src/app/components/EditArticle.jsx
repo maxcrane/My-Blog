@@ -40,15 +40,20 @@ export class EditArticle extends React.Component{
 	}
 
 	onSaveClicked(title, content, thumbnailUrl, thumbnailName) {		
-		articleUtils.updateArticle({title, content, thumbnailUrl, thumbnailName}, 
+		articleUtils.updateArticle({title, content, thumbnailUrl, thumbnailName, 
+								    creationDate : this.state.creationDate}, 
 					this.state.key);
 	}
 
 	render() {
 		return (
 			<div>
-				<ArticleEditor content={this.state.content} title={this.state.title}
-							   buttonTitle={"save"} callback={this.onSaveClicked.bind(this)}/>
+				<ArticleEditor content={this.state.content} 
+							   title={this.state.title}
+							   thumbnailUrl={this.state.thumbnailUrl} 
+							   thumbnailName={this.state.thumbnailName} 
+							   buttonTitle={"save"} 
+							   callback={this.onSaveClicked.bind(this)}/>
 			</div>
 		);
 	}

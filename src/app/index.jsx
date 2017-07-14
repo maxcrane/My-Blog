@@ -27,7 +27,7 @@ ReactDOM.render(
 		<div>
 		  	<Navbar/>
 		    <Switch>
-		   		<Route exact path="/"         component={Home}/>
+		   		<Route exact path="/"         component={ArticleList}/>
 		   		<Route path="/edit/:title"    component={EditArticle}/>
 		   		<Route path="/article/:title" component={Article}/>	
 		  		<Route path="/about"          component={About}/>

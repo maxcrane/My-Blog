@@ -30,7 +30,9 @@ export class ArticleEditor extends React.Component{
 
 	componentWillReceiveProps(nextProps){
 		this.setState({
-			title : nextProps.title
+			title : nextProps.title,
+			thumbnailUrl: nextProps.thumbnailUrl,
+			thumbnailName: nextProps.thumbnailName
 		});
 
 		if (this.state.editor) {
@@ -93,7 +95,6 @@ export class ArticleEditor extends React.Component{
 	}
 
 	onPhotoClicked(thumbnailName, thumbnailUrl){
-		console.log("hi", thumbnailName, thumbnailUrl);
 		this.setState({
 			thumbnailUrl,
 			thumbnailName
