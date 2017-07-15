@@ -1,5 +1,7 @@
 var webpack = require("webpack");
 var path = require("path");
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 var DIST_DIR = path.resolve(__dirname, "dist");
 var SRC_DIR = path.resolve(__dirname, "src");
@@ -35,7 +37,20 @@ var config = {
                 changeOrigin: true
             }
         }
-  	}
+  	},
+  	context: SRC_DIR,
+  	plugins: [
+        new CopyWebpackPlugin([
+            { 
+              from: 'images',
+              to:  path.resolve(DIST_DIR, "images") 
+          	},
+          	{
+          		from: 'index.html',
+          		to: path.resolve(DIST_DIR, 'index.html')
+          	}
+        ])
+    ]
 };
 
 module.exports = config;
