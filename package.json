@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "learning react",
   "main": "index.js",
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
     "dev": "npm run build & npm run server",
-    "start": "npm run build:prod && npm run server",
+    "start": "npm run server",
     "server": "nodemon server/server.js",
     "build": "npm run packdev && src/copy.sh && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback",
     "build:prod": "src/copy.sh && npm run packprod",
+    "postinstall": "npm run build:prod",
     "packprod": "webpack -p",
     "packdev": "webpack -d",
     "test": "karma start --single-run",
