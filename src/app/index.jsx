@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import {About} from "./components/About.jsx";
 import {Home} from "./components/Home.jsx";
 import {Navbar} from "./components/Navbar.jsx";
+import {Footer} from "./components/Footer.jsx";
 import {Admin} from "./components/Admin.jsx";
 import {Photos} from "./components/Photos.jsx";
 import {AddPhoto} from "./components/AddPhoto.jsx";
@@ -38,6 +39,7 @@ ReactDOM.render(
 		  		<Route exact path="/photos"   component={Photos}/>
 		  		<Route path="/photos/add"     component={AddPhoto}/>
 		    </Switch>
+		    <Footer/>
 		</div>
   	</Router>,
   	document.getElementById("app")

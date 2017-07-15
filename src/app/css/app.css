@@ -58,6 +58,7 @@
     border-width: 1px;
     color: white;
     width: 100%;
+    margin-bottom: 0px;
 } 
 
 .article {
@@ -256,4 +257,26 @@
 
 .articleLink:hover {
     text-decoration: none;
+}
+
+footer{
+    margin-top: 50px;
+    color: white;
+    text-align:center;
+}
+
+.aboutContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 0px 30px 0px 30px;
+}
+
+.aboutContainer p {
+    color: white;
+}
+
+.aboutImage {  
+  max-width: 100%;
+  object-fit: contain;
 }
