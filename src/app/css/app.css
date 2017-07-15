@@ -53,13 +53,13 @@
     }
 }
 
-.articleCardDivider  { 
+.articleCardDivider {
     border-style: inset;
     border-width: 1px;
     color: white;
     width: 100%;
     margin-bottom: 0px;
-} 
+}
 
 .article {
     margin: 0% 25% 0% 25%;
@@ -239,16 +239,6 @@
     color: white;
 }
 
-#bg {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  margin: 0px;
-  z-index: -1;
-  max-width: 100%;
-  min-height: 100%;
-}
-
 .articleLink {
     display: flex;
     flex-direction: column;
@@ -259,10 +249,10 @@
     text-decoration: none;
 }
 
-footer{
+footer {
     margin-top: 50px;
     color: white;
-    text-align:center;
+    text-align: center;
 }
 
 .aboutContainer {
@@ -276,7 +266,16 @@ footer{
     color: white;
 }
 
-.aboutImage {  
-  max-width: 100%;
-  object-fit: contain;
+.aboutImage {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+
+body {
+    background-image: url(images/background.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
 }
