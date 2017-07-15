@@ -19,7 +19,8 @@ export class ArticleEditor extends React.Component{
 			title: "",
 			percentUploaded: 0,
 			thumbnailUrl: null,
-			thumbnailName: null
+			thumbnailName: null,
+			photoMode: null
 		}
 		this.id = "markdownEditor";
 	}
@@ -90,14 +91,16 @@ export class ArticleEditor extends React.Component{
 	onPhotoUploaded(thumbnailName, thumbnailUrl){
 		this.setState({
 			thumbnailUrl,
-			thumbnailName
+			thumbnailName,
+			imageMode: "none"
 		})
 	}
 
 	onPhotoClicked(thumbnailName, thumbnailUrl){
 		this.setState({
 			thumbnailUrl,
-			thumbnailName
+			thumbnailName,
+			imageMode: "none"
 		})
 	}
 
@@ -106,12 +109,18 @@ export class ArticleEditor extends React.Component{
 		let titleField = null;
 		let textarea = null;
 		let editor = null;
-		let submitButton = <button className="btn btn-primary editorSubmitButton" 
+		let imageLabel = "Please select an image:";
+		let chooseExistingImageButton = null;
+		let chooseExistingImage = null;
+		let uploadNewImageButton = null;
+		let uploadNewImage = null;
+
+		let submitButton = <button className="btn btn-success editorSubmitButton" 
 			onClick={this.onButtonClicked.bind(this)}>
 			{this.props.buttonTitle}</button>
 
 		titleField = <input className="articleTitleField" 
-			type="text" value={this.state.title} placeholder={"article title"}
+			type="text" value={this.state.title} placeholder={"Title"}
 			onChange={this.onTitleChanged.bind(this)} ></input>
 
 		textarea = React.createElement('textarea', 
@@ -120,16 +129,48 @@ export class ArticleEditor extends React.Component{
 		editor = React.createElement('div', 
 			{id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		
+		const {thumbnailUrl, imageMode} = this.state;
+
+		if (thumbnailUrl !== null && thumbnailUrl !== undefined) {
+			imageLabel = "Article Image:";
+		} 
+
+		chooseExistingImageButton = <button className="btn btn-info center-block editorAddPhotoButton" 
+											type="submit"
+											onClick={()=>{this.setState({imageMode:'existing'})}}>
+										Choose Existing Image
+									</button>
+		uploadNewImageButton = 		<button className="btn btn-info center-block editorAddPhotoButton" 
+											type="submit"
+											onClick={()=>{this.setState({imageMode:'new'})}}>
+										Upload New Image
+									</button>
+	
+
+		if (imageMode === 'existing') {
+			chooseExistingImage = <Photos isSelectionMode={true} 
+						onPhotoClicked={this.onPhotoClicked.bind(this)}/>
+		}
+		else if (imageMode === 'new') {
+			uploadNewImage = <AddPhoto includeLinkToAllPhotos={false}
+						  onFileUploaded={this.onPhotoUploaded.bind(this)}/>
+		}
+
 		return (
-			<div>
+			<div className="articleEditor">
 				{titleField}
 				{editor}
+				<div className="imagePreviewContainer">
+					<h3>{imageLabel}</h3>
+					<img className="articleEditorImagePreview" 
+						 src={thumbnailUrl}></img>
+				</div>
+
+				{chooseExistingImageButton}
+				{uploadNewImageButton}
+				{chooseExistingImage}
+				{uploadNewImage}
 				{submitButton}
-				<AddPhoto includeLinkToAllPhotos={false}
-						  onFileUploaded={this.onPhotoUploaded.bind(this)}/>
-				<img src={this.state.thumbnailUrl}></img>
-				<Photos isSelectionMode={true} 
-						onPhotoClicked={this.onPhotoClicked.bind(this)}/>
 			</div>
 		);
 	}

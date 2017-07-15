@@ -193,6 +193,11 @@
     height: auto;
 }
 
+.photoContainer img {
+    max-width: 90%;
+    margin: 10px;
+}
+
 .articlePhoto {
     position: relative;
     width: 100%;
@@ -253,6 +258,7 @@ footer {
     margin-top: 50px;
     color: white;
     text-align: center;
+    bottom: 2px;
 }
 
 .aboutContainer {
@@ -271,9 +277,27 @@ footer {
     object-fit: contain;
 }
 
+.articleEditor {
+    background-color: aliceblue;
+}
+
+.articleEditorImagePreview {
+   max-width: 60%;
+}
+
+.imagePreviewContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editorAddPhotoButton {
+    width: 90%;
+    margin-bottom: 5px;
+}
 
 body {
-    background-image: url(images/background.png);
+    background-image: url(/images/background.png);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
