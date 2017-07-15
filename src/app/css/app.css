@@ -64,8 +64,12 @@
     margin: 0% 25% 0% 25%;
 }
 
-.content {
-    padding-top: 50px;
+.article p{
+    color: white;
+}
+
+#content {
+    padding-top: 10px;
 }
 
 .navcontainer {
@@ -179,7 +183,7 @@
 }
 
 .articleDate {
-    font-size: 20px;
+    font-size: 15px;
     color: lightgrey;
     text-decoration: none;
 }
@@ -195,7 +199,6 @@
     position: relative;
     width: 100%;
     height: auto;
-    margin-top: 20px;
 }
 
 .deletePhotoButton {

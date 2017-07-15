@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import articleUtils from "../../utils/articleUtils";
 import {
   BrowserRouter as Router,
@@ -15,23 +14,21 @@ export class ArticleCard extends React.Component{
 
 	render() {
 		const {index, article} = this.props;
-		const articleCreationDate = new Date(article.creationDate)
-		const formattedDate = moment(articleCreationDate).format("MMMM Do, YYYY");
-
+	
 		return (
 			<div className="articleCard">
 				<Link className="articleLink" 
 				      key={`${index}link`} 
 				      to={{ pathname : `/article/${article.key}`,
 							state : {key : article.key}}}>
-					<li key={index} className="articleTitle">
+					<h2 key={index} className="articleTitle">
 						{article.title}
-					</li>	
+					</h2>	
 				</Link>
 
-				<li key={`${index}date`} className="articleDate">
-				   {formattedDate}
-				</li>
+				<p key={`${index}date`} className="articleDate">
+				   {articleUtils.getPrettyCreationDate(article.creationDate)}
+				</p>
 
 				<img key={`${index}img`} 
 					 src={article.thumbnailUrl}

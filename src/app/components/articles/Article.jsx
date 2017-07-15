@@ -1,4 +1,5 @@
 import React from "react";
+import articleUtils from "../../utils/articleUtils";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +15,7 @@ export class Article extends React.Component{
 			title: "",
 			thumbnailName: "",
 			thumbnailUrl: "",
+			creationDate: ""
 		};
 	}
 
@@ -28,35 +30,41 @@ export class Article extends React.Component{
 		axios.get(`/api/${articleKey}`)
 		.then((res)=>{
 			const article = res.data;
-
-			this.setState({
-				text: article.content,
-				title: article.title,
-				thumbnailName: article.thumbnailName,
-				thumbnailUrl: article.thumbnailUrl
-			});
+			this.setState(article);
 		}).catch(function (error) {
 			console.log(error);
 		});
 	}
 
 	render() {
-		var showdown  = require('showdown');
-		var showdownHighlight = require("showdown-highlight")
-		let converter = new showdown.Converter({
+		const showdown  = require('showdown');
+		const showdownHighlight = require("showdown-highlight")
+		const converter = new showdown.Converter({
 		    extensions: [showdownHighlight]
 		});
+	    const markdown = converter.makeHtml(this.state.content);
 
-	    var text      = this.state.text,
-	    markdown      = converter.makeHtml(text);
+	    const {title, creationDate, thumbnailUrl, thumbnailName} = this.state;
+	    const prettyDate = creationDate !== "" ? 
+	    	articleUtils.getPrettyCreationDate(creationDate) : "";
+
+	    var img = null;
+	    if (thumbnailUrl !== "" && thumbnailName !== "") {
+	    	img = <img src={thumbnailUrl} 
+					   alt={thumbnailName}
+					   className="articlePhoto">
+				  </img>
+	    }
 
 		return (
-			<div className="article">
-				<h3 className="articleTitle">{this.state.title}</h3>
-				<img src={this.state.thumbnailUrl} 
-					 alt={this.state.thumbnailName}
-					 className="articlePhoto"></img>
-				<div id="content" ref="content" dangerouslySetInnerHTML={{ __html:  markdown}} />
+			<div className="article" >
+				<h2 className="articleTitle">{title}</h2>
+				<p  className="articleDate">{prettyDate}</p>
+
+				{img}
+				
+				<div id="content" ref="content" 
+					 dangerouslySetInnerHTML={{ __html:  markdown}} />
 			</div>
 		);
 

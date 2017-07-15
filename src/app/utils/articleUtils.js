@@ -1,5 +1,6 @@
 import firebaseRef from "./firebaseRef";
 import auth from "./auth";
+import moment from "moment";
 import slugify from "slugify";
 slugify.extend({'%': ' percent'})
 
@@ -14,6 +15,11 @@ const addImage = (image, progress, err, complete) => {
     const storageRef = firebaseRef.getFirebase().storage().ref(`photos/${image.name}`);
     const task = storageRef.put(image);
     task.on('state_changed', progress, err, complete);
+};
+
+const getPrettyCreationDate = (rawdate) => {
+    const articleCreationDate = new Date(rawdate);
+    return moment(articleCreationDate).format("MMMM Do, YYYY");
 };
 
 module.exports = {
@@ -44,5 +50,6 @@ module.exports = {
     },
 
     getKeyForTitle,
-    addImage
+    addImage,
+    getPrettyCreationDate
 };
