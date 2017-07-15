@@ -64,12 +64,9 @@
     margin: 0% 25% 0% 25%;
 }
 
-.article p{
-    color: white;
-}
-
 #content {
     padding-top: 10px;
+    color: white;
 }
 
 .navcontainer {
@@ -177,7 +174,7 @@
     transition: color 0.2s linear;
 }
 
-.articleTitle:hover {
+.articleTitleLink:hover {
     color: darkslategray;
     transition: color 0.2s linear;
 }
