@@ -16,6 +16,7 @@ import {EditArticle} from "./components/articles/EditArticle.jsx";
 import './css/app.css';
 import './css/simplemde.min.css';
 import './css/default.min.css';
+import './css/opensans.css';
 
 import {
   BrowserRouter as Router,
