@@ -8,8 +8,8 @@ import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
 import photoUtils from "../../utils/photoUtils";
 import SimpleMDE from "simplemde";
-import {AddPhoto} from "../AddPhoto.jsx";
-import {Photos} from "../Photos.jsx";
+import {AddPhoto} from "../photos/AddPhoto.jsx";
+import {Photos} from "../photos/Photos.jsx";
 
 export class ArticleEditor extends React.Component{
 	constructor(props) {

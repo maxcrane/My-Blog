@@ -4,8 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import auth from "../utils/auth";
-import photoUtils from "../utils/photoUtils";
+import auth from "../../utils/auth";
+import photoUtils from "../../utils/photoUtils";
 
 export class AddPhoto extends React.Component{
 	constructor(props) {

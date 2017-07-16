@@ -1,18 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+//Root folder
 import {About} from "./components/About.jsx";
 import {Home} from "./components/Home.jsx";
 import {Navbar} from "./components/Navbar.jsx";
 import {Footer} from "./components/Footer.jsx";
 import {Admin} from "./components/Admin.jsx";
-import {Photos} from "./components/Photos.jsx";
-import {AddPhoto} from "./components/AddPhoto.jsx";
+
+//Photo folder
+import {Photos} from "./components/photos/Photos.jsx";
+import {AddPhoto} from "./components/photos/AddPhoto.jsx";
+
+//Article folder
 import {Article} from "./components/articles/Article.jsx";
 import {ArticleList} from "./components/articles/ArticleList.jsx";
 import {ArticleCard} from "./components/articles/ArticleCard.jsx";
 import {CreateArticle} from "./components/articles/CreateArticle.jsx";
 import {EditArticle} from "./components/articles/EditArticle.jsx";
 
+//Inline css
 import './css/app.css';
 import './css/simplemde.min.css';
 import './css/default.min.css';
