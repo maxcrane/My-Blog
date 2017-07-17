@@ -16,7 +16,8 @@ export class Photos extends React.Component{
 			photos : {},
 			isSelectionMode : Boolean(props.isSelectionMode),
 			onPhotoClicked : props.onPhotoClicked,
-			loggedIn: false
+			loggedIn: false,
+			includeAddPhotoButton: props.includeAddPhotoButton !== false
 		}
 	}
 
@@ -37,10 +38,6 @@ export class Photos extends React.Component{
 		})
 	}
 
-	componentWillReceiveProps(nextProps) {
-
-	}
-
 	deleteImageClicked(imageKey) {
 		const photos = this.state.photos;
 		const photoName = photos[imageKey].name;
@@ -57,7 +54,7 @@ export class Photos extends React.Component{
 	}
 
 	render() {
-		let addPhotoButton = this.state.loggedIn ?  
+		let addPhotoButton = (this.state.loggedIn && this.state.includeAddPhotoButton) ?  
 							<Link to="/photos/add">
 								<button className="btn btn-primary center-block addPhotoButton" 
 										type="submit">

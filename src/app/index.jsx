@@ -11,6 +11,8 @@ import {Admin} from "./components/Admin.jsx";
 //Photo folder
 import {Photos} from "./components/photos/Photos.jsx";
 import {AddPhoto} from "./components/photos/AddPhoto.jsx";
+import {PhotoPicker} from "./components/photos/PhotoPicker.jsx";
+
 
 //Article folder
 import {Article} from "./components/articles/Article.jsx";
