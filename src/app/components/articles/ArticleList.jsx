@@ -49,6 +49,15 @@ export class ArticleList extends React.Component{
 		});
 	}
 
+	//TODO: Make this work so article is removed from page after deleted by admin...
+	articleDeleted(deletedArticleKey) {
+		this.setState({
+			articles : articles.filter((article)=>{
+				article.key !== deletedArticleKey
+			})
+		});
+	}
+
 	render() {
 		return (
 			<div className="articleList">
@@ -56,7 +65,9 @@ export class ArticleList extends React.Component{
       				<ArticleCard key={index} 
       							 article={article} 
       							 index={index}
-      							 admin={this.state.adminLoggedIn}/>
+      							 history={this.props.history}
+      							 articleDeleted={this.articleDeleted.bind(this)}
+      							 adminLoggedIn={this.state.adminLoggedIn}/>
       			)}
     		</div>
 		);

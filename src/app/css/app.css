@@ -145,11 +145,8 @@
 }
 
 .articlelinkedit {
-    margin: 0px 0px 0px 15px;
-    position: absolute !important;
+    margin: 5px;
     font-size: 20px;
-    top: 30px !important;
-    right: 60px !important;
 }
 
 .articlelinkedit:hover {
@@ -157,15 +154,18 @@
 }
 
 .articlelinkdelete {
-    margin: 0px 0px 0px 5px;
-    position: absolute !important;
     font-size: 20px;
-    top: 30px !important;
-    right: 30px !important;
+    margin: 5px;
 }
 
 .articlelinkdelete:hover {
     color: red;
+}
+
+.adminButtonContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
 }
 
 .articleTitle {

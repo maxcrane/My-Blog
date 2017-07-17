@@ -6,15 +6,41 @@ import {
   Link
 } from 'react-router-dom';
 
-//TODO: Re-add delete/edit buttons to this component
 export class ArticleCard extends React.Component{
 	constructor(props) {
 		super(props);
 	}
 
+	editArticle () {
+		const editArticleLink = `edit/${this.props.article.key}`
+		this.props.history.push(editArticleLink);
+	}
+
+	deleteArticle (key) {
+		if (!confirm(`are you sure you want to delete ${key}?`)) {
+			return;    
+		} 
+
+		articleUtils.deleteArticle(key, (err)=>{
+			if(err) {
+				alert("could not delete", err);
+			}
+			else {
+				alert("successfully deleted");
+				this.props.articleDeleted(key);
+			}
+		});
+	}
+
 	render() {
-		const {index, article} = this.props;
-	
+		const {index, article, adminLoggedIn} = this.props;
+		const editButton = adminLoggedIn ? <span className="glyphicon glyphicon-pencil articlelinkedit" 
+	    									     onClick={this.editArticle.bind(this)}>
+	    									</span> : null;
+	    const deleteButton = adminLoggedIn ? <span className="glyphicon glyphicon-trash articlelinkdelete" 
+	    									     onClick={()=>{this.deleteArticle(article.key)}}>
+	    									</span> : null;
+
 		return (
 			<div className="articleCard">
 				<Link className="articleLink" 
@@ -30,6 +56,11 @@ export class ArticleCard extends React.Component{
 				   {articleUtils.getPrettyCreationDate(article.creationDate)}
 				</p>
 
+				<div className="adminButtonContainer"> 
+					{editButton}
+					{deleteButton}
+				</div>
+				
 				<img key={`${index}img`} 
 					 src={article.thumbnailUrl}
 				     className="articlePhoto">
