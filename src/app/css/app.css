@@ -65,6 +65,10 @@
     margin: 0% 25% 0% 25%;
 }
 
+.article img{
+    width: 100%;
+}
+
 #content {
     padding-top: 10px;
     color: white;
@@ -213,6 +217,17 @@
 
 .deletePhotoButton:hover {
     color: red;
+}
+
+.copyPhotoButton {
+    position: absolute !important;
+    font-size: 20px;
+    top: 30px !important;
+    right: 60px !important;
+}
+
+.copyPhotoButton:hover {
+    color: green;
 }
 
 .deleteArticleButton {

@@ -8,6 +8,8 @@ import {
 import auth from "../../utils/auth";
 import photoUtils from "../../utils/photoUtils";
 import {sortByDate} from "../../utils/dateSorter";
+import CopyToClipboard from 'react-copy-to-clipboard';
+
 
 export class Photos extends React.Component{
 	constructor(props) {
@@ -53,7 +55,12 @@ export class Photos extends React.Component{
 		}
 	}
 
+	getMarkdownPhotoEmbed(photo) {
+		return `![${photo.name}](${photo.url})`;
+	}
+
 	render() {
+		let {photos} = this.state;
 		let addPhotoButton = (this.state.loggedIn && this.state.includeAddPhotoButton) ?  
 							<Link to="/photos/add">
 								<button className="btn btn-primary center-block addPhotoButton" 
@@ -61,25 +68,29 @@ export class Photos extends React.Component{
 										Add Photo
 								</button>
 							</Link> : null;
-		let photoKeys = Object.keys(this.state.photos);
+		for (var key in photos) {
+			photos[key].key = key;
+		}
 
 		return (
 			<div className="photoListContainer">
 				{
-					Object.values(this.state.photos).sort(sortByDate('uploadDate')).map((photo, index) => 
+					Object.values(photos).sort(sortByDate('uploadDate')).map((photo, index) => 
 						<div key={`${index}container`} className="photoContainer">
 							<a href={this.state.isSelectionMode ? "javascript:;" : photo.url}>
 								<img key={index} 
 	      						 src={photo.url} 
 	      						 alt={photo.name}/>
 		      				</a> 
+
 	      					<a href="javascript:;">
 		      					<span style={this.state.isSelectionMode ? {display: "none"} : {}}
 		      						  key={`delete${index}`}
 		      						  className="glyphicon glyphicon-trash deletePhotoButton" 
-		      						  onClick={()=>{this.deleteImageClicked(photoKeys[index])}}>
+		      						  onClick={()=>{this.deleteImageClicked(photo.key)}}>
 		      					</span>
 	      					</a>
+
 	      					<a href="javascript:;">
 		      					<span style={this.state.isSelectionMode ? {} : {display: "none"}}
 		      						  key={`delete${index}`}
@@ -87,6 +98,14 @@ export class Photos extends React.Component{
 		      						  onClick={()=>{this.state.onPhotoClicked(photo.name, photo.url)}}>
 		      					</span>
 	      					</a>
+
+	      					<CopyToClipboard text={this.getMarkdownPhotoEmbed(photo)}>
+		      					<a href="javascript:;">
+			      					<span key={`copy${index}`}
+			      						  className="glyphicon glyphicon-copy copyPhotoButton">
+			      					</span>
+		      					</a>
+	      					</CopyToClipboard>
 	      				</div>
       				)
       			}
