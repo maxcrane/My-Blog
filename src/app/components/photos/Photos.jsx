@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 import auth from "../../utils/auth";
 import photoUtils from "../../utils/photoUtils";
-
+import {sortByDate} from "../../utils/dateSorter";
 
 export class Photos extends React.Component{
 	constructor(props) {
@@ -66,7 +66,7 @@ export class Photos extends React.Component{
 		return (
 			<div className="photoListContainer">
 				{
-					Object.values(this.state.photos).map((photo, index) => 
+					Object.values(this.state.photos).sort(sortByDate('uploadDate')).map((photo, index) => 
 						<div key={`${index}container`} className="photoContainer">
 							<a href={this.state.isSelectionMode ? "javascript:;" : photo.url}>
 								<img key={index} 

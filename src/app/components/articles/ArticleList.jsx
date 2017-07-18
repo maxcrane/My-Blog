@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
+import {sortByDate} from "../../utils/dateSorter";
 import axios from "axios";
 import {ArticleCard} from "./ArticleCard.jsx";
 
@@ -38,9 +39,7 @@ export class ArticleList extends React.Component{
 		axios.get('/api/articles')
 		.then((res)=>{
 			this.setState({
-				articles : res.data.filter(article => article.title).sort((a, b)=>{
-					return new Date(b.creationDate) - new Date(a.creationDate);
-				})
+				articles : res.data.filter(article => article.title).sort(sortByDate('creationDate'))
 			});
 		}).catch(function (error) {
 			console.log(error);

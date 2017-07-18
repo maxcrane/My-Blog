@@ -14,11 +14,14 @@ const addPhoto = (image, progress, err, onComplete) => {
 };
 
 const addPhotoDBRecord = (imageName, downloadURL, onComplete, err) => {
+    const uploadDate = new Date().toJSON();
+
     auth.onAuthStateChanged((user) => {
         if (user) {
             photos.push().set({
                 name: imageName,
-                url: downloadURL
+                url: downloadURL,
+                uploadDate 
             }, function(error) {
                 if (error) {
                     err(error);
