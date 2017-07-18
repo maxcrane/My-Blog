@@ -26,7 +26,6 @@ export class ArticleCard extends React.Component{
 				alert("could not delete", err);
 			}
 			else {
-				alert("successfully deleted");
 				this.props.articleDeleted(key);
 			}
 		});

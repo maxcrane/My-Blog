@@ -38,9 +38,7 @@ export class ArticleList extends React.Component{
 		axios.get('/api/articles')
 		.then((res)=>{
 			this.setState({
-				articles : res.data.filter((article)=>{
-					return article.title;
-				}).sort((a, b)=>{
+				articles : res.data.filter(article => article.title).sort((a, b)=>{
 					return new Date(b.creationDate) - new Date(a.creationDate);
 				})
 			});
@@ -49,12 +47,11 @@ export class ArticleList extends React.Component{
 		});
 	}
 
-	//TODO: Make this work so article is removed from page after deleted by admin...
 	articleDeleted(deletedArticleKey) {
+		console.log('deletedArticleKey', deletedArticleKey);
 		this.setState({
-			articles : articles.filter((article)=>{
-				article.key !== deletedArticleKey
-			})
+			articles : this.state.articles.filter(article => 
+									article.key !== deletedArticleKey)
 		});
 	}
 
