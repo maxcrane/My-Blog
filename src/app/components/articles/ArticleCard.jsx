@@ -16,28 +16,13 @@ export class ArticleCard extends React.Component{
 		this.props.history.push(editArticleLink);
 	}
 
-	deleteArticle (key) {
-		if (!confirm(`are you sure you want to delete ${key}?`)) {
-			return;    
-		} 
-
-		articleUtils.deleteArticle(key, (err)=>{
-			if(err) {
-				alert("could not delete", err);
-			}
-			else {
-				this.props.articleDeleted(key);
-			}
-		});
-	}
-
 	render() {
 		const {index, article, adminLoggedIn} = this.props;
 		const editButton = adminLoggedIn ? <span className="glyphicon glyphicon-pencil articlelinkedit" 
 	    									     onClick={this.editArticle.bind(this)}>
 	    									</span> : null;
 	    const deleteButton = adminLoggedIn ? <span className="glyphicon glyphicon-trash articlelinkdelete" 
-	    									     onClick={()=>{this.deleteArticle(article.key)}}>
+	    									     onClick={()=>{this.props.deleteArticle(article.key)}}>
 	    									</span> : null;
 
 		return (

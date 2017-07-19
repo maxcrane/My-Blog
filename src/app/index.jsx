@@ -17,6 +17,7 @@ import {PhotoPicker} from "./components/photos/PhotoPicker.jsx";
 //Article folder
 import {Article} from "./components/articles/Article.jsx";
 import {ArticleList} from "./components/articles/ArticleList.jsx";
+import {ArticleListContainer} from "./components/articles/ArticleListContainer.jsx";
 import {ArticleCard} from "./components/articles/ArticleCard.jsx";
 import {CreateArticle} from "./components/articles/CreateArticle.jsx";
 import {EditArticle} from "./components/articles/EditArticle.jsx";
@@ -39,11 +40,11 @@ ReactDOM.render(
 		<div>
 		  	<Navbar/>
 		    <Switch>
-		   		<Route exact path="/"         component={ArticleList}/>
+		   		<Route exact path="/"         component={ArticleListContainer}/>
 		   		<Route path="/edit/:title"    component={EditArticle}/>
 		   		<Route path="/article/:title" component={Article}/>	
 		  		<Route path="/about"          component={About}/>
-		  		<Route path="/articles"       component={ArticleList}/>
+		  		<Route path="/articles"       component={ArticleListContainer}/>
 		  		<Route path="/admin"          component={Admin}/>	
 		  		<Route path="/create"         component={CreateArticle}/>
 		  		<Route exact path="/photos"   component={Photos}/>
