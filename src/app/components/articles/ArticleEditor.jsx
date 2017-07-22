@@ -31,9 +31,9 @@ export class ArticleEditor extends React.Component{
 
 	componentWillReceiveProps(nextProps){
 		this.setState({
-			title : nextProps.title,
-			thumbnailUrl: nextProps.thumbnailUrl,
-			thumbnailName: nextProps.thumbnailName
+			title : nextProps.title || "",
+			thumbnailUrl: nextProps.thumbnailUrl || null,
+			thumbnailName: nextProps.thumbnailName || null
 		});
 
 		if (this.state.editor) {

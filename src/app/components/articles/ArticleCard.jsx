@@ -24,6 +24,14 @@ export class ArticleCard extends React.Component{
 	    const deleteButton = adminLoggedIn ? <span className="glyphicon glyphicon-trash articlelinkdelete" 
 	    									     onClick={()=>{this.props.deleteArticle(article.key)}}>
 	    									</span> : null;
+	    var img = null;		
+	    if (article.thumbnailUrl && article.thumbnailName) {
+	    	img = <img key={`${index}img`} 
+					 src={article.thumbnailUrl}
+					 alt={article.thumbnailName}
+				     className="articlePhoto">
+				</img>
+	    }
 
 		return (
 			<div className="articleCard">
@@ -45,10 +53,7 @@ export class ArticleCard extends React.Component{
 					{deleteButton}
 				</div>
 				
-				<img key={`${index}img`} 
-					 src={article.thumbnailUrl}
-				     className="articlePhoto">
-				</img>
+				{img}
 
 				<hr className="articleCardDivider"></hr>
 			</div>

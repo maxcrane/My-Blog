@@ -16,7 +16,9 @@ export class CreateArticle extends React.Component{
 		this.state = {
 			adminLoggedIn : true,
 			title : null,
-			content : null
+			content : null,
+			thumbnailName: null,
+			thumbnailUrl: null
 		}
 	}
 
@@ -36,23 +38,20 @@ export class CreateArticle extends React.Component{
 
 	onSubmitArticle(title, content, thumbnailUrl, thumbnailName) {
 		const creationDate = new Date().toJSON();
-		
-		if (title != null && title !== "" &&
-			content != null && content != ""){
-			articleUtils.addArticle({
-				title, 
-				content, 
-				thumbnailName, 
-				thumbnailUrl,
-				creationDate
-			})
 
+		articleUtils.saveArticle({
+			title, 
+			content, 
+			thumbnailName, 
+			thumbnailUrl,
+			creationDate
+		}).then((res) =>{
 			const articleLink = `article/${articleUtils.getKeyForTitle(title)}`;
 			this.props.history.push(articleLink);
-		}
-		else {
-			console.log("article title missing...");
-		}
+		}).catch((err) => {
+			alert(err);
+		});
+
 	}
 
 

@@ -49,7 +49,7 @@ export class Article extends React.Component{
 	    	articleUtils.getPrettyCreationDate(creationDate) : "";
 
 	    var img = null;
-	    if (thumbnailUrl !== "" && thumbnailName !== "") {
+	    if (thumbnailUrl && thumbnailName) {
 	    	img = <img src={thumbnailUrl} 
 					   alt={thumbnailName}
 					   className="articlePhoto">

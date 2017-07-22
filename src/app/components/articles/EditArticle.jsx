@@ -39,10 +39,17 @@ export class EditArticle extends React.Component{
 		});
 	}
 
-	onSaveClicked(title, content, thumbnailUrl, thumbnailName) {		
-		articleUtils.updateArticle({title, content, thumbnailUrl, thumbnailName, 
-								    creationDate : this.state.creationDate}, 
-					this.state.key);
+	onSaveClicked(title, content, thumbnailUrl, thumbnailName) {	
+		const article = {title, content, thumbnailUrl, thumbnailName, 
+								    creationDate : this.state.creationDate}
+		const articleKey = this.state.key;
+
+		articleUtils.saveArticle(article, articleKey).then((res) =>{
+			const articleLink = `/article/${articleKey}`;
+			this.props.history.push(articleLink);
+		}).catch((err) => {
+			alert(err);
+		});
 	}
 
 	render() {
