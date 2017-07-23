@@ -6,6 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import axios from "axios";
+import ReactDisqusComments from 'react-disqus-comments';
 
 export class Article extends React.Component{
 	constructor(props) {
@@ -36,6 +37,10 @@ export class Article extends React.Component{
 		});
 	}
 
+	handleNewComment(comment) {
+		console.log(comment.text);
+	}
+
 	render() {
 		const showdown  = require('showdown');
 		const showdownHighlight = require("showdown-highlight")
@@ -56,6 +61,10 @@ export class Article extends React.Component{
 				  </img>
 	    }
 
+	    const articleKey = this.props.match.params.title;
+	    const url = `http://maxcrane.org/${articleKey}`;
+
+
 		return (
 			<div className="article" >
 				<h2 className="articleTitle">{title}</h2>
@@ -65,6 +74,15 @@ export class Article extends React.Component{
 				
 				<div id="content" ref="content" 
 					 dangerouslySetInnerHTML={{ __html:  markdown}} />
+
+				<div className='disquisCommentSection'>
+					<ReactDisqusComments
+				        shortname="maxcrane-org"
+				        identifier={articleKey}
+				        title={articleKey}
+				        category_id="123456"
+				        onNewComment={this.handleNewComment.bind(this)}/>
+			    </div>
 			</div>
 		);
 
