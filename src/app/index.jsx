@@ -24,6 +24,7 @@ import {EditArticle} from "./components/articles/EditArticle.jsx";
 
 //Inline css
 import './css/app.css';
+import './css/background.css';
 import './css/simplemde.min.css';
 import './css/default.min.css';
 import './css/opensans.css';
