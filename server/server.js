@@ -38,6 +38,8 @@ app.get('/api/articles', function(req, res) {
             Object.keys(values).forEach((key) => {
                 const article = values[key];
                 article.key = key;
+                article.preview = article.content.substring(0, 150);
+                delete article.content;
                 articles.push(article);
             });
         }

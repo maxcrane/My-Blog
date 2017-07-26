@@ -59,6 +59,7 @@
     color: white;
     width: 100%;
     margin-bottom: 0px;
+    margin-top: 5px;
 }
 
 .article {
@@ -74,9 +75,14 @@
     color: white;
 }
 
-.navlinkspacing {
+.readmorebutton {
+    font-size: 15px;
+}
+
+.topnavlink {
     margin: 0% 1% 0% 1%;
     align-self: center;
+    font-size: 25px;
 }
 
 .navcontainer {
@@ -92,7 +98,6 @@
 .navlink {
     position: relative;
     color: white;
-    font-size: 25px;
     transition: font-size 0.3s;
 }
 
@@ -328,4 +333,8 @@ footer {
 .editorAddPhotoButton {
     width: 90%;
     margin-bottom: 5px;
+}
+
+.articlePreview {
+    color: white;
 }
