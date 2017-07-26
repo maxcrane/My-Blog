@@ -35,7 +35,7 @@ export class ArticleCard extends React.Component{
 
 		return (
 			<div className="articleCard">
-				<Link className="articleLink" 
+				<Link className="articleLink navlink"
 				      key={`${index}link`} 
 				      to={{ pathname : `/article/${article.key}`,
 							state : {key : article.key}}}>

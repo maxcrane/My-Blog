@@ -74,6 +74,11 @@
     color: white;
 }
 
+.navlinkspacing {
+    margin: 0% 1% 0% 1%;
+    align-self: center;
+}
+
 .navcontainer {
     display: flex;
     flex-direction: row;
@@ -85,19 +90,38 @@
 }
 
 .navlink {
+    position: relative;
     color: white;
     font-size: 25px;
-    margin: 0% 1% 0% 1%;
-    align-self: center;
     transition: font-size 0.3s;
-    transition: color 0.2s linear;
+}
+
+.navlink:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.navlink:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .navlink:hover,
 .navlink:focus {
-    color: darkslategray;
+    position: relative;
+    color: white;
     text-decoration: none;
-    transition: color 0.2s linear;
 }
 
 .navlink,
@@ -176,18 +200,13 @@
     font-size: 30px;
     color: white;
     text-decoration: none;
-    transition: color 0.2s linear;
-}
-
-.articleTitleLink:hover {
-    color: darkslategray;
-    transition: color 0.2s linear;
 }
 
 .articleDate {
     font-size: 15px;
     color: lightgrey;
     text-decoration: none;
+    margin-top: 5px;
 }
 
 .photoContainer {
