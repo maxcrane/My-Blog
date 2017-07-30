@@ -48,16 +48,7 @@ export class ArticleCard extends React.Component{
 				   {articleUtils.getPrettyCreationDate(article.creationDate)}
 				</p>
 
-				<p className="articlePreview">{article.preview}.......
-
-				<Link   to={{ pathname : `/article/${article.key}`,
-							state : {key : article.key}}}
-						className="navlink">
-						<span className="glyphicon glyphicon-chevron-right readmorebutton">
-						</span>
-				</Link>
-
-				</p>
+				<p className="articlePreview">{article.preview}...</p>
 			
 				<div className="adminButtonContainer"> 
 					{editButton}
