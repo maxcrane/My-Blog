@@ -16,7 +16,6 @@
 
 .articleTitleField {
     margin: 1% 5% 1% 5%;
-    width: 90%;
     height: 40px;
 }
 
@@ -317,7 +316,7 @@ footer {
 }
 
 .articleEditor {
-    background-color: aliceblue;
+    background-color: white;
 }
 
 .articleEditorImagePreview {

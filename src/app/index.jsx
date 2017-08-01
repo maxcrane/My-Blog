@@ -22,6 +22,11 @@ import {ArticleCard} from "./components/articles/ArticleCard.jsx";
 import {CreateArticle} from "./components/articles/CreateArticle.jsx";
 import {EditArticle} from "./components/articles/EditArticle.jsx";
 
+//material-ui
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 //Inline css
 import './css/app.css';
 import './css/background.css';
@@ -37,22 +42,24 @@ import {
 } from 'react-router-dom'
 
 ReactDOM.render(
-	<Router>
-		<div>
-		  	<Navbar/>
-		    <Switch>
-		   		<Route exact path="/"         component={ArticleListContainer}/>
-		   		<Route path="/edit/:title"    component={EditArticle}/>
-		   		<Route path="/article/:title" component={Article}/>	
-		  		<Route path="/about"          component={About}/>
-		  		<Route path="/articles"       component={ArticleListContainer}/>
-		  		<Route path="/admin"          component={Admin}/>	
-		  		<Route path="/create"         component={CreateArticle}/>
-		  		<Route exact path="/photos"   component={Photos}/>
-		  		<Route path="/photos/add"     component={AddPhoto}/>
-		    </Switch>
-		    <Footer/>
-		</div>
-  	</Router>,
+	<MuiThemeProvider>
+		<Router>
+			<div>
+			  	<Navbar/>
+			    <Switch>
+			   		<Route exact path="/"         component={ArticleListContainer}/>
+			   		<Route path="/edit/:title"    component={EditArticle}/>
+			   		<Route path="/article/:title" component={Article}/>	
+			  		<Route path="/about"          component={About}/>
+			  		<Route path="/articles"       component={ArticleListContainer}/>
+			  		<Route path="/admin"          component={Admin}/>	
+			  		<Route path="/create"         component={CreateArticle}/>
+			  		<Route exact path="/photos"   component={Photos}/>
+			  		<Route path="/photos/add"     component={AddPhoto}/>
+			    </Switch>
+			    <Footer/>
+			</div>
+	  	</Router>
+  	</MuiThemeProvider>,
   	document.getElementById("app")
 );

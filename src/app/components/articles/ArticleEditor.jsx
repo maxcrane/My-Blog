@@ -9,6 +9,7 @@ import articleUtils from "../../utils/articleUtils";
 import photoUtils from "../../utils/photoUtils";
 import SimpleMDE from "simplemde";
 import {PhotoPicker} from "../photos/PhotoPicker.jsx";
+import TextField from 'material-ui/TextField';
 
 
 export class ArticleEditor extends React.Component{
@@ -101,14 +102,9 @@ export class ArticleEditor extends React.Component{
 		let editor = null;
 		let imageLabel = "Please select an image:";
 		
-
 		let submitButton = <button className="btn btn-success editorSubmitButton" 
 			onClick={this.onButtonClicked.bind(this)}>
 			{this.props.buttonTitle}</button>
-
-		titleField = <input className="articleTitleField" 
-			type="text" value={this.state.title} placeholder={"Title"}
-			onChange={this.onTitleChanged.bind(this)} ></input>
 
 		textarea = React.createElement('textarea', 
 			{id: this.id, className : "markdownEditor"});
@@ -122,10 +118,17 @@ export class ArticleEditor extends React.Component{
 			imageLabel = "Article Image:";
 		} 
 
-		
+		let titleStyle = {
+			width: '90%'
+		}
 		return (
 			<div className="articleEditor">
-				{titleField}
+				<TextField className="articleTitleField"
+			      floatingLabelText="Article Title"
+			      onChange={this.onTitleChanged.bind(this)}
+			      value={this.state.title}
+			      style={titleStyle}
+			    />
 				{editor}
 				<div className="imagePreviewContainer">
 					<h3>{imageLabel}</h3>
