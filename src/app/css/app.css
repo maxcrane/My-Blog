@@ -81,7 +81,8 @@
 .topnavlink {
     margin: 0% 1% 0% 1%;
     align-self: center;
-    font-size: 25px;
+    font-size: 26px;
+    font-weight: 300;
 }
 
 .navcontainer {
@@ -163,6 +164,7 @@
     max-width: 60px;
 }
 
+/* roboto has font weight 300 & 400 */
 * {
     font-size: 100%;
     font-family: 'Roboto', sans-serif;
@@ -201,9 +203,11 @@
 }
 
 .articleTitle {
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: 300;
     color: white;
     text-decoration: none;
+    margin-bottom: 5px;
 }
 
 .articleDate {

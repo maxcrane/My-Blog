@@ -39,7 +39,7 @@ export class ArticleCard extends React.Component{
 				      key={`${index}link`} 
 				      to={{ pathname : `/article/${article.key}`,
 							state : {key : article.key}}}>
-					<h2 key={index} className="articleTitle articleTitleLink">
+					<h2 key={index} className="articleTitle">
 						{article.title}
 					</h2>	
 				</Link>

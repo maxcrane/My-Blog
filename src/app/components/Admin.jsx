@@ -7,6 +7,8 @@ import {
 import axios from "axios";
 import firebase from "firebase";
 import auth from "../utils/auth";
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 export class Admin extends React.Component{
 	constructor(props) {
@@ -95,13 +97,17 @@ export class Admin extends React.Component{
 		let goToPhotos = null;
 		let loggedIn = this.state.loggedIn;
 
+		const style = {
+			width: "90%",
+			paddingLeft: "10%"
+		}
 
 	    if (loggedIn && loggedIn != undefined) {
-	    	goToCreate = <Link to="/create"><button className="btn btn-primary center-block adminButton" type="submit">Create</button></Link>;
-	    	goToPhotos = <Link to="/photos"><button className="btn btn-primary center-block adminButton"  type="submit">Photos</button></Link>;
-	    	loginbutton = <button className="btn btn-primary center-block adminButton" onClick={this.onLogout.bind(this)} type="submit">Logout</button>;
+	    	goToCreate = <Link to="/create"><RaisedButton label="create an article" fullWidth={true}/></Link>;
+	    	goToPhotos = <Link to="/photos"><RaisedButton label="manage photos" fullWidth={true}/></Link>;
+	    	loginbutton = <RaisedButton label="logout" fullWidth={true} onClick={this.onLogout.bind(this)} type="submit"/>;
 	    } else if (loggedIn != undefined){
-	      	loginbutton = <button className="btn btn-primary center-block adminButton" onClick={this.onLogin.bind(this)} type="submit">Login</button>;
+	      	loginbutton = <RaisedButton label="login" fullWidth={true} onClick={this.onLogin.bind(this)} type="submit"/>;
 	    	form = 	<div className="logincontainer">
 							<input  type="text" placeholder="email" className="loginfield form-control"
 									onChange={(event)=> this.onEmailChanged(event)} ></input>
@@ -111,10 +117,14 @@ export class Admin extends React.Component{
 	    }
 
 		return (
-			<div>	
+			<div style={style}>	
 				{form}
 				{goToCreate}
+				<br />
+				<br />
 				{goToPhotos}
+				<br />
+				<br />
 				{loginbutton}
 			</div>
 		);
