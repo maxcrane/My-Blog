@@ -8,7 +8,7 @@ import axios from "axios";
 import firebase from "firebase";
 import auth from "../utils/auth";
 import RaisedButton from 'material-ui/RaisedButton';
-
+import TextField from 'material-ui/TextField';
 
 export class Admin extends React.Component{
 	constructor(props) {
@@ -92,6 +92,7 @@ export class Admin extends React.Component{
 
 	render() {
 		let loginbutton = null;
+		let logoutButton = null;
 		let form  = null;
 		let goToCreate = null;
 		let goToPhotos = null;
@@ -102,17 +103,52 @@ export class Admin extends React.Component{
 			paddingLeft: "10%"
 		}
 
-	    if (loggedIn && loggedIn != undefined) {
-	    	goToCreate = <Link to="/create"><RaisedButton label="create an article" fullWidth={true}/></Link>;
-	    	goToPhotos = <Link to="/photos"><RaisedButton label="manage photos" fullWidth={true}/></Link>;
-	    	loginbutton = <RaisedButton label="logout" fullWidth={true} onClick={this.onLogout.bind(this)} type="submit"/>;
-	    } else if (loggedIn != undefined){
-	      	loginbutton = <RaisedButton label="login" fullWidth={true} onClick={this.onLogin.bind(this)} type="submit"/>;
+		const loginFields = {
+			alignSelf: "center"
+		};
+
+		const loginButton = {
+			width: "256px",
+			alignSelf: "center",
+			marginTop: "20px"
+		};
+
+		console.log(loggedIn);
+
+	    if (loggedIn) {
+	    	goToCreate 	= 	<Link  	to="/create"><RaisedButton 
+	    	 						label="create an article" 
+	    	 						primary={true}
+	    	 						fullWidth={true} 
+	    	 						style={loginButton}/>
+	    	 				</Link>;
+
+	    	goToPhotos 	= 	<Link 	to="/photos"><RaisedButton 
+	    							label="manage photos" 
+	    							primary={true}
+	    							fullWidth={true}/>
+	    				 	</Link>;
+
+	    	logoutButton = <RaisedButton label="logout" secondary={true} fullWidth={true} onClick={this.onLogout.bind(this)} type="submit"/>;
+	    } else if (loggedIn !== undefined){
+	      	loginbutton = <RaisedButton label="login" onClick={this.onLogin.bind(this)} style={loginButton} type="submit"/>;
 	    	form = 	<div className="logincontainer">
-							<input  type="text" placeholder="email" className="loginfield form-control"
-									onChange={(event)=> this.onEmailChanged(event)} ></input>
-							<input type="password" placeholder="Enter Password" className="loginfield form-control"
-									onChange={(event)=> this.onPassChanged(event)}></input>
+	    					<TextField 
+						      floatingLabelText="email"
+						      floatingLabelFixed={true}
+						      onChange={(event)=> this.onEmailChanged(event)}
+						      value={this.state.title}
+						      style={loginFields}
+						    />
+						    <TextField 
+						      floatingLabelText="password"
+						      floatingLabelFixed={true}
+						      onChange={(event)=> this.onPassChanged(event)}
+						      value={this.state.title}
+						      style={loginFields}
+						      type="password"
+						    />
+							{loginbutton}
 					</div>;
 	    }
 
@@ -125,10 +161,8 @@ export class Admin extends React.Component{
 				{goToPhotos}
 				<br />
 				<br />
-				{loginbutton}
+				{logoutButton}
 			</div>
 		);
 	}
 }
-
-
