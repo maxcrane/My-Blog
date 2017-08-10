@@ -10,6 +10,8 @@ import photoUtils from "../../utils/photoUtils";
 import SimpleMDE from "simplemde";
 import {PhotoPicker} from "../photos/PhotoPicker.jsx";
 import TextField from 'material-ui/TextField';
+import ArticleThumbnailEditor from './ArticleThumbnailEditor.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 export class ArticleEditor extends React.Component{
@@ -91,8 +93,8 @@ export class ArticleEditor extends React.Component{
 
 	onPhotoPicked(photo) {
 		this.setState({
-			thumbnailUrl: photo.photoUrl,
-			thumbnailName: photo.photoName,
+			thumbnailUrl: photo.url,
+			thumbnailName: photo.name,
 		});
 	}
 
@@ -102,9 +104,11 @@ export class ArticleEditor extends React.Component{
 		let editor = null;
 		let imageLabel = "Please select an image:";
 		
-		let submitButton = <button className="btn btn-success editorSubmitButton" 
-			onClick={this.onButtonClicked.bind(this)}>
-			{this.props.buttonTitle}</button>
+		let submitButton = <RaisedButton	label={this.props.buttonTitle}
+											fullWidth={true} 
+											primary={true}
+											onClick={this.onButtonClicked.bind(this)} 
+											type="submit"/>;
 
 		textarea = React.createElement('textarea', 
 			{id: this.id, className : "markdownEditor"});
@@ -112,15 +116,16 @@ export class ArticleEditor extends React.Component{
 		editor = React.createElement('div', 
 			{id: `${this.id}-wrapper`, className: "markdownEditor"}, textarea);
 		
-		const {thumbnailUrl, imageMode} = this.state;
+		const {thumbnailUrl, imageMode, thumbnailName} = this.state;
 
 		if (thumbnailUrl !== null && thumbnailUrl !== undefined) {
 			imageLabel = "Article Image:";
 		} 
 
 		let titleStyle = {
-			width: '90%'
+			width: '100%'
 		}
+		
 		return (
 			<div className="articleEditor">
 				<TextField className="articleTitleField"
@@ -130,12 +135,9 @@ export class ArticleEditor extends React.Component{
 			      style={titleStyle}
 			    />
 				{editor}
-				<div className="imagePreviewContainer">
-					<h3>{imageLabel}</h3>
-					<img className="articleEditorImagePreview" 
-						 src={thumbnailUrl}></img>
-				</div>
-				<PhotoPicker onPhotoPicked={this.onPhotoPicked.bind(this)}/>
+				<ArticleThumbnailEditor url={thumbnailUrl} 
+										name={thumbnailName}
+										onPhotoPicked={this.onPhotoPicked.bind(this)}/>
 				{submitButton}
 			</div>
 		);
