@@ -403,6 +403,14 @@ footer {
     display: none;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
+}
+
 .shadow {
   -webkit-box-shadow: 3px 2px 1px  #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
   -moz-box-shadow:    3px 2px 1px  #ccc;  /* Firefox 3.5 - 3.6 */
