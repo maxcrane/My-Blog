@@ -9,46 +9,26 @@ import firebase from "firebase";
 import auth from "../utils/auth";
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Loader from "./Loader.jsx";
 
-export class Admin extends React.Component{
+class Admin extends React.Component{
 	constructor(props) {
 		super(props);
-		this.setupAuth();
 		this.state = {
 			email: null,
 			password: null,
-			loggedIn: undefined
+			loggedIn: undefined,
+			isAdmin: props.isAdmin
 		};
 	}
 
-	setupAuth() {
-		auth.onAuthStateChanged(function(user) {
-			
-		  if (user) {
-		    // User is signed in.
-		    this.setState({
-		    	loggedIn : true
-		    });
-		    var displayName = user.displayName;
-		    var email = user.email;
-		    var emailVerified = user.emailVerified;
-		    var photoURL = user.photoURL;
-		    var isAnonymous = user.isAnonymous;
-		    var uid = user.uid;
-		    var providerData = user.providerData;
-		    // ...
-		  } else {
-		    // User is signed out.
-		    // ...
-		    this.setState({
-		    	loggedIn : false
-		    });
-		  }
-		}.bind(this));
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			isAdmin : nextProps.isAdmin
+		})
 	}
 
 	componentDidMount() {
-		
 	}
 
 	onLogin() {
@@ -86,16 +66,8 @@ export class Admin extends React.Component{
 		});
 	}
 
-	onGoToCreate(){
-
-	}
-
 	render() {
-		let loginbutton = null;
-		let logoutButton = null;
 		let form  = null;
-		let goToCreate = null;
-		let goToPhotos = null;
 		let loggedIn = this.state.loggedIn;
 
 		const style = {
@@ -107,62 +79,50 @@ export class Admin extends React.Component{
 			alignSelf: "center"
 		};
 
-		const loginButton = {
+		const loginLogoutButton = {
 			width: "256px",
 			alignSelf: "center",
 			marginTop: "20px"
 		};
 
-		console.log(loggedIn);
-
-	    if (loggedIn) {
-	    	goToCreate 	= 	<Link  	to="/create"><RaisedButton 
-	    	 						label="create an article" 
-	    	 						primary={true}
-	    	 						fullWidth={true} 
-	    	 						style={loginButton}/>
-	    	 				</Link>;
-
-	    	goToPhotos 	= 	<Link 	to="/photos"><RaisedButton 
-	    							label="manage photos" 
-	    							primary={true}
-	    							fullWidth={true}/>
-	    				 	</Link>;
-
-	    	logoutButton = <RaisedButton label="logout" secondary={true} fullWidth={true} onClick={this.onLogout.bind(this)} type="submit"/>;
-	    } else if (loggedIn !== undefined){
-	      	loginbutton = <RaisedButton label="login" onClick={this.onLogin.bind(this)} style={loginButton} type="submit"/>;
-	    	form = 	<div className="logincontainer">
-	    					<TextField 
+		let usernameField = this.props.isAdmin ? null : 
+							<TextField 
 						      floatingLabelText="email"
 						      floatingLabelFixed={true}
 						      onChange={(event)=> this.onEmailChanged(event)}
 						      value={this.state.title}
 						      style={loginFields}
-						    />
-						    <TextField 
-						      floatingLabelText="password"
-						      floatingLabelFixed={true}
-						      onChange={(event)=> this.onPassChanged(event)}
-						      value={this.state.title}
-						      style={loginFields}
-						      type="password"
-						    />
-							{loginbutton}
-					</div>;
-	    }
+						    />;
 
+		let passwordField = this.props.isAdmin ? null : 
+							<TextField 
+								floatingLabelText="password"
+								floatingLabelFixed={true}
+								onChange={(event)=> this.onPassChanged(event)}
+								value={this.state.title}
+								style={loginFields}
+								type="password"
+							/>;
+
+		let loginLogoutbutton = this.props.isAdmin ? 
+									<RaisedButton label="logout" secondary={true} 
+	    							     onClick={this.onLogout.bind(this)} 
+	    							     type="submit"
+	    							     style={loginLogoutButton}/>
+	   										 : 							
+	    							<RaisedButton label="login" 
+	      				                onClick={this.onLogin.bind(this)} 
+	      				                style={loginLogoutButton} 
+	      				                type="submit"/>;
+	    
 		return (
-			<div style={style}>	
-				{form}
-				{goToCreate}
-				<br />
-				<br />
-				{goToPhotos}
-				<br />
-				<br />
-				{logoutButton}
+			<div className="logincontainer">
+				{usernameField}
+			   	{passwordField}
+				{loginLogoutbutton}
 			</div>
-		);
+		);	
 	}
 }
+
+export default Loader('isAdmin')(Admin);	

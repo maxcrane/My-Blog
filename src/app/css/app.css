@@ -324,6 +324,8 @@ footer {
     flex-direction: column;
     align-items: center;
     margin: 0% 5% 1% 5%;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 .articleEditorImagePreview {
@@ -360,7 +362,7 @@ footer {
 }
 
 .thumbnailImageDescriptionContainer {
-    width: 530px;
+    width: 430px;
     max-width: 100%;
 }
 
@@ -395,4 +397,8 @@ footer {
     width: 40%;
     right: 30%;
     bottom: 5px;
+}
+
+.hide {
+    display: none;
 }

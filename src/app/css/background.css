@@ -1,5 +1,5 @@
 @media (min-width: 601px) {
-    body {
+    .bodyWithBackground {
         background: url(/images/background.png) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 600px) {
-    body {
+    .bodyWithBackground {
         background: url(/images/background-mobile.png) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;

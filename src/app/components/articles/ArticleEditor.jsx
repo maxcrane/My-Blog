@@ -105,7 +105,7 @@ export class ArticleEditor extends React.Component{
 		let imageLabel = "Please select an image:";
 		
 		let submitButton = <RaisedButton	label={this.props.buttonTitle}
-											fullWidth={true} 
+											
 											primary={true}
 											onClick={this.onButtonClicked.bind(this)} 
 											type="submit"/>;
