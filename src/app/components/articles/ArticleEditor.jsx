@@ -127,7 +127,7 @@ export class ArticleEditor extends React.Component{
 		}
 		
 		return (
-			<div className="articleEditor">
+			<div className="articleEditor shadow">
 				<TextField className="articleTitleField"
 			      floatingLabelText="Article Title"
 			      onChange={this.onTitleChanged.bind(this)}
