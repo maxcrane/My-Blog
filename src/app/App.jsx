@@ -75,8 +75,8 @@ export default class App extends React.Component {
 					   		<Route path="/edit/:title"    component={EditArticle}/>
 					   		<Route path="/article/:title" component={Article}/>	
 					  		<Route path="/about"          component={About}/>
-					  		<Route path="/articles"       component={ArticleListContainer}/>
-					  		<Route path="/admin" exact render={() => (<Admin isAdmin={isAdmin}/>)} />	
+					  		<Route path="/articles"       exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)} />	
+					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)} />	
 					  		<Route path="/create"         component={CreateArticle}/>
 					  		<Route exact path="/photos"   component={Photos}/>
 					  		<Route path="/photos/add"     component={AddPhoto}/>

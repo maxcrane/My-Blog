@@ -4,7 +4,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
 import {sortByDate} from "../../utils/dateSorter";
 import axios from "axios";
@@ -25,7 +24,7 @@ class ArticleList extends Component {
       							 index={index}
       							 history={this.props.history}
       							 deleteArticle={this.props.deleteArticle.bind(this)}
-      							 adminLoggedIn={this.props.adminLoggedIn}/>
+      							 isAdmin={this.props.isAdmin}/>
       			)}
     		</div>
 		);

@@ -4,7 +4,6 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
 import {sortByDate} from "../../utils/dateSorter";
 import axios from "axios";
@@ -16,19 +15,14 @@ export class ArticleListContainer extends React.Component{
 		super(props);
 		this.state = {
 			articles: [],
-			adminLoggedIn: false
+			isAdmin: props.isAdmin
 		};
-		this.setupAuth();
 	}
 
-	setupAuth() {
-		auth.onAuthStateChanged(function(user) {			
-		  	if (user) {
-			    this.setState({
-			    	adminLoggedIn : true
-			    });
-		  	}
-		}.bind(this));
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			isAdmin : nextProps.isAdmin
+		});
 	}
 
 	componentDidMount() {		
@@ -71,7 +65,7 @@ export class ArticleListContainer extends React.Component{
 	render() {
 		return (
 			<ArticleList articles={this.state.articles} 
-						 adminLoggedIn={this.state.adminLoggedIn}
+						 isAdmin={this.state.isAdmin}
 						 deleteArticle={this.deleteArticle.bind(this)}
 						 history={this.props.history}/>
 		);

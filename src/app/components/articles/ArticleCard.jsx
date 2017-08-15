@@ -17,11 +17,11 @@ export class ArticleCard extends React.Component{
 	}
 
 	render() {
-		const {index, article, adminLoggedIn} = this.props;
-		const editButton = adminLoggedIn ? <span className="glyphicon glyphicon-pencil articlelinkedit" 
+		const {index, article, isAdmin} = this.props;
+		const editButton = isAdmin ? <span className="glyphicon glyphicon-pencil articlelinkedit" 
 	    									     onClick={this.editArticle.bind(this)}>
 	    									</span> : null;
-	    const deleteButton = adminLoggedIn ? <span className="glyphicon glyphicon-trash articlelinkdelete" 
+	    const deleteButton = isAdmin ? <span className="glyphicon glyphicon-trash articlelinkdelete" 
 	    									     onClick={()=>{this.props.deleteArticle(article.key)}}>
 	    									</span> : null;
 	    var img = null;		
