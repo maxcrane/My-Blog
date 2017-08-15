@@ -12,22 +12,32 @@ export default class ArticleThumbnailEditor extends React.Component {
 			url: props.url,
 			name: props.name,
 			changePhotoMode: false,
-			photos: []
+			photos: [],
+			isMounted: false
 		});
 	}
 
 	componentDidMount() {
+		this.setState({isMounted: true})
  		photoUtils.getPhotos(this.receievedPhotos.bind(this));
 	}
 
+	componentWillUnmount(){
+		this.setState({isMounted: false})
+  	}
+
 	receievedPhotos(photos) {
-		this.setState({
-			photos: photos || {}
-		})
+		if (this.state.isMounted) {
+			this.setState({
+				photos: photos || {}
+			})
+		}
 	}
 
 	componentWillReceiveProps(nextProps){
-		this.setState(nextProps)
+		if (this.state.isMounted) {
+			this.setState(nextProps)
+		}
 	}
 
 	changeButtonClicked(){

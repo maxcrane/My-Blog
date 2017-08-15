@@ -7,7 +7,7 @@ import {
 import articleUtils from "../../utils/articleUtils";
 import {sortByDate} from "../../utils/dateSorter";
 import axios from "axios";
-import {ArticleCard} from "./ArticleCard.jsx";
+import ArticleCard from "./ArticleCard.jsx";
 import Loader from "../Loader.jsx";
 
 class ArticleList extends Component {
@@ -32,4 +32,3 @@ class ArticleList extends Component {
 }
 
 export default Loader('articles')(ArticleList);
-

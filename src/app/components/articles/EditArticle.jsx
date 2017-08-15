@@ -10,7 +10,7 @@ import {ArticleEditor} from "./ArticleEditor.jsx";
 import axios from "axios"
 import SimpleMDE from "simplemde";
 
-export class EditArticle extends React.Component{
+class EditArticle extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,7 +19,11 @@ export class EditArticle extends React.Component{
 			content: "",
 			thumbnailName: "",
 			thumbnailUrl: "",
-			creationDate: ""
+			creationDate: "",
+			buttons: [
+				{name: "save and republish", callback: this.onSaveClicked.bind(this)},
+				{name: "save as draft",    callback: this.onSaveClicked.bind(this)}
+			]
 		};
 	}
 
@@ -53,15 +57,19 @@ export class EditArticle extends React.Component{
 	}
 
 	render() {
+		const {content, title, thumbnailUrl, thumbnailName, buttons} = this.state;
 		return (
 			<div>
-				<ArticleEditor content={this.state.content} 
-							   title={this.state.title}
-							   thumbnailUrl={this.state.thumbnailUrl} 
-							   thumbnailName={this.state.thumbnailName} 
-							   buttonTitle={"save"} 
-							   callback={this.onSaveClicked.bind(this)}/>
+				<ArticleEditor {...this.state}/>
 			</div>
 		);
 	}
 }
+/*
+<ArticleEditor content={content} 
+							   title={title}
+							   thumbnailUrl={thumbnailUrl} 
+							   thumbnailName={thumbnailName} 
+							   buttons={buttons}/>
+*/
+export default EditArticle;

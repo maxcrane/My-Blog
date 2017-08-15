@@ -30,7 +30,8 @@ export class Navbar extends React.Component{
 							let isLast = index === (this.state.currentNavlinks.length - 1);
 							links.push(<Link 	key={index}
 				  							 	className="navitem navlink topnavlink" 
-				  								to={current}>{current}
+				  								to={"/" + current}>
+				  								{current}
 										</Link>);
 
 							if (!isLast) {

@@ -2,38 +2,33 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom'
-import auth from "../../utils/auth";
 import {ArticleEditor} from "./ArticleEditor.jsx";
 import articleUtils from "../../utils/articleUtils";
 import SimpleMDE from "simplemde";
 
-export class CreateArticle extends React.Component{
+class CreateArticle extends React.Component{
 	constructor(props) {
 		super(props);
-		this.setupAuth();
 		this.state = {
-			adminLoggedIn : true,
+			isAdmin : props.isAdmin,
 			title : null,
 			content : null,
 			thumbnailName: null,
-			thumbnailUrl: null
+			thumbnailUrl: null,
+			buttons: [
+				{name: "save and publish", callback: this.onSubmitArticle.bind(this)},
+				{name: "save as draft",    callback: this.onSubmitArticle.bind(this)}
+			]
 		}
 	}
 
-	setupAuth() {
-		auth.onAuthStateChanged(function(user) {			
-		  if (user) {
-		    this.setState({
-		    	adminLoggedIn : true
-		    });
-		  } else {
-		    this.setState({
-		    	adminLoggedIn : false
-		    });
-		  }
-		}.bind(this));
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			isAdmin : nextProps.isAdmin
+		});
 	}
 
 	onSubmitArticle(title, content, thumbnailUrl, thumbnailName) {
@@ -51,17 +46,14 @@ export class CreateArticle extends React.Component{
 		}).catch((err) => {
 			alert(err);
 		});
-
 	}
-
 
 	render() {
 		let editor = null;
-		let adminLoggedIn = this.state.adminLoggedIn;
+		let {isAdmin, buttons} = this.state;
 		
-		if (adminLoggedIn != null && adminLoggedIn) {
-			editor = <ArticleEditor content="" title="" buttonTitle="create"
-				callback={ this.onSubmitArticle.bind(this) }/>;
+		if (isAdmin) {
+			editor = <ArticleEditor content="" title="" buttons={buttons}/>;
 		}
 		
 		return (
@@ -71,3 +63,5 @@ export class CreateArticle extends React.Component{
 		);
 	}
 }
+
+export default withRouter(CreateArticle);

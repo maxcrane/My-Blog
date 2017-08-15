@@ -17,9 +17,9 @@ import {PhotoPicker} from "./components/photos/PhotoPicker.jsx";
 import {Article} from "./components/articles/Article.jsx";
 import {ArticleList} from "./components/articles/ArticleList.jsx";
 import {ArticleListContainer} from "./components/articles/ArticleListContainer.jsx";
-import {ArticleCard} from "./components/articles/ArticleCard.jsx";
-import {CreateArticle} from "./components/articles/CreateArticle.jsx";
-import {EditArticle} from "./components/articles/EditArticle.jsx";
+import ArticleCard from "./components/articles/ArticleCard.jsx";
+import CreateArticle from "./components/articles/CreateArticle.jsx";
+import EditArticle from "./components/articles/EditArticle.jsx";
 
 //material-ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -48,7 +48,6 @@ export default class App extends React.Component {
 		this.state = {
 			isAdmin: undefined
 		};
-		
 	}
 
 	componentDidMount() {
@@ -65,6 +64,7 @@ export default class App extends React.Component {
 
 	render() {
 		let {isAdmin} = this.state;
+
 		return (
 			<MuiThemeProvider>
 				<Router>
@@ -75,9 +75,9 @@ export default class App extends React.Component {
 					   		<Route path="/edit/:title"    component={EditArticle}/>
 					   		<Route path="/article/:title" component={Article}/>	
 					  		<Route path="/about"          component={About}/>
-					  		<Route path="/articles"       exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)} />	
-					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)} />	
-					  		<Route path="/create"         component={CreateArticle}/>
+					  		<Route path="/articles"       exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>	
+					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)}/>	
+					  		<Route path="/create"         exact render={() => (<CreateArticle 		 isAdmin={isAdmin}/>)}/>
 					  		<Route exact path="/photos"   component={Photos}/>
 					  		<Route path="/photos/add"     component={AddPhoto}/>
 					    </Switch>

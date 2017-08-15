@@ -3,10 +3,11 @@ import articleUtils from "../../utils/articleUtils";
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom';
 
-export class ArticleCard extends React.Component{
+class ArticleCard extends React.Component{
 	constructor(props) {
 		super(props);
 	}
@@ -62,3 +63,5 @@ export class ArticleCard extends React.Component{
 		);
 	}
 }	
+
+export default withRouter(ArticleCard);

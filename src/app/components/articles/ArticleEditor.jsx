@@ -62,9 +62,9 @@ export class ArticleEditor extends React.Component{
 		});
 	}
 
-	onButtonClicked(){
+	onButtonClicked(callback){
 		let text = this.state.editor.value();
-		this.props.callback(this.state.title.trim(), text, 
+		callback(this.state.title.trim(), text, 
 							this.state.thumbnailUrl, this.state.thumbnailName);
 	}
 
@@ -102,13 +102,9 @@ export class ArticleEditor extends React.Component{
 		let titleField = null;
 		let textarea = null;
 		let editor = null;
+		let buttons = this.props.buttons;
 		let imageLabel = "Please select an image:";
 		
-		let submitButton = <RaisedButton	label={this.props.buttonTitle}
-											
-											primary={true}
-											onClick={this.onButtonClicked.bind(this)} 
-											type="submit"/>;
 
 		textarea = React.createElement('textarea', 
 			{id: this.id, className : "markdownEditor"});
@@ -125,6 +121,10 @@ export class ArticleEditor extends React.Component{
 		let titleStyle = {
 			width: '100%'
 		}
+
+		let buttonStyle = {
+			marginBottom: '15px'
+		}
 		
 		return (
 			<div className="articleEditor shadow">
@@ -138,7 +138,15 @@ export class ArticleEditor extends React.Component{
 				<ArticleThumbnailEditor url={thumbnailUrl} 
 										name={thumbnailName}
 										onPhotoPicked={this.onPhotoPicked.bind(this)}/>
-				{submitButton}
+				{
+					buttons.map((button) => <RaisedButton	
+												key={button.name}
+												label={button.name}
+												primary={true}
+												onClick={()=>{this.onButtonClicked(button.callback)}}
+												style={buttonStyle} 
+												type="submit"/>)
+				}
 			</div>
 		);
 	}
