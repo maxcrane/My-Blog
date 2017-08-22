@@ -295,13 +295,6 @@
     text-decoration: none;
 }
 
-footer {
-    margin-top: 50px;
-    color: white;
-    text-align: center;
-    bottom: 2px;
-}
-
 .aboutContainer {
     display: flex;
     flex-direction: column-reverse;
@@ -421,4 +414,28 @@ input:-webkit-autofill:active {
 .noDraftFoundText {
     color: white;
     text-align: center;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 80px;
+    /* bottom = footer height */
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    overflow:hidden;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
