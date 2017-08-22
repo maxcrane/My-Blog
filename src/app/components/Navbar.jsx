@@ -11,7 +11,7 @@ export class Navbar extends React.Component{
 		super(props);
 		this.state = {
 			navlinks:   [ "about", "articles"],
-			adminNavlinks: [ "about", "admin", "articles", "create", "photos"],
+			adminNavlinks: [ "about", "admin", "articles", "create", "drafts", "photos"],
 			currentNavlinks : []
 		};
 	}	

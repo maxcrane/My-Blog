@@ -14,7 +14,7 @@ import ArticleThumbnailEditor from './ArticleThumbnailEditor.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
-export class ArticleEditor extends React.Component{
+export class ArticleEditor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -97,6 +97,7 @@ export class ArticleEditor extends React.Component{
 			thumbnailName: photo.name,
 		});
 	}
+   
 
 	render() {
 		let titleField = null;

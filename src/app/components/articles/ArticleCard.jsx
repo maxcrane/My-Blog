@@ -49,7 +49,7 @@ class ArticleCard extends React.Component{
 				   {articleUtils.getPrettyCreationDate(article.creationDate)}
 				</p>
 
-				<p className="articlePreview">{article.preview}...</p>
+				<p className="articlePreview">{article.preview || article.content.substring(0, 150)}...</p>
 			
 				<div className="adminButtonContainer"> 
 					{editButton}

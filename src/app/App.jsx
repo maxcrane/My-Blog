@@ -20,6 +20,7 @@ import {ArticleListContainer} from "./components/articles/ArticleListContainer.j
 import ArticleCard from "./components/articles/ArticleCard.jsx";
 import CreateArticle from "./components/articles/CreateArticle.jsx";
 import EditArticle from "./components/articles/EditArticle.jsx";
+import Drafts from "./components/articles/Drafts.jsx";
 
 //material-ui
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -77,6 +78,7 @@ export default class App extends React.Component {
 					  		<Route path="/about"          component={About}/>
 					  		<Route path="/articles"       exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>	
 					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)}/>	
+					  		<Route path="/drafts"         exact render={() => (<Drafts               isAdmin={isAdmin}/>)}/>	
 					  		<Route path="/create"         exact render={() => (<CreateArticle 		 isAdmin={isAdmin}/>)}/>
 					  		<Route exact path="/photos"   component={Photos}/>
 					  		<Route path="/photos/add"     component={AddPhoto}/>

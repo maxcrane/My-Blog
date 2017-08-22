@@ -2,7 +2,8 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom'
 import auth from "../../utils/auth";
 import articleUtils from "../../utils/articleUtils";
@@ -20,10 +21,8 @@ class EditArticle extends React.Component{
 			thumbnailName: "",
 			thumbnailUrl: "",
 			creationDate: "",
-			buttons: [
-				{name: "save and republish", callback: this.onSaveClicked.bind(this)},
-				{name: "save as draft",    callback: this.onSaveClicked.bind(this)}
-			]
+			buttons: [],
+			draftMode: true
 		};
 	}
 
@@ -32,32 +31,84 @@ class EditArticle extends React.Component{
 		this.setState({
 			key : articleKey
 		});
+		this.fetchDraftAndArticle(articleKey);
+	}
 
+	setButtons() {
+		const {draftMode} = this.state;
+		const publishButtonTitle = draftMode ? "publish draft" : "publish changes now";
+		const draftButtonTitle = draftMode ? "save changes to draft" : "save changes as draft";
+		const buttons = [
+			{name: publishButtonTitle, callback: this.onPublishClicked.bind(this)},
+			{name: draftButtonTitle,    callback: this.onSaveDraftClicked.bind(this)}
+		];
 
-		axios.get(`/api/${articleKey}`)
-		.then((res)=>{
-			const article = res.data;
-			this.setState(article);
-		}).catch(function (error) {
-			console.log(error);
+		if (draftMode) {
+			buttons.push({
+				name: "delete draft", 
+				callback: this.onDeleteDraftClicked.bind(this)
+			})
+		}
+
+		this.setState({buttons});
+	}
+
+	fetchDraftAndArticle(articleKey) {
+		Promise.all([articleUtils.getArticle(articleKey), 
+			        articleUtils.getDraft(articleKey)])
+					.then(vals => {
+			const [article, draft] = vals;
+			const draftMode = Boolean(draft);
+			this.setState({draftMode});
+			this.setState(draftMode ? draft : article);
+			this.setButtons();
+		}).catch((err)=>{
+			alert(err);
 		});
 	}
 
-	onSaveClicked(title, content, thumbnailUrl, thumbnailName) {	
+	onDeleteDraftClicked() {
+		if (!confirm(`Are you sure you want to delete the draft?`)) {
+			return;
+		}
+
+		const articleKey = this.state.key;
+		articleUtils.deleteDraft(articleKey)
+			.then((resolve) => {
+				alert("draft deleted");
+				this.props.history.push('/articles');
+			}).catch((err) => {
+				alert(err);
+			});
+	}
+
+	onPublishClicked(title, content, thumbnailUrl, thumbnailName) {	
 		const article = {title, content, thumbnailUrl, thumbnailName, 
 								    creationDate : this.state.creationDate}
 		const articleKey = this.state.key;
 
-		articleUtils.saveArticle(article, articleKey).then((res) =>{
+		articleUtils.publishArticle(article, articleKey).then((res) =>{
 			const articleLink = `/article/${articleKey}`;
 			this.props.history.push(articleLink);
+		}).catch((err) => {
+			alert(err);
+		});
+		
+	}
+
+	onSaveDraftClicked(title, content, thumbnailUrl, thumbnailName) {
+		const article = {title, content, thumbnailUrl, thumbnailName, 
+								    creationDate : this.state.creationDate}
+		const articleKey = this.state.key;
+
+		articleUtils.saveArticleDraft(article, articleKey).then((res) =>{
+			alert("draft saved!");
 		}).catch((err) => {
 			alert(err);
 		});
 	}
 
 	render() {
-		const {content, title, thumbnailUrl, thumbnailName, buttons} = this.state;
 		return (
 			<div>
 				<ArticleEditor {...this.state}/>
@@ -65,11 +116,5 @@ class EditArticle extends React.Component{
 		);
 	}
 }
-/*
-<ArticleEditor content={content} 
-							   title={title}
-							   thumbnailUrl={thumbnailUrl} 
-							   thumbnailName={thumbnailName} 
-							   buttons={buttons}/>
-*/
-export default EditArticle;
+
+export default withRouter(EditArticle);

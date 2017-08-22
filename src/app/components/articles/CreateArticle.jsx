@@ -19,8 +19,8 @@ class CreateArticle extends React.Component{
 			thumbnailName: null,
 			thumbnailUrl: null,
 			buttons: [
-				{name: "save and publish", callback: this.onSubmitArticle.bind(this)},
-				{name: "save as draft",    callback: this.onSubmitArticle.bind(this)}
+				{name: "save as draft",    callback: this.onSaveDraft.bind(this)},
+				{name: "save and publish", callback: this.onPublishArticle.bind(this)}
 			]
 		}
 	}
@@ -31,10 +31,26 @@ class CreateArticle extends React.Component{
 		});
 	}
 
-	onSubmitArticle(title, content, thumbnailUrl, thumbnailName) {
+	onSaveDraft(title, content, thumbnailUrl, thumbnailName) {
 		const creationDate = new Date().toJSON();
 
-		articleUtils.saveArticle({
+		articleUtils.saveArticleDraft({
+			title, 
+			content, 
+			thumbnailName, 
+			thumbnailUrl,
+			creationDate
+		}).then((res) =>{
+			alert("draft saved!");
+		}).catch((err) => {
+			alert(err);
+		});
+	}
+
+	onPublishArticle(title, content, thumbnailUrl, thumbnailName) {
+		const creationDate = new Date().toJSON();
+
+		articleUtils.publishArticle({
 			title, 
 			content, 
 			thumbnailName, 

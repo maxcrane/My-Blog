@@ -6,6 +6,7 @@ slugify.extend({ '%': ' percent' })
 
 const database = firebaseRef.getFirebase().database();
 const articles = database.ref('articles');
+const drafts = database.ref('drafts');
 
 const getKeyForTitle = (articleTitle) => {
     return slugify(articleTitle, '_');
@@ -41,9 +42,52 @@ const isArticleValid = (article) => {
     return errors;
 };
 
+const getDrafts = function() {
+    return new Promise((resolve, reject) => {
+
+        drafts.once('value', (data) => {
+            const articles = [];
+            const values = data.val();
+            resolve(values || []);
+        }, (err) => {
+            reject(err);
+        });
+    });
+}
+
+const getArticle = function(articleKey) {
+    return new Promise((resolve, reject) => {
+        const articleRef = articles.child(articleKey);
+        articleRef.once("value", function(snapshot) {
+            const article = snapshot.val();
+            resolve(article);
+        }, function(errorObject) {
+            reject(errorObject);
+        });
+    });
+}
+
+const getDraft = function(articleKey) {
+    return new Promise((resolve, reject) => {
+        const draftRef = drafts.child(articleKey);
+        draftRef.once("value", function(snapshot) {
+            const draft = snapshot.val();
+            resolve(draft);
+        }, function(errorObject) {
+            reject(errorObject);
+        });
+    });
+}
+
+const deleteDraft = (articleKey) => {    
+    const draft = drafts.child(articleKey);
+    return draft.remove();        
+}
+
+
 module.exports = {
     // addArticle expects article to be an object that has a title and content key
-    saveArticle: function(article, key) {
+    publishArticle: function(article, key) {
         const validationErrors = isArticleValid(article);
 
         if (validationErrors.length) {
@@ -52,12 +96,15 @@ module.exports = {
 
         return new Promise((resolve, reject) => {
             auth.onAuthStateChanged((user) => {
-                if (user) {
-                    const articleKey = key || this.getKeyForTitle(article.title);
-                    articles.child(articleKey).set(article).then(resolve).catch(reject);
-                } else {
+                if (!Boolean(user)) {
                     reject('User not authorized');
-                }
+                } 
+
+                const articleKey = key || this.getKeyForTitle(article.title);
+                articles.child(articleKey).set(article)
+                    .then(() =>  deleteDraft(articleKey))
+                    .then(resolve)
+                    .catch(reject);
             });
         });
     },
@@ -78,7 +125,35 @@ module.exports = {
         })
     },
 
+    deleteDraft: function(articleKey) {
+        const article = articles.child(articleKey);
+        return article.remove();        
+    },
+
+    saveArticleDraft : function(article, key) {
+        const validationErrors = isArticleValid(article);
+
+        if (validationErrors.length) {
+            return Promise.reject(validationErrors.join(', '));
+        }
+
+        return new Promise((resolve, reject) => {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    const articleKey = key || this.getKeyForTitle(article.title);
+                    drafts.child(articleKey).set(article).then(resolve).catch(reject);
+                } else {
+                    reject('User not authorized');
+                }
+            });
+        });
+    },
+
     getKeyForTitle,
     addImage,
-    getPrettyCreationDate
+    getPrettyCreationDate,
+    getDrafts,
+    getArticle,
+    getDraft,
+    deleteDraft
 };
