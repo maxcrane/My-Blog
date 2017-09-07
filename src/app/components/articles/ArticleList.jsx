@@ -1,13 +1,5 @@
 import React, {Component} from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
-import articleUtils from "../../utils/articleUtils";
-import {sortByDate} from "../../utils/dateSorter";
-import axios from "axios";
-import ArticleCard from "./ArticleCard.jsx";
+import ArticleCard from './ArticleCard.jsx';
 import Loader from "../Loader.jsx";
 
 class ArticleList extends Component {
