@@ -4,10 +4,25 @@ import auth from "./auth";
 const database = firebaseRef.getFirebase().database();
 const photos = database.ref('photos');
 
+/**
+ *
+ * @param image
+ * @param progress - calls with a percent of the image uploaded from 0-100
+ * @param err
+ * @param onComplete
+ */
 const addPhoto = (image, progress, err, onComplete) => {
     const storageRef = firebaseRef.getFirebase().storage().ref(`photos/${image.name}`);
     const task = storageRef.put(image);
-    task.on('state_changed', progress, err, () => {
+
+    const percentProgress = (snapshot) => {
+        const percentUploaded = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+        if (progress) {
+            progress(percentUploaded);
+        }
+    };
+
+    task.on('state_changed', percentProgress, err, () => {
         var downloadURL = task.snapshot.downloadURL;
         addPhotoDBRecord(image.name, downloadURL, onComplete, err);
     });

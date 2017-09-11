@@ -42,10 +42,6 @@ export class ArticleListContainer extends React.Component {
         });
     }
 
-    openDialog = () => {
-        this.setState({dialogOpen: true});
-    };
-
     closeDialog = () => {
         this.setState({dialogOpen: false});
     };

@@ -357,6 +357,8 @@
 .thumbnailImageDescriptionContainer {
     width: 430px;
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .photosToPickContainer{
@@ -375,9 +377,22 @@
     max-width: 100%;
     height: 250px;
     overflow: hidden;
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
     display: inline-block;
     position: relative;
+}
+
+.thumbnailImageContainer {
+    width: 500px;
+    max-width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+
+.thumbnailImage {
+    width: 100%;
 }
 
 .imageWithButtonImage {
@@ -391,6 +406,24 @@
     right: 30%;
     bottom: 5px;
 }
+
+.customDropzone {
+    width: 500px;
+    height: 255px;
+    border: 2px dashed rgb(102, 102, 102);
+    border-radius: 5px;
+}
+
+.dropZoneRejected {
+    border: solid #c66;
+    background-color: #eee;
+}
+
+.dropZoneActive {
+    border: solid #6c6;
+    background-color: #eee;
+}
+
 
 .hide {
     display: none;
@@ -414,6 +447,24 @@ input:-webkit-autofill:active {
 .noDraftFoundText {
     color: white;
     text-align: center;
+}
+
+.flexContainerCenterItem {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumbnailEditorButtonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonsInColumn {
+    margin-bottom: 15px;
 }
 
 html {
