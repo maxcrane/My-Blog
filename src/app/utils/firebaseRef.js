@@ -10,8 +10,8 @@ var config = {
 };
 firebase.initializeApp(config);
 
-module.exports = {
+export default {
 	getFirebase : function() {
 		return firebase;
 	}
-}
+};

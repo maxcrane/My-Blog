@@ -12,12 +12,6 @@ const getKeyForTitle = (articleTitle) => {
     return slugify(articleTitle, '_');
 };
 
-const addImage = (image, progress, err, complete) => {
-    const storageRef = firebaseRef.getFirebase().storage().ref(`photos/${image.name}`);
-    const task = storageRef.put(image);
-    task.on('state_changed', progress, err, complete);
-};
-
 const getPrettyCreationDate = (rawdate) => {
     const articleCreationDate = new Date(rawdate);
     return moment(articleCreationDate).format("MMMM Do, YYYY");
@@ -150,7 +144,6 @@ module.exports = {
     },
 
     getKeyForTitle,
-    addImage,
     getPrettyCreationDate,
     getDrafts,
     getArticle,

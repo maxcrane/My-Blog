@@ -342,8 +342,8 @@
 
 .thumbnailEditorContainer {  
     max-width: 100%;
-    padding: 10px;
-    margin: 10px;
+    padding-top: 5px;
+    padding-bottom: 20px;
 }
 
 .thumbnailImagePreviewContainer {
@@ -351,7 +351,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 100%;
-    margin-bottom: 30px;
+    justify-content: center;
 }
 
 .thumbnailImageDescriptionContainer {

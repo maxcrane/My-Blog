@@ -14,10 +14,12 @@ export default class PhotoDropzone extends React.Component {
     onDrop(acceptedFiles, rejectedFiles) {
         //TODO: Only accept image file formats, show error message for other file types
         const [photo] = acceptedFiles;
-        photoUtils.addPhoto(photo, undefined, this.onError.bind(this), this.onPhotoUploaded.bind(this));
-        this.setState({
-            showUploadProgress: true
-        })
+        photoUtils.addPhoto(photo).then((photo)=> {
+            const {name, url} = photo;
+            this.onPhotoUploaded({name, url});
+        }).catch(this.onUploadError.bind(this));
+
+        this.setState({showUploadProgress: true});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,16 +31,14 @@ export default class PhotoDropzone extends React.Component {
     }
 
 
-    onError() {
-        //TODO: Handle this, show an error message
+    onUploadError(error) {
+        this.setState({showUploadProgress: false});
+        setTimeout(()=>{alert(error)}, 50);
     }
 
-    onPhotoUploaded(photoName, photoUrl) {
-        this.setState({
-            showUploadProgress: false
-        });
-
-        this.props.onImageUploaded(photoName, photoUrl);
+    onPhotoUploaded(photo) {
+        this.setState({showUploadProgress: false});
+        this.props.onImageUploaded({name: photo.name, url : photo.url});
     }
 
     render() {

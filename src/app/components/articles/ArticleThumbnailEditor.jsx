@@ -56,7 +56,8 @@ export default class ArticleThumbnailEditor extends React.Component {
         this.props.onPhotoPicked(img);
     }
 
-    onImageUploaded(name, url) {
+    onImageUploaded(photo) {
+        const {name, url} = photo;
         this.setState({name, url});
         this.setState({showUploadProgress: false});
         this.props.onPhotoPicked({name, url});
@@ -65,7 +66,7 @@ export default class ArticleThumbnailEditor extends React.Component {
     onImageFilePicked(event) {
         const photo = event.target.files[0];
         this.setState({showUploadProgress: true});
-        photoUtils.addPhoto(photo, undefined, undefined, this.onImageUploaded.bind(this));
+        photoUtils.addPhoto(photo).then(this.onImageUploaded.bind(this));
     }
 
     render() {
@@ -115,6 +116,7 @@ export default class ArticleThumbnailEditor extends React.Component {
                                 label="upload new photo"
                                 labelPosition="before"
                                 style={styles.uploadButton}
+                                className="buttonsInColumn"
                                 containerElement="label">
                                 <input type="file" style={styles.uploadInput}
                                        onChange={(event) => {
