@@ -267,7 +267,11 @@
     margin: 0% 3% 0% 3%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+}
+
+.photoListContainer div {
+    margin: 5px 10px 5px 0;
 }
 
 .addPhotoContainer {
@@ -366,6 +370,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 100%;
+    justify-content: center;
 }
 
 .photoWithButtonToPick {
@@ -409,6 +414,7 @@
 
 .customDropzone {
     width: 500px;
+    max-width: 100%;
     height: 255px;
     border: 2px dashed rgb(102, 102, 102);
     border-radius: 5px;

@@ -93,7 +93,7 @@ export default class ArticleThumbnailEditor extends React.Component {
                 left: 0,
                 width: '100%',
                 opacity: 0,
-            },
+            }
         };
 
         return (

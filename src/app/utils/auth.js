@@ -1,6 +1,6 @@
 import firebaseRef from "./firebaseRef";
 
-module.exports = {
+export default {
 	onAuthStateChanged : function(callback) {
 		firebaseRef.getFirebase().auth().onAuthStateChanged(callback);
 	},
@@ -10,4 +10,4 @@ module.exports = {
 	}
 
 
-}
+};
