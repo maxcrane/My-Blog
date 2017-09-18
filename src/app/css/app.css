@@ -20,7 +20,7 @@
 }
 
 .editorSubmitButton {
-    margin: 0% 5% 5% 5%;
+    margin: 0 5% 5% 5%;
     width: 90%;
 }
 
@@ -64,7 +64,7 @@
     margin: 0% 25% 0% 25%;
 }
 
-.article img{
+.article img {
     width: 100%;
 }
 
@@ -101,24 +101,24 @@
 }
 
 .navlink:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: white;
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
 }
 
 .navlink:hover:before {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
+    visibility: visible;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 .navlink:hover,
@@ -139,9 +139,11 @@
         font-size: 20px;
         transition: font-size 0.3s;
     }
+
     .navcontainer {
         -webkit-padding-start: 0px;
     }
+
     .article {
         margin: 0% 5% 0% 5%;
         transition: margin 0.5s;
@@ -152,6 +154,7 @@
     .navlink {
         font-size: 13px;
     }
+
     .article {
         margin: 0% 2% 0% 2%;
         transition: margin 0.5s;
@@ -322,11 +325,11 @@
     margin: 0% 5% 1% 5%;
     padding: 20px;
     border-radius: 5px;
-    background-color: rgba(255,255,255,0.85);
+    background-color: rgba(255, 255, 255, 0.85);
 }
 
 .articleEditorImagePreview {
-   max-width: 60%;
+    max-width: 60%;
 }
 
 .imagePreviewContainer {
@@ -344,7 +347,7 @@
     color: white;
 }
 
-.thumbnailEditorContainer {  
+.thumbnailEditorContainer {
     max-width: 100%;
     padding-top: 5px;
     padding-bottom: 20px;
@@ -365,26 +368,32 @@
     flex-direction: column;
 }
 
-.photosToPickContainer{
+.photosToPickContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    max-width: 100%;
     justify-content: center;
 }
 
-.photoWithButtonToPick {
-    margin-right: 30px;
-}
-
 .imageWithButtonContainer {
-    width: 500px;
+    width: 470px;
     max-width: 100%;
-    height: 250px;
+    cursor: pointer;
+    height: 235px;
     overflow: hidden;
-    /*border: 1px solid #000;*/
     display: inline-block;
     position: relative;
+    border: 3px solid #000;
+    border-radius: 3px;
+    margin: 13px 6px;
+    -webkit-transition: border 200ms ease-out;
+    -moz-transition: border 200ms ease-out;
+    -o-transition: border 200ms ease-out;
+    transition: border 200ms ease-out;
+}
+
+.imageWithButtonContainer:hover {
+    border: 3px solid rgb(0, 188, 212);
 }
 
 .thumbnailImageContainer {
@@ -430,7 +439,6 @@
     background-color: #eee;
 }
 
-
 .hide {
     display: none;
 }
@@ -444,11 +452,10 @@ input:-webkit-autofill:active {
 }
 
 .shadow {
-  -webkit-box-shadow: 3px 2px 1px  #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  -moz-box-shadow:    3px 2px 1px  #ccc;  /* Firefox 3.5 - 3.6 */
-  box-shadow:         3px 2px 1px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+    -webkit-box-shadow: 3px 2px 1px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow: 3px 2px 1px #ccc; /* Firefox 3.5 - 3.6 */
+    box-shadow: 3px 2px 1px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
-
 
 .noDraftFoundText {
     color: white;
@@ -473,6 +480,27 @@ input:-webkit-autofill:active {
     margin-bottom: 15px;
 }
 
+.customActionsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.pagination {
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: rgb(0, 188, 212);
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: rgb(0, 188, 212);
+    border-color: rgb(0, 188, 212);
+}
+
 html {
     position: relative;
     min-height: 100%;
@@ -489,7 +517,7 @@ footer {
     bottom: 0;
     height: 50px;
     width: 100%;
-    overflow:hidden;
+    overflow: hidden;
     color: white;
     text-align: center;
     display: flex;

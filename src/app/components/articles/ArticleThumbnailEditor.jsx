@@ -5,6 +5,9 @@ import ImageWithButton from "./ImageWithButton.jsx";
 import photoUtils from "../../utils/photoUtils";
 import {sortByDate} from "../../utils/dateSorter";
 import ArticleThumbnail from "../photos/ArticleThumbnail.jsx";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import ReactPaginate from 'react-paginate';
 
 export default class ArticleThumbnailEditor extends React.Component {
     constructor(props) {
@@ -12,26 +15,29 @@ export default class ArticleThumbnailEditor extends React.Component {
         this.state = ({
             url: props.url,
             name: props.name,
-            changePhotoMode: false,
+            chooseExistingPhotoMode: false,
             photos: [],
             isMounted: false,
-            showUploadProgress: undefined
+            showUploadProgress: undefined,
+            currentPage: 1,
+            pageCount: undefined,
+            photosPerPage: 10
         });
     }
 
     componentDidMount() {
         this.setState({isMounted: true});
-        photoUtils.getPhotos(this.receievedPhotos.bind(this));
     }
 
     componentWillUnmount() {
         this.setState({isMounted: false})
     }
 
-    receievedPhotos(photos) {
+    receivedPhotos(photos) {
         if (this.state.isMounted) {
             this.setState({
-                photos: photos || {}
+                photos: photos || {},
+                pageCount: Math.ceil(Object.values(photos).length / this.state.photosPerPage)
             })
         }
     }
@@ -42,16 +48,20 @@ export default class ArticleThumbnailEditor extends React.Component {
         }
     }
 
-    changeButtonClicked() {
+    chooseExistingPhotoClicked() {
+        if (!this.state.chooseExistingPhotoMode) {
+            photoUtils.getPhotos(this.receivedPhotos.bind(this));
+        }
+
         this.setState({
-            changePhotoMode: !this.state.changePhotoMode
+            chooseExistingPhotoMode: !this.state.chooseExistingPhotoMode
         });
     }
 
     imagePicked(img) {
         this.setState(img);
         this.setState({
-            changePhotoMode: false
+            chooseExistingPhotoMode: false
         });
         this.props.onPhotoPicked(img);
     }
@@ -69,17 +79,50 @@ export default class ArticleThumbnailEditor extends React.Component {
         photoUtils.addPhoto(photo).then(this.onImageUploaded.bind(this));
     }
 
-    render() {
-        const {url, name, photos, showUploadProgress} = this.state;
+    handleClose = () => {
+        this.setState({chooseExistingPhotoMode: false});
+    };
 
-        const photosToPick = this.state.changePhotoMode ?
-            Object.values(photos).sort(sortByDate('uploadDate')).map((photo, index) =>
+
+    handlePageClick = (data) => {
+        this.setState({currentPage: data.selected + 1});
+    };
+
+    render() {
+        const {
+            url, name, photos, showUploadProgress,
+            chooseExistingPhotoMode, currentPage, photosPerPage
+        } = this.state;
+
+        const startIndex = (currentPage - 1) * photosPerPage;
+        const endIndex = currentPage * photosPerPage;
+
+        const photosToPick = chooseExistingPhotoMode ?
+            Object.values(photos).sort(sortByDate('uploadDate')).slice(startIndex, endIndex).map((photo, index) =>
                 <ImageWithButton url={photo.url}
                                  key={index}
                                  name={photo.name}
                                  buttonName="select"
                                  customClasses={"photoWithButtonToPick"}
                                  onButtonClicked={this.imagePicked.bind(this)}/>) : null;
+        const actions = [
+            <ReactPaginate previousLabel={"PREVIOUS"}
+                           nextLabel={"NEXT"}
+                           pageCount={this.state.pageCount}
+                           marginPagesDisplayed={2}
+                           pageRangeDisplayed={5}
+                           forcePage={this.state.currentPage - 1}
+                           onPageChange={this.handlePageClick}
+                           containerClassName={"pagination"}
+                           subContainerClassName={"pages pagination"}
+                           activeClassName={"active"}/>,
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.handleClose}
+            />
+        ];
+
         const styles = {
             uploadButton: {
                 verticalAlign: 'middle',
@@ -93,6 +136,12 @@ export default class ArticleThumbnailEditor extends React.Component {
                 left: 0,
                 width: '100%',
                 opacity: 0,
+            },
+            dialog: {
+                height: '90%',
+                maxHeight: 'none',
+                width: '80%',
+                maxWidth: 'none',
             }
         };
 
@@ -111,7 +160,7 @@ export default class ArticleThumbnailEditor extends React.Component {
                             <RaisedButton label="choose existing photo"
                                           type="submit"
                                           className="buttonsInColumn"
-                                          onClick={this.changeButtonClicked.bind(this)}/>
+                                          onClick={this.chooseExistingPhotoClicked.bind(this)}/>
                             <RaisedButton
                                 label="upload new photo"
                                 labelPosition="before"
@@ -132,9 +181,15 @@ export default class ArticleThumbnailEditor extends React.Component {
                     </PhotoDropzone>
                 </div>
 
-                <div className="photosToPickContainer">
-                    {photosToPick}
-                </div>
+                <Dialog open={chooseExistingPhotoMode} autoScrollBodyContent={true}
+                        actionsContainerClassName={"customActionsContainer"}
+                        onRequestClose={this.handleClose.bind(this)}
+                        actions={actions} contentStyle={styles.dialog}>
+                    <div className="photosToPickContainer">
+                        {photosToPick}
+                    </div>
+                </Dialog>
+
             </div>
         )
     }

@@ -33,12 +33,8 @@ export default class ImageWithButton extends React.Component {
         return (
 
 
-                <div className={className}>
+                <div className={className} onClick={this.changeButtonClicked.bind(this)}>
                     {img}
-                    <RaisedButton label={this.props.buttonName}
-                                  type="submit"
-                                  className="imageWithButtonButton"
-                                  onClick={this.changeButtonClicked.bind(this)}/>
                 </div>
 
         )
