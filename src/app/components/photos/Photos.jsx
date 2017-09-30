@@ -1,39 +1,55 @@
 import React from "react";
 import _ from "lodash";
-import auth from "../../utils/auth";
 import photoUtils from "../../utils/photoUtils";
 import {sortByDate} from "../../utils/dateSorter";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import PhotoDropzone from './PhotoDropzone.jsx';
+import ReactPaginate from 'react-paginate';
 
 export class Photos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             photos: {},
-            isSelectionMode: Boolean(props.isSelectionMode),
-            onPhotoClicked: props.onPhotoClicked,
-            loggedIn: false,
-            includeAddPhotoButton: props.includeAddPhotoButton !== false
+            // TODO: hide page contents if user isn't an admin
+            isAdmin: props.isAdmin,
+            currentPage: 1,
+            pageCount: undefined,
+            photosPerPage: 6
         }
     }
 
     componentDidMount() {
-        auth.onAuthStateChanged(function (user) {
-            if (user) {
-                photoUtils.getPhotos(this.receievedPhotos.bind(this));
-                this.setState({
-                    loggedIn: true
-                });
-            }
-        }.bind(this));
+        photoUtils.getPhotos(this.receivedPhotos.bind(this));
     }
 
-    receievedPhotos(photos) {
-        this.setState({
-            photos: photos || {}
-        })
+    componentWillReceiveProps(newProps) {
+        if ('isAdmin' in newProps) {
+            this.setState({isAdmin: newProps.isAdmin});
+        }
     }
+
+    receivedPhotos(photos) {
+        photos = photos || {};
+        this.setState({photos});
+        this.setPageCount();
+    }
+
+    setPageCount() {
+        const {photos, currentPage} = this.state;
+        const newPageCount = Math.ceil(Object.values(photos).length / this.state.photosPerPage);
+        const newCurrentPage = currentPage > newPageCount ? newPageCount : currentPage;
+
+        this.setState({
+            pageCount: newPageCount,
+            currentPage: newCurrentPage
+        });
+    }
+
+    handlePageClick = (data) => {
+        const currentPage = data.selected + 1;
+        this.setState({currentPage});
+    };
 
     deleteImageClicked(imageKey) {
         const photos = this.state.photos;
@@ -44,6 +60,8 @@ export class Photos extends React.Component {
                 this.setState({
                     photos: _.omit(this.state.photos, imageKey)
                 });
+
+                this.setPageCount();
             }).catch((err) => {
                 console.log(`err: ${err}`);
             });
@@ -54,7 +72,7 @@ export class Photos extends React.Component {
         //TODO: (Probably safer to) grab the uuid firebase created instead of using the name as a unique key
         const photos = this.state.photos;
         photos[photo.name] = photo;
-        this.setState({ photos });
+        this.setState({photos});
     }
 
     static getMarkdownPhotoEmbed(photo) {
@@ -62,27 +80,31 @@ export class Photos extends React.Component {
     }
 
     render() {
-        let {photos} = this.state;
-        for (let key in photos) {
-            photos[key].key = key;
-        }
+        const {photos, currentPage, photosPerPage, pageCount} = this.state;
+        const startIndex = (currentPage - 1) * photosPerPage;
+        const endIndex = currentPage * photosPerPage;
+
+        const photosToDisplay = Object.keys(photos)
+            .map((key)=> Object.assign(photos[key], {key}))
+            .sort(sortByDate('uploadDate'))
+            .slice(startIndex, endIndex);
 
         return (
             <div className="photoListContainer">
-                <PhotoDropzone onImageUploaded={this.onImageUploaded.bind(this)}/>
+                {/* TODO Re add this, but have it be triggered by a "add photo" button <PhotoDropzone onImageUploaded={this.onImageUploaded.bind(this)}/>*/}
+
                 {
-                    Object.values(photos).sort(sortByDate('uploadDate')).map((photo, index) =>
+                    photosToDisplay.map((photo, index) =>
                         <div key={`${index}container`} className="thumbnailImageContainer">
-                            <a href={this.state.isSelectionMode ? "javascript:;" : photo.url}>
+                            <a href={photo.url}>
                                 <img key={index}
                                      className="thumbnailImage"
                                      src={photo.url}
                                      alt={photo.name}/>
                             </a>
 
-                            <a href="javascript:;">
-		      					<span style={this.state.isSelectionMode ? {display: "none"} : {}}
-                                      key={`delete${index}`}
+                            <a>
+		      					<span key={`delete${index}`}
                                       className="glyphicon glyphicon-trash deletePhotoButton"
                                       onClick={() => {
                                           this.deleteImageClicked(photo.key)
@@ -90,18 +112,8 @@ export class Photos extends React.Component {
 		      					</span>
                             </a>
 
-                            <a href="javascript:;">
-		      					<span style={this.state.isSelectionMode ? {} : {display: "none"}}
-                                      key={`delete${index}`}
-                                      className="glyphicon glyphicon-plus deletePhotoButton"
-                                      onClick={() => {
-                                          this.state.onPhotoClicked(photo.name, photo.url)
-                                      }}>
-		      					</span>
-                            </a>
-
                             <CopyToClipboard text={Photos.getMarkdownPhotoEmbed(photo)}>
-                                <a href="javascript:;">
+                                <a>
 			      					<span key={`copy${index}`}
                                           className="glyphicon glyphicon-copy copyPhotoButton">
 			      					</span>
@@ -111,6 +123,18 @@ export class Photos extends React.Component {
                     )
                 }
 
+                {
+                    pageCount ? <ReactPaginate previousLabel={"PREVIOUS"}
+                                               nextLabel={"NEXT"}
+                                               pageCount={this.state.pageCount}
+                                               marginPagesDisplayed={2}
+                                               pageRangeDisplayed={5}
+                                               forcePage={this.state.currentPage - 1}
+                                               onPageChange={this.handlePageClick}
+                                               containerClassName={"pagination"}
+                                               subContainerClassName={"pages pagination"}
+                                               activeClassName={"active"}/> : null
+                }
             </div>
         );
     }

@@ -11,7 +11,6 @@ import Admin from "./components/Admin.jsx";
 //Photo folder
 import {Photos} from "./components/photos/Photos.jsx";
 import {AddPhoto} from "./components/photos/AddPhoto.jsx";
-import {PhotoPicker} from "./components/photos/PhotoPicker.jsx";
 
 //Article folder
 import {Article} from "./components/articles/Article.jsx";
@@ -80,7 +79,7 @@ export default class App extends React.Component {
 					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)}/>	
 					  		<Route path="/drafts"         exact render={() => (<Drafts               isAdmin={isAdmin}/>)}/>	
 					  		<Route path="/create"         exact render={() => (<CreateArticle 		 isAdmin={isAdmin}/>)}/>
-					  		<Route exact path="/photos"   component={Photos}/>
+					  		<Route exact path="/photos"         render={() => (<Photos               isAdmin={isAdmin}/>)}/>
 					  		<Route path="/photos/add"     component={AddPhoto}/>
 					    </Switch>
 					    <Footer/>
