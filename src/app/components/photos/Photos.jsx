@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-import {Link} from 'react-router-dom'
 import auth from "../../utils/auth";
 import photoUtils from "../../utils/photoUtils";
 import {sortByDate} from "../../utils/dateSorter";
@@ -41,7 +40,7 @@ export class Photos extends React.Component {
         const photoName = photos[imageKey].name;
 
         if (confirm(`Are you sure you want to delete ${photoName}`)) {
-            photoUtils.deletePhoto(photoName, imageKey).then((data) => {
+            photoUtils.deletePhoto(photoName, imageKey).then(() => {
                 this.setState({
                     photos: _.omit(this.state.photos, imageKey)
                 });
@@ -51,25 +50,26 @@ export class Photos extends React.Component {
         }
     }
 
+    onImageUploaded(photo) {
+        //TODO: (Probably safer to) grab the uuid firebase created instead of using the name as a unique key
+        const photos = this.state.photos;
+        photos[photo.name] = photo;
+        this.setState({ photos });
+    }
+
     static getMarkdownPhotoEmbed(photo) {
         return `![${photo.name}](${photo.url})`;
     }
 
     render() {
         let {photos} = this.state;
-        let addPhotoButton = (this.state.loggedIn && this.state.includeAddPhotoButton) ?
-            <Link to="/photos/add">
-                <button className="btn btn-primary center-block addPhotoButton"
-                        type="submit">
-                    Add Photo
-                </button>
-            </Link> : null;
-        for (var key in photos) {
+        for (let key in photos) {
             photos[key].key = key;
         }
 
         return (
             <div className="photoListContainer">
+                <PhotoDropzone onImageUploaded={this.onImageUploaded.bind(this)}/>
                 {
                     Object.values(photos).sort(sortByDate('uploadDate')).map((photo, index) =>
                         <div key={`${index}container`} className="thumbnailImageContainer">
@@ -110,7 +110,7 @@ export class Photos extends React.Component {
                         </div>
                     )
                 }
-                <PhotoDropzone/>
+
             </div>
         );
     }

@@ -40,7 +40,7 @@ export default class PhotoDropzone extends React.Component {
 
     onPhotoUploaded(photo) {
         this.setState({showUploadProgress: false});
-        this.props.onImageUploaded({name: photo.name, url: photo.url});
+        this.props.onImageUploaded({name: photo.name, url: photo.url, uploadDate: new Date().toJSON()});
     }
 
     render() {
