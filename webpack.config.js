@@ -9,11 +9,11 @@ const SRC_DIR = path.resolve(__dirname, "src");
 let envPath = undefined;
 if (process.env.NODE_ENV !== 'production') {
     const envs = {
-        'development' : path.resolve(__dirname, ".devenv"),
-        'productionlocal' :path.resolve(__dirname, ".env")
+        'development': path.resolve(__dirname, ".devenv"),
+        'productionlocal': path.resolve(__dirname, ".env")
     };
     envPath = envs[process.env.NODE_ENV];
-    require('dotenv').config({path : envPath})
+    require('dotenv').config({path: envPath})
 }
 
 const config = {
@@ -25,13 +25,13 @@ const config = {
     },
     module: {
         loaders: [{
-                test: /\.jsx?/,
-                include: SRC_DIR,
-                loader: "babel-loader",
-                query: {
-                    presets: ["react", "es2015", "stage-2"]
-                }
-            },
+            test: /\.jsx?/,
+            include: SRC_DIR,
+            loader: "babel-loader",
+            query: {
+                presets: ["react", "es2015", "stage-2"]
+            }
+        },
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader?url=false"
@@ -50,16 +50,22 @@ const config = {
     context: SRC_DIR,
     plugins: [
         new CopyWebpackPlugin([{
-                from: 'images',
-                to: path.resolve(DIST_DIR, "images")
-            },
+            from: 'images',
+            to: path.resolve(DIST_DIR, "images")
+        },
             {
                 from: 'index.html',
                 to: path.resolve(DIST_DIR, 'index.html')
             }
         ]),
         new webpack.EnvironmentPlugin({
-            NODE_ENV: 'development'
+            NODE_ENV: 'development',
+            apiKey: undefined,
+            authDomain: undefined,
+            databaseURL: undefined,
+            messagingSenderId: undefined,
+            projectId: undefined,
+            storageBucket: undefined
         }),
         new Dotenv({path: envPath})
     ],
