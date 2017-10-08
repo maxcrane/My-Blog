@@ -10,14 +10,16 @@ const articles = database.ref('articles');
 //gzip compression
 app.use(compression());
 
-// Middleware that allows cross origin (for development only)
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+if (process.env.NODE_ENV !== 'production') {
+    // Middleware that allows cross origin (for development only)
+    app.use(function(req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        next();
+    });
+}
 
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 
@@ -65,4 +67,4 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, function() {
     console.log(`Express server running at http://localhost:${port}/`);
-})
+});

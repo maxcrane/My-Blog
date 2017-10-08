@@ -1,13 +1,5 @@
 const firebase = require("firebase");
-
-if (process.env.NODE_ENV !== 'production') {
-    const path = require('path');
-    const envs = {
-        'development' : path.resolve(__dirname, "..", "..", "..", ".devenv"),
-        'productionlocal' :path.resolve(__dirname, "..", "..", "..", "env")
-    };
-    require('dotenv').config({path: envs[process.env.NODE_ENV]})
-}
+require('./loadEnv');
 
 firebase.initializeApp({
     apiKey: process.env.apiKey,

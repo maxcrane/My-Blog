@@ -2,19 +2,10 @@ const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const loadEnv = require('./src/app/utils/loadEnv');
 
 const DIST_DIR = path.resolve(__dirname, "dist");
 const SRC_DIR = path.resolve(__dirname, "src");
-
-let envPath = undefined;
-if (process.env.NODE_ENV !== 'production') {
-    const envs = {
-        'development': path.resolve(__dirname, ".devenv"),
-        'productionlocal': path.resolve(__dirname, ".env")
-    };
-    envPath = envs[process.env.NODE_ENV];
-    require('dotenv').config({path: envPath})
-}
 
 const config = {
     entry: SRC_DIR + "/app/index.jsx",
@@ -67,7 +58,7 @@ const config = {
             projectId: undefined,
             storageBucket: undefined
         }),
-        new Dotenv({path: envPath})
+        new Dotenv({path: loadEnv.pathToEnv()})
     ],
     resolve: {
         alias: {
