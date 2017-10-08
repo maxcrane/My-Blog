@@ -11,7 +11,7 @@ export class ArticleListContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: [],
+            articles: null,
             isAdmin: props.isAdmin,
             dialogOpen: false,
             dialogOptions: [],
@@ -37,9 +37,10 @@ export class ArticleListContainer extends React.Component {
                 this.setState({
                     articles: res.data.filter(article => article.title).sort(sortByDate('creationDate'))
                 });
-            }).catch(function (error) {
-            console.log(error);
-        });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     closeDialog = () => {

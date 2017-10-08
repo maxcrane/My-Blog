@@ -1,17 +1,9 @@
 const express = require('express');
 const path = require('path');
-const firebase = require("firebase");
 const compression = require('compression');
 const app = express();
-const config = {
-    apiKey: "AIzaSyB3033HOIzxeeoSLsHsiWBCoRpG_Sbo-4A",
-    authDomain: "blog-987eb.firebaseapp.com",
-    databaseURL: "https://blog-987eb.firebaseio.com",
-    projectId: "blog-987eb",
-    storageBucket: "blog-987eb.appspot.com",
-    messagingSenderId: "198509011282"
-};
-firebase.initializeApp(config);
+
+const firebase = require('../src/app/utils/firebaseRef').getFirebase();
 const database = firebase.database();
 const articles = database.ref('articles');
 
@@ -44,8 +36,8 @@ app.get('/api/articles', function(req, res) {
             });
         }
         res.send(articles);
-    }, (err) => {
-        res.send(err);
+    }, () => {
+        res.send([]);
     });
 });
 

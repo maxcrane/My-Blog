@@ -1,17 +1,25 @@
-import firebase from "firebase";
+const firebase = require("firebase");
 
-var config = {
-    apiKey: "AIzaSyB3033HOIzxeeoSLsHsiWBCoRpG_Sbo-4A",
-    authDomain: "blog-987eb.firebaseapp.com",
-    databaseURL: "https://blog-987eb.firebaseio.com",
-    projectId: "blog-987eb",
-    storageBucket: "blog-987eb.appspot.com",
-    messagingSenderId: "198509011282"
-};
-firebase.initializeApp(config);
+if (process.env.NODE_ENV !== 'production') {
+    const path = require('path');
+    const envs = {
+        'development' : path.resolve(__dirname, "..", "..", "..", ".devenv"),
+        'productionlocal' :path.resolve(__dirname, "..", "..", "..", "env")
+    };
+    require('dotenv').config({path: envs[process.env.NODE_ENV]})
+}
 
-export default {
-	getFirebase : function() {
-		return firebase;
-	}
+firebase.initializeApp({
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId
+});
+
+module.exports = {
+    getFirebase: function () {
+        return firebase;
+    }
 };

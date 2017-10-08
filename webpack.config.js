@@ -1,12 +1,22 @@
-var webpack = require("webpack");
-var path = require("path");
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require("webpack");
+const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
+const DIST_DIR = path.resolve(__dirname, "dist");
+const SRC_DIR = path.resolve(__dirname, "src");
 
-var DIST_DIR = path.resolve(__dirname, "dist");
-var SRC_DIR = path.resolve(__dirname, "src");
+let envPath = undefined;
+if (process.env.NODE_ENV !== 'production') {
+    const envs = {
+        'development' : path.resolve(__dirname, ".devenv"),
+        'productionlocal' :path.resolve(__dirname, ".env")
+    };
+    envPath = envs[process.env.NODE_ENV];
+    require('dotenv').config({path : envPath})
+}
 
-var config = {
+const config = {
     entry: SRC_DIR + "/app/index.jsx",
     output: {
         path: DIST_DIR + "/app",
@@ -47,13 +57,21 @@ var config = {
                 from: 'index.html',
                 to: path.resolve(DIST_DIR, 'index.html')
             }
-        ])
+        ]),
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'development'
+        }),
+        new Dotenv({path: envPath})
     ],
     resolve: {
         alias: {
             'images': path.resolve(SRC_DIR, "images")
         }
+    },
+    node: {
+        fs: 'empty'
     }
 };
+
 
 module.exports = config;
