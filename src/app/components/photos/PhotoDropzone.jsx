@@ -48,15 +48,15 @@ export default class PhotoDropzone extends React.Component {
             <Dropzone className="customDropzone"
                       activeClassName="dropZoneActive"
                       onDrop={this.onDrop.bind(this)}>
-                {
-                    this.state.showUploadProgress ?
-                        <div className="flexContainerCenterItem">
-                            <CircularProgress
-                                size={150}
-                                thickness={5}
-                            />
-                        </div> : null
-                }
+
+                <div className="flexContainerCenterItem">
+                    {
+                        this.state.showUploadProgress ? <CircularProgress
+                            size={150}
+                            thickness={5} /> : <p>drop photo here, or click me</p>
+                    }
+                </div>
+
                 {this.state.showUploadProgress ? null : this.props.children}
             </Dropzone>
         )

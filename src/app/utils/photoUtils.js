@@ -56,7 +56,7 @@ const addPhotoDBRecord = (name, url) => {
 const getPhotos = (callback) => {
     photos.once("value", function (snap) {
         callback(snap.val());
-    });
+    }).catch(callback);
 };
 
 const deletePhoto = (imageName, imageKey) => {

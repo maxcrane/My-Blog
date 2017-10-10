@@ -173,7 +173,7 @@
 }
 
 p {
-    color: white;
+    color: black;
 }
 
 .articlecontainer {
@@ -271,14 +271,23 @@ p {
 }
 
 .photoListContainer {
-    margin: 0% 3% 0% 3%;
+    margin: 10px;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
-.photoListContainer div {
-    margin: 5px 10px 5px 0;
+.addPhotoDialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photoListEmpty {
+    align-self: center;
+    margin-top: 10px;
 }
 
 .addPhotoContainer {
@@ -288,8 +297,8 @@ p {
 }
 
 .addPhotoButton {
-    width: 350px;
-    height: auto;
+    align-self: center;
+    margin: 10px;
 }
 
 .divider {
@@ -377,6 +386,17 @@ p {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.photosContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photosContainer div{
+    margin: 10px;
 }
 
 .imageWithButtonContainer {
@@ -528,3 +548,4 @@ footer {
     align-items: center;
     justify-content: center;
 }
+

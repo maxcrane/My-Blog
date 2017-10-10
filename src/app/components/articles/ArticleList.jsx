@@ -25,7 +25,7 @@ class ArticleList extends Component {
                 {
                     articles.hasOwnProperty('length') && articles.length === 0 ?
                         <p>
-                            No articles yet :(
+                            no articles yet :(
                         </p> : null
                 }
             </div>

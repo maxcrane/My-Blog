@@ -5,17 +5,25 @@ import {sortByDate} from "../../utils/dateSorter";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import PhotoDropzone from './PhotoDropzone.jsx';
 import ReactPaginate from 'react-paginate';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
 
 export class Photos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             photos: {},
+            receivedPhotos: false,
             // TODO: hide page contents if user isn't an admin
             isAdmin: props.isAdmin,
             currentPage: 1,
             pageCount: undefined,
-            photosPerPage: 6
+            photosPerPage: 6,
+            addPhotoDialogOpen: false,
+            snackbarOpen: false,
+            snackbarMessage: ''
         }
     }
 
@@ -30,9 +38,13 @@ export class Photos extends React.Component {
     }
 
     receivedPhotos(photos) {
-        photos = photos || {};
-        this.setState({photos});
-        this.setPageCount();
+        //firebase sends back an object that looks like {code : NOT_AUTHORIZED}
+        //if the user is not authorized to view photos from the db
+        if (!("code" in photos)) {
+            photos = photos || {};
+            this.setState({photos, receivedPhotos: true});
+            this.setPageCount();
+        }
     }
 
     setPageCount() {
@@ -69,59 +81,93 @@ export class Photos extends React.Component {
     }
 
     onImageUploaded(photo) {
-        //TODO: (Probably safer to) grab the uuid firebase created instead of using the name as a unique key
         const photos = this.state.photos;
-        photos[photo.name] = photo;
-        this.setState({photos});
+        photos[photoUtils.getKeyForPhotoName(photo.name)] = photo;
+        this.setState({photos, snackbarOpen: true, snackbarMessage: `successfully uploaded ${photo.name}`});
+        this.setPageCount();
     }
+
+    closeSnackbar() {
+        this.setState({snackbarOpen: false, snackbarMessage: ''});
+    }
+
+    toggleAddPhotoDialogOpen = () => {
+        const {addPhotoDialogOpen} = this.state;
+        this.setState({addPhotoDialogOpen: !addPhotoDialogOpen});
+    };
 
     static getMarkdownPhotoEmbed(photo) {
         return `![${photo.name}](${photo.url})`;
     }
 
+    openSnackbarForPhotoEmbed(photo) {
+        this.setState({
+            snackbarMessage: `copied markdown embed to clipboard for image ${photo.name}`,
+            snackbarOpen: true
+        });
+    }
+
     render() {
-        const {photos, currentPage, photosPerPage, pageCount} = this.state;
+        const {photos, currentPage, photosPerPage, pageCount, addPhotoDialogOpen, receivedPhotos, snackbarOpen, snackbarMessage, isAdmin} = this.state;
         const startIndex = (currentPage - 1) * photosPerPage;
         const endIndex = currentPage * photosPerPage;
 
         const photosToDisplay = Object.keys(photos)
-            .map((key)=> Object.assign(photos[key], {key}))
+            .map((key) => Object.assign(photos[key], {key}))
             .sort(sortByDate('uploadDate'))
             .slice(startIndex, endIndex);
 
+        const actions = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={this.toggleAddPhotoDialogOpen.bind(this)}
+            />
+        ];
+
         return (
             <div className="photoListContainer">
-                {/* TODO Re add this, but have it be triggered by a "add photo" button <PhotoDropzone onImageUploaded={this.onImageUploaded.bind(this)}/>*/}
-
                 {
-                    photosToDisplay.map((photo, index) =>
-                        <div key={`${index}container`} className="thumbnailImageContainer">
-                            <a href={photo.url}>
-                                <img key={index}
-                                     className="thumbnailImage"
-                                     src={photo.url}
-                                     alt={photo.name}/>
-                            </a>
+                    isAdmin ? <RaisedButton
+                        label="Add Photo"
+                        className="addPhotoButton"
+                        onClick={this.toggleAddPhotoDialogOpen.bind(this)}
+                        type="submit"/> : null
+                }
 
-                            <a>
+                <div className={"photosContainer"}>
+                    {
+                        photosToDisplay.map((photo, index) =>
+                            <div key={`${index}container`} className="thumbnailImageContainer">
+                                <a href={photo.url}>
+                                    <img key={index}
+                                         className="thumbnailImage"
+                                         src={photo.url}
+                                         alt={photo.name}/>
+                                </a>
+
+                                <a>
 		      					<span key={`delete${index}`}
                                       className="glyphicon glyphicon-trash deletePhotoButton"
                                       onClick={() => {
                                           this.deleteImageClicked(photo.key)
                                       }}>
 		      					</span>
-                            </a>
+                                </a>
 
-                            <CopyToClipboard text={Photos.getMarkdownPhotoEmbed(photo)}>
-                                <a>
+                                <CopyToClipboard text={Photos.getMarkdownPhotoEmbed(photo)}>
+                                    <a onClick={() => {
+                                        this.openSnackbarForPhotoEmbed(photo)
+                                    }}>
 			      					<span key={`copy${index}`}
                                           className="glyphicon glyphicon-copy copyPhotoButton">
 			      					</span>
-                                </a>
-                            </CopyToClipboard>
-                        </div>
-                    )
-                }
+                                    </a>
+                                </CopyToClipboard>
+                            </div>
+                        )
+                    }
+                </div>
 
                 {
                     pageCount ? <ReactPaginate previousLabel={"PREVIOUS"}
@@ -135,6 +181,31 @@ export class Photos extends React.Component {
                                                subContainerClassName={"pages pagination"}
                                                activeClassName={"active"}/> : null
                 }
+
+                {
+                    photosToDisplay.length === 0 && receivedPhotos ?
+                        <p className={"photoListEmpty"}>no photos found :(</p> : null
+                }
+
+                <Dialog open={addPhotoDialogOpen}
+                        autoScrollBodyContent={true}
+                        actionsContainerClassName={"customActionsContainer"}
+                        onRequestClose={this.toggleAddPhotoDialogOpen.bind(this)}
+                        actions={actions}
+                        contentClassName={"addPhotoDialog"}
+                >
+                    <div className={"addPhotoDialog"}>
+                        <PhotoDropzone onImageUploaded={this.onImageUploaded.bind(this)}/>
+                    </div>
+                </Dialog>
+
+                <Snackbar
+                    open={snackbarOpen}
+                    message={snackbarMessage}
+                    autoHideDuration={4000}
+                    onRequestClose={this.closeSnackbar.bind(this)}
+                />
+
             </div>
         );
     }

@@ -71,7 +71,7 @@ export default class App extends React.Component {
 					<div>
 					  	<Navbar isAdmin={isAdmin}/>
 					    <Switch>
-					   		<Route exact path="/"         component={ArticleListContainer}/>
+					   		<Route path="/"         	  exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
 					   		<Route path="/edit/:title"    component={EditArticle}/>
 					   		<Route path="/article/:title" component={Article}/>	
 					  		<Route path="/about"          component={About}/>

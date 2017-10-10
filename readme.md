@@ -1,7 +1,5 @@
-#Welcome To The Repo For My Blog!
-
 #### Where does it live?
-Currently lives (on a free heroku host) at [maxcrane.org](maxcrane.org)
+Currently lives (on a free heroku host) at [maxcrane.org](http://www.maxcrane.org)
 
 #### What technologies did you use to build it?
 

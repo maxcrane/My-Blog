@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
-import axios from "axios";
 import firebase from "firebase";
 import auth from "../utils/auth";
 import RaisedButton from 'material-ui/RaisedButton';

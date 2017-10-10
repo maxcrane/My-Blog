@@ -181,10 +181,12 @@ export default class ArticleThumbnailEditor extends React.Component {
                     </PhotoDropzone>
                 </div>
 
-                <Dialog open={chooseExistingPhotoMode} autoScrollBodyContent={true}
+                <Dialog open={chooseExistingPhotoMode}
+                        autoScrollBodyContent={true}
                         actionsContainerClassName={"customActionsContainer"}
                         onRequestClose={this.handleClose.bind(this)}
-                        actions={actions} contentStyle={styles.dialog}>
+                        actions={actions}
+                        contentStyle={styles.dialog}>
                     <div className="photosToPickContainer">
                         {photosToPick}
                     </div>
