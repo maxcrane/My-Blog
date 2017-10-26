@@ -29,13 +29,13 @@ export class Navbar extends React.Component{
 						this.state.currentNavlinks.reduce((links, current, index) => {
 							let isLast = index === (this.state.currentNavlinks.length - 1);
 							links.push(<Link 	key={index}
-				  							 	className="navitem navlink topnavlink" 
+				  							 	className="navitem navlink topnavlink navlink:active"
 				  								to={"/" + current}>
 				  								{current}
 										</Link>);
 
 							if (!isLast) {
-								links.push(<li key={index + "divider"} className="divider">/</li>);
+								links.push(<li key={index + "divider"} className="divider">|</li>);
 							}	
 							return links;
 						}, [])

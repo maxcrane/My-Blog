@@ -9,6 +9,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
+import AddAPhoto from 'material-ui/svg-icons/image/add-a-photo';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 export class Photos extends React.Component {
     constructor(props) {
@@ -40,11 +42,13 @@ export class Photos extends React.Component {
     receivedPhotos(photos) {
         //firebase sends back an object that looks like {code : NOT_AUTHORIZED}
         //if the user is not authorized to view photos from the db
-        if (!("code" in photos)) {
+        if (photos && !("code" in photos)) {
             photos = photos || {};
-            this.setState({photos, receivedPhotos: true});
+            this.setState({photos});
             this.setPageCount();
         }
+
+        this.setState({receivedPhotos: true});
     }
 
     setPageCount() {
@@ -128,12 +132,29 @@ export class Photos extends React.Component {
         return (
             <div className="photoListContainer">
                 {
-                    isAdmin ? <RaisedButton
-                        label="Add Photo"
-                        className="addPhotoButton"
-                        onClick={this.toggleAddPhotoDialogOpen.bind(this)}
-                        type="submit"/> : null
+                    isAdmin ?
+                        <div>
+                            {
+                                pageCount > 1 ? <ReactPaginate previousLabel={"PREVIOUS"}
+                                                           nextLabel={"NEXT"}
+                                                           pageCount={this.state.pageCount}
+                                                           marginPagesDisplayed={2}
+                                                           pageRangeDisplayed={5}
+                                                           forcePage={this.state.currentPage - 1}
+                                                           onPageChange={this.handlePageClick}
+                                                           containerClassName={"pagination"}
+                                                           subContainerClassName={"pages pagination"}
+                                                           activeClassName={"active"}/> : null
+
+                            }
+
+                            <FloatingActionButton onClick={this.toggleAddPhotoDialogOpen.bind(this)}>
+                                <AddAPhoto/>
+                            </FloatingActionButton>
+                        </div>
+                        : null
                 }
+
 
                 <div className={"photosContainer"}>
                     {
@@ -170,16 +191,7 @@ export class Photos extends React.Component {
                 </div>
 
                 {
-                    pageCount ? <ReactPaginate previousLabel={"PREVIOUS"}
-                                               nextLabel={"NEXT"}
-                                               pageCount={this.state.pageCount}
-                                               marginPagesDisplayed={2}
-                                               pageRangeDisplayed={5}
-                                               forcePage={this.state.currentPage - 1}
-                                               onPageChange={this.handlePageClick}
-                                               containerClassName={"pagination"}
-                                               subContainerClassName={"pages pagination"}
-                                               activeClassName={"active"}/> : null
+
                 }
 
                 {

@@ -76,7 +76,8 @@ class Admin extends React.Component{
 		const loginLogoutButton = {
 			width: "256px",
 			alignSelf: "center",
-			marginTop: "20px"
+			marginTop: "20px",
+			color: "rgba(0, 200, 20, 0.4)"
 		};
 
 		let usernameField = this.props.isAdmin ? null : 
@@ -98,16 +99,11 @@ class Admin extends React.Component{
 								type="password"
 							/>;
 
-		let loginLogoutbutton = this.props.isAdmin ? 
-									<RaisedButton label="logout" secondary={true} 
-	    							     onClick={this.onLogout.bind(this)} 
-	    							     type="submit"
-	    							     style={loginLogoutButton}/>
-	   										 : 							
-	    							<RaisedButton label="login" 
-	      				                onClick={this.onLogin.bind(this)} 
-	      				                style={loginLogoutButton} 
-	      				                type="submit"/>;
+        let loginLogoutbutton = <RaisedButton label={this.props.isAdmin ? "logout" : "login" }
+											  primary={true}
+						  					  onClick={this.props.isAdmin ? this.onLogout.bind(this) : this.onLogin.bind(this)}
+						  					  style={loginLogoutButton}
+						  					  type="submit"/>;
 	    
 		return (
 			<div className="logincontainer">

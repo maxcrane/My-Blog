@@ -16,7 +16,6 @@
 
 .articleTitleField {
     margin: 1% 5% 1% 5%;
-    height: 40px;
 }
 
 .editorSubmitButton {
@@ -30,9 +29,10 @@
 
 .articleList {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
 }
 
 .articleCard {
@@ -40,8 +40,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 40%;
+
     transition: width 0.5s;
+    margin: 5px 10px;
+    background: ghostwhite;
+    padding: 20px;
+    width: 450px;
+    max-width: 100%;
 }
 
 @media only screen and (max-width: 700px) {
@@ -54,7 +59,7 @@
 .articleCardDivider {
     border-style: inset;
     border-width: 1px;
-    color: white;
+    color: black;
     width: 100%;
     margin-bottom: 0px;
     margin-top: 5px;
@@ -70,7 +75,7 @@
 
 #content {
     padding-top: 10px;
-    color: white;
+    color: black;
 }
 
 .readmorebutton {
@@ -91,41 +96,21 @@
     justify-content: center;
     align-items: center;
     border-width: 1px;
-    height: 70px;
+    height: 50px;
+    background-color:  rgba(0, 188, 190, 0.3);
 }
 
 .navlink {
     position: relative;
-    color: white;
+    color: black;
     transition: font-size 0.3s;
-}
-
-.navlink:before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: white;
-    visibility: hidden;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    transition: all 0.3s ease-in-out 0s;
-}
-
-.navlink:hover:before {
-    visibility: visible;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
 }
 
 .navlink:hover,
 .navlink:focus {
     position: relative;
-    color: white;
-    text-decoration: none;
+    color: black;
+
 }
 
 .navlink,
@@ -185,12 +170,12 @@ p {
 }
 
 .articlelinkedit {
-    margin: 5px;
+    margin-left: 20px;
     font-size: 20px;
 }
 
 .articlelinkedit:hover {
-    color: green;
+    color: rgba(0, 140, 200, 0.8);
 }
 
 .articlelinkdelete {
@@ -211,9 +196,18 @@ p {
 .articleTitle {
     font-size: 25px;
     font-weight: 300;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 5px;
+    color: black;
+    margin-bottom: 0;
+    margin-top:0;
+}
+
+.articleTitle:hover {
+    text-decoration: underline;
+}
+
+.articleImageContainer {
+    display: flex;
+    justify-content: center;
 }
 
 .articleDate {
@@ -221,6 +215,7 @@ p {
     color: lightgrey;
     text-decoration: none;
     margin-top: 5px;
+    color: rgba(0,0,0,0.4);
 }
 
 .photoContainer {
@@ -237,8 +232,9 @@ p {
 
 .articlePhoto {
     position: relative;
-    width: 100%;
-    height: auto;
+    max-width: 100%;
+    height: 250px;
+    object-fit: contain;
 }
 
 .deletePhotoButton {
@@ -302,17 +298,22 @@ p {
 }
 
 .divider {
-    color: white;
+    color: black;
 }
 
 .articleLink {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
 }
 
 .articleLink:hover {
     text-decoration: none;
+}
+
+.articleLinkContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content:center;
 }
 
 .aboutContainer {
@@ -323,7 +324,7 @@ p {
 }
 
 .aboutContainer p {
-    color: white;
+    color: black;
 }
 
 .aboutImage {
@@ -338,7 +339,7 @@ p {
     margin: 0% 5% 1% 5%;
     padding: 20px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: ghostwhite;
 }
 
 .articleEditorImagePreview {
@@ -357,7 +358,7 @@ p {
 }
 
 .articlePreview {
-    color: white;
+    color: black;
 }
 
 .thumbnailEditorContainer {
@@ -482,7 +483,7 @@ input:-webkit-autofill:active {
 }
 
 .noDraftFoundText {
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -514,6 +515,7 @@ input:-webkit-autofill:active {
 .pagination {
     margin: 5px 0;
     cursor: pointer;
+    padding-right: 25px;
 }
 
 .pagination > li > a, .pagination > li > span {
@@ -542,7 +544,7 @@ footer {
     height: 50px;
     width: 100%;
     overflow: hidden;
-    color: white;
+    color: black;
     text-align: center;
     display: flex;
     align-items: center;

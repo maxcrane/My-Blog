@@ -1,10 +1,5 @@
 import React from "react";
 import articleUtils from "../../utils/articleUtils";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
 import axios from "axios";
 import ReactDisqusComments from 'react-disqus-comments';
 

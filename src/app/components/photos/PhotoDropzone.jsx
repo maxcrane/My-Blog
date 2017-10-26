@@ -7,7 +7,8 @@ export default class PhotoDropzone extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showUploadProgress: false
+            showUploadProgress: false,
+            showUploadedPhoto: false
         }
     }
 
@@ -53,11 +54,15 @@ export default class PhotoDropzone extends React.Component {
                     {
                         this.state.showUploadProgress ? <CircularProgress
                             size={150}
-                            thickness={5} /> : <p>drop photo here, or click me</p>
+                            thickness={5} /> :
+
+
+                            null
                     }
+                    {this.state.showUploadProgress ? null : this.props.children}
                 </div>
 
-                {this.state.showUploadProgress ? null : this.props.children}
+
             </Dropzone>
         )
     }
