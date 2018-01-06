@@ -1,8 +1,6 @@
 import React from "react";
 import articleUtils from "../../utils/articleUtils";
 import {
-    BrowserRouter as Router,
-    Route,
     Link,
     withRouter
 } from 'react-router-dom';
@@ -13,7 +11,11 @@ class ArticleCard extends React.Component {
     }
 
     editArticle() {
-        const editArticleLink = `edit/${this.props.article.key}`
+        const article = this.props.article;
+
+        const linkPrefix = (this.props.isDraft || article.draftKey) ? 'edit-draft' : 'edit';
+        const linkKey = this.props.isDraft ? article.key : article.draftKey || article.url;
+        const editArticleLink = `${linkPrefix}/${linkKey}`;
         this.props.history.push(editArticleLink);
     }
 
@@ -24,10 +26,10 @@ class ArticleCard extends React.Component {
 	    									</span> : null;
         const deleteButton = isAdmin ? <span className="glyphicon glyphicon-trash articlelinkdelete"
                                              onClick={() => {
-                                                 this.props.deleteArticle(article.key)
+                                                 this.props.deleteArticle(article)
                                              }}>
 	    									</span> : null;
-        var img = null;
+        let img = null;
         if (article.thumbnailUrl && article.thumbnailName) {
             img = <img key={`${index}img`}
                        src={article.thumbnailUrl}
@@ -36,14 +38,18 @@ class ArticleCard extends React.Component {
             </img>
         }
 
+        if (article.content === undefined) {
+            article.content = "";
+        }
+
         return (
             <div className="articleCard">
                 <div className="articleLinkContainer">
                     <Link className="articleLink navlink"
                           key={`${index}link`}
                           to={{
-                              pathname: `/article/${article.key}`,
-                              state: {key: article.key}
+                              pathname: `/article/${article.url}`,
+                              state: {key: article.url}
                           }}>
 
                         <h2 key={index} className="articleTitle">

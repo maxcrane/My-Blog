@@ -1,11 +1,9 @@
 import React from "react";
 import articleUtils from "../../utils/articleUtils";
-import {sortByDate} from "../../utils/dateSorter";
-import axios from "axios";
 import ArticleList from "./ArticleList.jsx";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-
+import _ from 'lodash';
 
 export class ArticleListContainer extends React.Component {
     constructor(props) {
@@ -32,15 +30,24 @@ export class ArticleListContainer extends React.Component {
     }
 
     getArticles() {
-        axios.get('/api/articles')
-            .then((res) => {
-                this.setState({
-                    articles: res.data.filter(article => article.title).sort(sortByDate('creationDate'))
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        articleUtils.getArticles()
+            .then(this.prepareArticlesForView)
+            .then(this.assignArticlesToState.bind(this))
+            .catch(console.log.bind(this));
+    }
+
+    prepareArticlesForView(articles) {
+        _.forOwn(articles, function(value, key) {
+
+            value.key = key;
+            value.preview = value.content.substring(0, 150);
+        });
+
+        return Promise.resolve(_.reverse(_.values(articles)));
+    }
+
+    assignArticlesToState(articles) {
+        this.setState({articles});
     }
 
     closeDialog = () => {
@@ -70,12 +77,12 @@ export class ArticleListContainer extends React.Component {
         });
     };
 
-    onDeleteArticle(key) {
+    onDeleteArticle(article) {
         this.setState({
-            dialogTitle: `are you sure you want to delete ${key}?`,
+            dialogTitle: `are you sure you want to delete ${article.title}?`,
             dialogMessage: 'this will unpublish the article',
             dialogOpen: true,
-            confirmDeleteArticleKey: key,
+            confirmDeleteArticleKey: article.key,
             dialogOptions: [
                 <FlatButton
                     label="Cancel"
@@ -92,10 +99,15 @@ export class ArticleListContainer extends React.Component {
     }
 
     articleDeleted(deletedArticleKey) {
-        this.setState({
-            articles: this.state.articles.filter(article =>
-                article.key !== deletedArticleKey)
-        });
+        const articles = this.state.articles.filter(article =>
+            article.key !== deletedArticleKey);
+
+
+        this.setState({articles});
+    }
+
+    getPage(pageNum, startKey) {
+        this.getArticles(pageNum, startKey);
     }
 
     render() {
@@ -103,9 +115,10 @@ export class ArticleListContainer extends React.Component {
             <div>
                 <ArticleList articles={this.state.articles}
                              isAdmin={this.state.isAdmin}
+                             isListOfDrafts={false}
+                             getPage={this.getPage.bind(this)}
                              deleteArticle={this.onDeleteArticle.bind(this)}
                              history={this.props.history}/>
-
                 <div>
                     <Dialog
                         title={this.state.dialogTitle}

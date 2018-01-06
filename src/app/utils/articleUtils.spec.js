@@ -1,7 +1,7 @@
 import articleUtils from "../utils/articleUtils";
 
 describe('article utils', function() {
-    describe('converting an article title to a firebase key', () => {
+    describe('converting an article title to a firebase url', () => {
         it('should not do anything to single word', () => {
             expect(articleUtils.getKeyForTitle("Cats")).to.equal("Cats");
         });

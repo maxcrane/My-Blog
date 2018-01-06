@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "articles": {
+      ".read": true,
+      ".indexOn": [
+        "url"
+      ],
+      "$articleId": {
+        ".write": "!data.exists() || auth.uid === data.child('authorUid').val()",
+        ".validate": "newData.hasChildren(['title', 'content', 'creationDate', 'authorUid', 'url'])"
+      }
+    },
+    "photos": {
+      ".read": true,
+      ".write": "auth !== null"
+    },
+    "drafts": {
+      ".read": true,
+      "$draftId": {
+        ".read": "auth.uid === data.child('authorUid').val()",
+        ".write": "!data.exists() || auth.uid === data.child('authorUid').val()",
+        ".validate": "newData.hasChildren(['title', 'creationDate'])"
+      }
+    }
+  }
+}

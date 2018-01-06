@@ -5,7 +5,6 @@ import {sortByDate} from "../../utils/dateSorter";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import PhotoDropzone from './PhotoDropzone.jsx';
 import ReactPaginate from 'react-paginate';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
@@ -171,7 +170,7 @@ export class Photos extends React.Component {
 		      					<span key={`delete${index}`}
                                       className="glyphicon glyphicon-trash deletePhotoButton"
                                       onClick={() => {
-                                          this.deleteImageClicked(photo.key)
+                                          this.deleteImageClicked(photo.url)
                                       }}>
 		      					</span>
                                 </a>

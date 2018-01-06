@@ -44,7 +44,8 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAdmin: undefined
+			isAdmin: undefined,
+			user: undefined
 		};
 	}
 
@@ -55,13 +56,14 @@ export default class App extends React.Component {
 	setupAuth() {
 		auth.onAuthStateChanged(function(user) {
 		    this.setState({
-		    	isAdmin : Boolean(user)
+		    	isAdmin : Boolean(user),
+				user: user
 		    }); 
 		}.bind(this));
 	}
 
 	render() {
-		let {isAdmin} = this.state;
+		let {isAdmin, user} = this.state;
 
 		return (
 			<MuiThemeProvider>
@@ -69,16 +71,17 @@ export default class App extends React.Component {
 					<div>
 					  	<Navbar isAdmin={isAdmin}/>
 					    <Switch>
-					   		<Route path="/"         	  exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
-					   		<Route path="/edit/:title"    component={EditArticle}/>
-					   		<Route path="/article/:title" component={Article}/>	
-					  		<Route path="/about"          component={About}/>
-					  		<Route path="/articles"       exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>	
-					  		<Route path="/admin"          exact render={() => (<Admin                isAdmin={isAdmin}/>)}/>	
-					  		<Route path="/drafts"         exact render={() => (<Drafts               isAdmin={isAdmin}/>)}/>	
-					  		<Route path="/create"         exact render={() => (<CreateArticle 		 isAdmin={isAdmin}/>)}/>
-					  		<Route exact path="/photos"         render={() => (<Photos               isAdmin={isAdmin}/>)}/>
-					  		<Route path="/photos/add"     component={AddPhoto}/>
+					   		<Route path="/"         	  	exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
+					   		<Route path="/edit/:articleTitle"   exact render={() => (<EditArticle isDraft={false}/>)}/>
+							<Route path="/edit-draft/:draftKey"	exact render={() => (<EditArticle isDraft={true}/>)}/>
+					   		<Route path="/article/:title" 	component={Article}/>
+					  		<Route path="/about"          	component={About}/>
+					  		<Route path="/articles"       	exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
+					  		<Route path="/admin"          	exact render={() => (<Admin                isAdmin={isAdmin}/>)}/>
+					  		<Route path="/drafts"         	exact render={() => (<Drafts               isAdmin={isAdmin}/>)}/>
+					  		<Route path="/create"         	exact render={() => (<CreateArticle 		 isAdmin={isAdmin} user={user}/>)}/>
+					  		<Route exact path="/photos"     render={() => (<Photos               isAdmin={isAdmin}/>)}/>
+					  		<Route path="/photos/add"     	component={AddPhoto}/>
 					    </Switch>
 					    <Footer/>
 					</div>

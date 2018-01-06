@@ -35,6 +35,17 @@
     justify-content: center;
 }
 
+.articleAndPaginator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.articlePaginator {
+    margin-top: 50px;
+}
+
 .articleCard {
     list-style-type: none;
     display: flex;
@@ -208,6 +219,7 @@ p {
 .articleImageContainer {
     display: flex;
     justify-content: center;
+    align-self: center;
 }
 
 .articleDate {
