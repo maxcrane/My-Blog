@@ -40,10 +40,7 @@ const config = {
     },
     context: SRC_DIR,
     plugins: [
-        new CopyWebpackPlugin([{
-            from: 'images',
-            to: path.resolve(DIST_DIR, "images")
-        },
+        new CopyWebpackPlugin([
             {
                 from: 'index.html',
                 to: path.resolve(DIST_DIR, 'index.html')
