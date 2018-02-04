@@ -59,11 +59,6 @@ const config = {
             storageBucket: undefined
         })
     ],
-    resolve: {
-        alias: {
-            'images': path.resolve(SRC_DIR, "images")
-        }
-    },
     node: {
         fs: 'empty'
     }
