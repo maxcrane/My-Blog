@@ -12,8 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
     const path = require('path');
 
     const envs = {
-        'development' : path.resolve(__dirname, "..", "..", "..", ".devenv"),
-        'productionlocal' :path.resolve(__dirname, "..", "..", "..", ".env")
+        'development' : path.resolve(__dirname, "..", "..", "..", "dev.env"),
+        'productionlocal' :path.resolve(__dirname, "..", "..", "..", "prod.env")
     };
 
     pathToEnv = envs[process.env.NODE_ENV];

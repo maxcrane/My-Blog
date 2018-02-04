@@ -57,8 +57,7 @@ const config = {
             messagingSenderId: undefined,
             projectId: undefined,
             storageBucket: undefined
-        }),
-        new Dotenv({path: loadEnv.pathToEnv()})
+        })
     ],
     resolve: {
         alias: {

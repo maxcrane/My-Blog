@@ -9,9 +9,7 @@ npm-debug.log*
 
 .idea
 
-.env
-
-.devenv
+*.env
 
 # Runtime data
 pids
