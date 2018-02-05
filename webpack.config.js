@@ -42,7 +42,7 @@ const config = {
     plugins: [
         new CopyWebpackPlugin([
             {
-                from: path.resolve("src", "images"),
+                from: 'src/images',
                 to: path.resolve(DIST_DIR, "images")
             },
             {
