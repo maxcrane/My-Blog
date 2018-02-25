@@ -1,8 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
-const loadEnv = require('./src/app/utils/loadEnv');
+require('./src/app/utils/loadEnv');
 
 const DIST_DIR = path.resolve(__dirname, "dist");
 const SRC_DIR = path.resolve(__dirname, "src");
@@ -42,9 +41,9 @@ const config = {
     plugins: [
         new CopyWebpackPlugin([
             {
-                from: 'images',
-                to: path.resolve(DIST_DIR, "images"),
-                toType: 'dir'
+                from: path.resolve(SRC_DIR, "images", "favicon.ico"),
+                to: path.resolve(DIST_DIR, "images", "favicon.ico"),
+                toType: 'file'
             },
             {
                 from: 'index.html',
