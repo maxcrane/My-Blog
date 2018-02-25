@@ -43,11 +43,13 @@ const config = {
         new CopyWebpackPlugin([
             {
                 from: 'images',
-                to: path.resolve(DIST_DIR, "images")
+                to: path.resolve(DIST_DIR, "images"),
+                toType: 'dir'
             },
             {
                 from: 'index.html',
-                to: path.resolve(DIST_DIR, 'index.html')
+                to: path.resolve(DIST_DIR, 'index.html'),
+                toType: 'file'
             }
         ]),
         new webpack.EnvironmentPlugin({
