@@ -28,42 +28,39 @@ class CreateArticle extends React.Component {
     }
 
     onSaveDraft(title, content, thumbnailUrl, thumbnailName) {
-        const creationDate = new Date().toJSON();
         const authorUid = this.state.user.uid;
 
-        articleUtils.saveDraft({
+        const draft = {
             title,
             content,
             thumbnailName,
             thumbnailUrl,
-            creationDate,
             authorUid
-        }).then((res) => {
+        };
+
+        articleUtils.createDraft(draft).then((firebaseDraftWithKey) => {
             //TODO: Make into a toast instead of modal
             alert(`draft saved!`);
-            const draftLink = `/edit-draft/${res}`;
+            const draftLink = `/edit-draft/${firebaseDraftWithKey.key}`;
             this.props.history.push(draftLink);
         }).catch((err) => {
-            alert(err);
+            console.log(err);
         });
     }
 
     onPublishArticle(title, content, thumbnailUrl, thumbnailName) {
         const creationDate = new Date().toJSON();
-        const url = articleUtils.getUrlFromTitle(title);
         const authorUid = this.state.user.uid;
 
-        articleUtils.publishArticle({
+        articleUtils.publishNewArticle({
             title,
             content,
             thumbnailName,
             thumbnailUrl,
             creationDate,
             authorUid,
-            url
-        }).then(() => {
-            const articleLink = `article/${url}`;
-            this.props.history.push(articleLink);
+        }).then((url) => {
+            this.props.history.push(`article/${url}`);
         }).catch((err) => {
             //TODO: Use material UI dialog
             alert(err);

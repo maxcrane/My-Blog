@@ -12,7 +12,6 @@ class ArticleCard extends React.Component {
 
     editArticle() {
         const article = this.props.article;
-
         const linkPrefix = (this.props.isDraft || article.draftKey) ? 'edit-draft' : 'edit';
         const linkKey = this.props.isDraft ? article.key : article.draftKey || article.url;
         const editArticleLink = `${linkPrefix}/${linkKey}`;

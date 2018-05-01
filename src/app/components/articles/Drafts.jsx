@@ -20,11 +20,7 @@ export default class Drafts extends React.Component {
     getDrafts() {
         articleUtils.getDrafts().then((drafts) => {
             this.setState({
-                drafts: Object.keys(drafts).map((key) => {
-                    let draft = drafts[key];
-                    draft.key = key;
-                    return draft;
-                }),
+                drafts,
                 waitingOnResponse: false
             })
         }).catch((err) => {

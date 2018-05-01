@@ -15,11 +15,14 @@
       ".write": "auth !== null"
     },
     "drafts": {
-      ".read": true,
+      ".read": "auth.uid === data.child('authorUid').val()",
+      ".indexOn": [
+        "published"
+      ],
       "$draftId": {
         ".read": "auth.uid === data.child('authorUid').val()",
         ".write": "!data.exists() || auth.uid === data.child('authorUid').val()",
-        ".validate": "newData.hasChildren(['title', 'creationDate'])"
+        ".validate": "newData.hasChildren(['authorUid'])"
       }
     }
   }

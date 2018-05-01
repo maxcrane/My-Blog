@@ -2,14 +2,12 @@ import React from "react";
 import {withRouter} from 'react-router-dom'
 import articleUtils from "../../utils/articleUtils";
 import {ArticleEditor} from "./ArticleEditor.jsx";
-
+import _ from 'lodash';
 
 class EditArticle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            articleKey: undefined,
-            articleUrl: undefined,
             draftKey: undefined,
             title: undefined,
             content: undefined,
@@ -17,31 +15,26 @@ class EditArticle extends React.Component {
             thumbnailUrl: undefined,
             creationDate: undefined,
             authorUid: undefined,
-            isDraft: this.props.isDraft
+            firebaseDraft: undefined //draft as it is saved in firebase
         };
     }
 
     componentDidMount() {
-        const {draftKey, articleTitle} = this.props.match.params;
-        this.setState({draftKey, articleTitle});
-        this.fetchDraftOrArticle(this.state.isDraft, draftKey, articleTitle);
+        const {draftKey} = this.props.match.params;
+        this.setState({draftKey});
+        this.fetchDraft(draftKey);
     }
 
-    fetchDraftOrArticle(isDraft, draftKey, articleTitle) {
-        if (isDraft) {
-            articleUtils.getDraft(draftKey)
-                .then(this.setState.bind(this))
-                .catch((err) => console.log(err));
-        }
-        else {
-            articleUtils.getArticleWithKeyAtUrl(articleTitle)
-                .then(this.setState.bind(this))
-                .catch((err) => console.log(err));
-        }
+    fetchDraft(draftKey) {
+        articleUtils.getDraft(draftKey)
+            .then((firebaseDraft) => {
+                this.setState(_.assign({firebaseDraft}, firebaseDraft.latestVersion));
+            })
+            .catch((err) => console.log(err));
     }
 
     getButtons() {
-        const {isDraft} = this.state;
+        const isDraft = true;//this.state;
         const publishButtonTitle = isDraft ? "publish draft" : "publish changes now";
         const draftButtonTitle = isDraft ? "save changes to draft" : "save changes as draft";
         const buttons = [
@@ -74,59 +67,30 @@ class EditArticle extends React.Component {
     }
 
     onPublishClicked(title, content, thumbnailUrl, thumbnailName) {
-        console.log('publish clicked');
-        //console.log(this.state);
+        const updatedState = {title, content, thumbnailName, thumbnailUrl};
+        this.setState(updatedState);
+        const {draftKey, firebaseDraft} = this.state;
 
-        const updateDate = new Date().toJSON();
-        const contents = {title, content, thumbnailUrl, thumbnailName, updateDate};
-        this.state.isDraft ? this.publishDraft(contents) : this.updateArticle(contents);
-    }
-
-    publishDraft(contents) {
-        const {articleKey, authorUid, creationDate, draftKey} = this.state;
-        const draft = Object.assign(contents, {authorUid, creationDate});
-
-
-        articleUtils.publishDraft(draft, draftKey, articleKey)
+        articleUtils.publishDraft(draftKey, firebaseDraft, updatedState)
             .then((key) => {
                 alert(`Draft published!`);
                 const articleLink = `/article/${key}`;
                 this.props.history.push(articleLink);
             })
             .catch((err) => {
-                alert(err)
-            });
-    }
-
-    updateArticle(contents) {
-        const {articleKey, authorUid, creationDate, url} = this.state;
-        const updateDate = new Date().toJSON();
-        const article = Object.assign(contents, {authorUid, creationDate, url, updateDate});
-
-        articleUtils.updateArticle(article, articleKey).then(() => {
-            alert(`Article updated!`);
-            const articleLink = `/article/${url}`;
-            this.props.history.push(articleLink);
-        }).catch((err) => {
-            alert(err);
-        });
+                alert(err);
+            })
     }
 
     onSaveDraftClicked(title, content, thumbnailUrl, thumbnailName) {
-        console.log(`save draft clicked....`);
-        console.log(this.state);
+        const updatedState = {title, content, thumbnailName, thumbnailUrl};
+        this.setState(updatedState);
+        const {draftKey, firebaseDraft} = this.state;
 
-        this.setState({title, content, thumbnailName, thumbnailUrl});
-        const {authorUid, creationDate, draftKey, articleKey, url} = this.state;
-
-        const draft = {title, content, thumbnailUrl, thumbnailName,
-                        authorUid, creationDate, articleKey, url};
-
-        articleUtils.saveDraft(draft, draftKey)
-            .then((draftKey) => {
-                alert(`Draft saved successfully`);
-                this.props.history.push(`/edit-draft/${draftKey}`);
-                this.setState({isDraft: true, draftKey});
+        articleUtils.updateDraft(draftKey, firebaseDraft, updatedState)
+            .then((updatedFirebaseDraft) => {
+                alert(`draft saved successfully`);
+                this.setState({firebaseDraft: updatedFirebaseDraft});
             })
             .catch(err => alert(`error: ${err}`));
     }
