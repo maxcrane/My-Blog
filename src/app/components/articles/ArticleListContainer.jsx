@@ -38,7 +38,6 @@ export class ArticleListContainer extends React.Component {
 
     prepareArticlesForView(articles) {
         _.forOwn(articles, function(value, key) {
-
             value.key = key;
             value.preview = value.content.substring(0, 150);
         });

@@ -15,7 +15,7 @@
       ".write": "auth !== null"
     },
     "drafts": {
-      ".read": "auth.uid === data.child('authorUid').val()",
+      ".read": "auth !== null",
       ".indexOn": [
         "published"
       ],

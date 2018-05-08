@@ -33,8 +33,6 @@ export default class Drafts extends React.Component {
             return;
         }
 
-        console.log(draftToDelete);
-
         articleUtils.deleteDraft(draftToDelete.key, draftToDelete.articleKey)
             .then(() => {
                 this.setState({

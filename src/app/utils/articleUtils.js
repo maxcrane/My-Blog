@@ -9,8 +9,6 @@ const articles = database.ref('articles');
 const drafts = database.ref('drafts');
 
 const defaultPageSize = 3;
-const publishedArticleKeys = ["authorUid", "content", "creationDate", "draftKey",
-    "thumbnailName", "thumbnailUrl", "title", "lastUpdatedDate", "url"];
 const firebaseDraftProps = ['articleKey', 'authorUid', 'creationDate', 'lastUpdatedDate',
                             'latestVersion', 'url', 'version', 'versions', 'published'];
 const draftProps = ['content', 'title', 'thumbnailUrl', 'thumbnailName'];
@@ -27,22 +25,24 @@ const getPrettyCreationDate = (rawdate) => {
 
 const getDrafts = function () {
     return new Promise((resolve) => {
-        drafts.orderByChild('published').equalTo(false).once("value", (snapshot) => {
-            const snapshotValue = snapshot.val();
+        drafts.orderByChild('published')
+            .equalTo(false)
+            .once("value", (snapshot) => {
+                const snapshotValue = snapshot.val();
 
-            const drafts = _.keys(snapshotValue).map((key) => {
-                const draft = snapshotValue[key];
-                const latestDraftVersion = draft.latestVersion;
-                const creationDate = draft.creationDate;
-                const lastUpdatedDate = draft.lastUpdatedDate;
+                const drafts = _.keys(snapshotValue).map((key) => {
+                    const draft = snapshotValue[key];
+                    const latestDraftVersion = draft.latestVersion;
+                    const creationDate = draft.creationDate;
+                    const lastUpdatedDate = draft.lastUpdatedDate;
 
-                return  _.assign({},
-                    latestDraftVersion,
-                    {key, creationDate, lastUpdatedDate});
+                    return  _.assign({},
+                        latestDraftVersion,
+                        {key, creationDate, lastUpdatedDate});
+                });
+
+                resolve(drafts);
             });
-
-            resolve(drafts);
-        });
     });
 };
 
