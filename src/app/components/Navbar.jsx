@@ -1,12 +1,11 @@
 import React from "react";
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Link
+	withRouter,
+  	Link
 } from 'react-router-dom'
 
-export class Navbar extends React.Component{
+class Navbar extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,9 +16,16 @@ export class Navbar extends React.Component{
 	}	
 
 	componentWillReceiveProps(nextProps){
+		console.log();
+
 		let {navlinks, adminNavlinks} = this.state;
 		let {isAdmin} = nextProps;
 		this.setState({ currentNavlinks : isAdmin ? adminNavlinks : navlinks});
+	}
+
+	isHomeLink(link) {
+		const currentUrl = this.props.location.pathname;
+        return currentUrl.slice(1) === link || (currentUrl === "/" && link === "articles");
 	}
 
 	render() {
@@ -29,7 +35,7 @@ export class Navbar extends React.Component{
 						this.state.currentNavlinks.reduce((links, current, index) => {
 							let isLast = index === (this.state.currentNavlinks.length - 1);
 							links.push(<Link 	key={index}
-				  							 	className="navitem navlink topnavlink navlink:active"
+				  							 	className={"navitem navlink topnavlink navlink:active " + (this.isHomeLink(current) ? "navlink-underline"  : "")}
 				  								to={"/" + current}>
 				  								{current}
 										</Link>);
@@ -44,3 +50,5 @@ export class Navbar extends React.Component{
 		)
 	}
 }
+
+export default withRouter(Navbar);

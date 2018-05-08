@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 //Root folder
 import {About} from "./components/About.jsx";
 import {Home} from "./components/Home.jsx";
-import {Navbar} from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar.jsx";
 import {Footer} from "./components/Footer.jsx";
 import Admin from "./components/Admin.jsx";
 
@@ -71,7 +71,7 @@ export default class App extends React.Component {
 					<div>
 					  	<Navbar isAdmin={isAdmin}/>
 					    <Switch>
-					   		<Route path="/"         	  	exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
+
 					   		<Route path="/edit/:articleTitle"   exact render={() => (<EditArticle isDraft={false}/>)}/>
 							<Route path="/edit-draft/:draftKey"	exact render={() => (<EditArticle isDraft={true}/>)}/>
 					   		<Route path="/article/:title" 	component={Article}/>
@@ -82,6 +82,7 @@ export default class App extends React.Component {
 					  		<Route path="/create"         	exact render={() => (<CreateArticle 		 isAdmin={isAdmin} user={user}/>)}/>
 					  		<Route exact path="/photos"     render={() => (<Photos               isAdmin={isAdmin}/>)}/>
 					  		<Route path="/photos/add"     	component={AddPhoto}/>
+							<Route exact render={() => (<ArticleListContainer isAdmin={isAdmin}/>)}/>
 					    </Switch>
 					    <Footer/>
 					</div>

@@ -125,9 +125,12 @@
 }
 
 .navlink,
-.navlink:visited,
-.navlink:active {
+.navlink:visited {
     text-decoration: none;
+}
+
+.navlink-underline {
+    text-decoration: underline;
 }
 
 @media only screen and (max-width: 500px) {
