@@ -7,7 +7,7 @@
     "node": "6.11.1"
   },
   "scripts": {
-    "dev": "export NODE_ENV=development; npm run build & npm run server",
+    "dev": "export NODE_ENV=development; npm run build",
     "prodloc": "export NODE_ENV=productionlocal && npm run build:prod && npm start",
     "start": "pm2 start server/server.js --name='blog'",
     "restart": "pm2 restart all",
@@ -46,7 +46,7 @@
     "nodemon": "1.11.0",
     "react": "15.6.1",
     "react-copy-to-clipboard": "5.0.0",
-    "react-disqus-comments": "1.0.3",
+    "react-disqus-comments": "1.2.0",
     "react-dom": "15.5.4",
     "react-dropzone": "4.1.2",
     "react-paginate": "4.4.4",

@@ -53,9 +53,8 @@ export class Article extends React.Component {
         }
 
         const articleKey = this.props.match.params.title;
-        const url = `http://maxcrane.org/${articleKey}`;
-
-
+        const url = `https://maxcrane.org/${articleKey}`;
+        
         return (
             <div className="article">
                 <h2 className="articleTitle">{title}</h2>
@@ -71,6 +70,7 @@ export class Article extends React.Component {
                         shortname="maxcrane-org"
                         identifier={articleKey}
                         title={articleKey}
+                        url={url}
                         category_id="123456"
                         onNewComment={this.handleNewComment.bind(this)}/>
                 </div>
