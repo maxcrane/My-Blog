@@ -54,7 +54,9 @@ export class Article extends React.Component {
 
         const articleKey = this.props.match.params.title;
         const url = `https://maxcrane.org/${articleKey}`;
-        
+        const shortName = 'maxcrane-org';
+        const categoryId='7669460'; //this the default category named 'general'
+
         return (
             <div className="article">
                 <h2 className="articleTitle">{title}</h2>
@@ -67,11 +69,11 @@ export class Article extends React.Component {
 
                 <div className='disquisCommentSection'>
                     <ReactDisqusComments
-                        shortname="maxcrane-org"
+                        shortname={shortName}
                         identifier={articleKey}
                         title={articleKey}
                         url={url}
-                        category_id="123456"
+                        category_id={categoryId}
                         onNewComment={this.handleNewComment.bind(this)}/>
                 </div>
             </div>
