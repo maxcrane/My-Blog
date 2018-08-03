@@ -56,6 +56,7 @@
     "showdown": "1.6.4",
     "showdown-highlight": "1.0.2",
     "simplemde": "1.11.2",
+    "sitemap": "^1.13.0",
     "slugify": "1.1.0",
     "style-loader": "0.18.2",
     "uglify-js": "3.0.23",

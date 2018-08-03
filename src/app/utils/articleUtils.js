@@ -1,9 +1,9 @@
-import moment from "moment";
-import _ from "lodash";
-import slugify from "slugify";
+const moment = require("moment");
+const _ = require("lodash");
+const slugify = require("slugify");
 slugify.extend({'%': ' percent'});
 
-import firebaseRef from "./firebaseRef";
+const firebaseRef = require("./firebaseRef");
 const database = firebaseRef.getFirebase().database();
 const articles = database.ref('articles');
 const drafts = database.ref('drafts');
