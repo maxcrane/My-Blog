@@ -138,7 +138,7 @@ const getArticles = () => {
         articles.orderByKey().once("value", (snapshot) => {
             resolve(_.reverse(snapshot.val()) || {});
         }, (err) => {
-            reject(err)
+            reject(err);
         });
     });
 };

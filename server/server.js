@@ -8,9 +8,6 @@ const sitemap = require('./sitemap');
 app.use(compression());
 app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 
-
-
-sitemap.updateSitemap();
 app.get('/sitemap.xml', function(req, res) {
     res.header('Content-Type', 'application/xml');
     res.send( sitemap.getSitemap() );

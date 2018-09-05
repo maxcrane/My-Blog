@@ -28,14 +28,19 @@ const updateSitemap = () => {
     articleUtils.getArticles()
         .then(convertToSitemapUrls)
         .then(applySitemapUpdate)
-        .catch(console.log.bind(this));
+        .catch(console.log.bind(this))
+
+    //TODO: Use .finally (looks like its not in node 6)
+    setTimeout(updateSitemap, 300000);
 };
 
 const getSitemap = () => {
     return blogSitemap.toString();
 };
 
+
+updateSitemap();
+
 module.exports = {
-    getSitemap,
-    updateSitemap
+    getSitemap
 };
